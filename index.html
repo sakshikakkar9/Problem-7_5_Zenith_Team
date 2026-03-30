@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCD Risk AI Engine | v2.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .risk-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .risk-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        input[type="range"] { accent-color: #2563eb; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen font-sans text-slate-900">
+
+    <div class="max-w-7xl mx-auto px-6 py-10">
+        <header class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-3 rounded-2xl shadow-xl shadow-blue-200">
+                    <i class="fas fa-heart-pulse text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black tracking-tight text-slate-800 uppercase">NCD <span class="text-blue-600">Predictor</span></h1>
+                    <p class="text-slate-400 font-bold text-xs tracking-widest uppercase">Multi-Label Neural Inference Engine</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-[10px] font-black border border-green-200">API: ONLINE</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-black border border-blue-200">MODEL: NCD-V1-DNN</span>
+            </div>
+        </header>
+
+        <div class="grid lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-4 h-fit sticky top-10">
+                <form id="predictionForm" class="bg-white rounded-[2rem] shadow-xl border border-slate-200 p-8 space-y-6 overflow-hidden relative">
+                    <div class="flex items-center justify-between border-b pb-4">
+                        <h2 class="text-xl font-black flex items-center gap-2">
+                            <i class="fas fa-clipboard-user text-blue-500"></i> Clinical Profile
+                        </h2>
+                    </div>
+                    
+                    <div class="space-y-5 custom-scrollbar overflow-y-auto max-h-[65vh] pr-2">
+                        <div class="space-y-4">
+                            <p class="text-[10px] font-black text-blue-600 tracking-widest uppercase">Biometrics</p>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase">BMI (Body Mass Index)</label>
+                                <input type="number" id="BMI" value="27.5" step="0.1" class="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 outline-none font-bold">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 text-[11px] font-bold uppercase">
+                                <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition">
+                                    <span>High Chol</span>
+                                    <input type="checkbox" id="HighChol" class="w-4 h-4 accent-blue-600">
+                                </label>
+                                <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition">
+                                    <span>Chol Check</span>
+                                    <input type="checkbox" id="CholCheck" checked class="w-4 h-4 accent-blue-600">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 pt-2">
+                            <p class="text-[10px] font-black text-blue-600 tracking-widest uppercase">Lifestyle & History</p>
+                            <div class="grid grid-cols-2 gap-3 text-[11px] font-bold uppercase">
+                                <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer">
+                                    <span>Smoker</span>
+                                    <input type="checkbox" id="Smoker" class="w-4 h-4 accent-blue-600">
+                                </label>
+                                <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer">
+                                    <span>Stroke</span>
+                                    <input type="checkbox" id="Stroke" class="w-4 h-4 accent-blue-600">
+                                </label>
+                                <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer">
+                                    <span>Active</span>
+                                    <input type="checkbox" id="PhysActivity" checked class="w-4 h-4 accent-blue-600">
+                                </label>
+                                <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer text-red-500">
+                                    <span>Diff Walk</span>
+                                    <input type="checkbox" id="DiffWalk" class="w-4 h-4 accent-blue-600">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 pt-2">
+                            <p class="text-[10px] font-black text-blue-600 tracking-widest uppercase">Demographics & Subjective</p>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase text-center">General Health (1-5)</label>
+                                <input type="range" id="GenHlth" min="1" max="5" value="3" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-[10px] font-bold text-slate-400 mt-1 uppercase">
+                                    <span>Excel</span><span>Poor</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Age (1-13)</label>
+                                    <input type="number" id="Age" value="8" min="1" max="13" class="w-full bg-slate-50 border border-slate-100 rounded-xl p-2 outline-none font-bold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Sex</label>
+                                    <select id="Sex" class="w-full bg-slate-50 border border-slate-100 rounded-xl p-2 outline-none font-bold text-xs uppercase">
+                                        <option value="1">Male</option>
+                                        <option value="0">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-black py-4 rounded-2xl shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group">
+                        <span class="group-hover:scale-110 transition-transform">RUN AI DIAGNOSIS</span>
+                        <i class="fas fa-chevron-right text-[10px]"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="lg:col-span-8">
+                <div id="welcomeState" class="h-full flex flex-col items-center justify-center border-4 border-dashed border-slate-200 rounded-[3rem] p-12 text-center bg-white/50">
+                    <div class="bg-blue-50 p-8 rounded-full mb-6">
+                        <i class="fas fa-brain text-blue-200 text-6xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-800">Neural Inference Ready</h3>
+                    <p class="text-slate-400 mt-2 max-w-sm font-medium">Input clinical indicators to generate a triple-target risk probability report.</p>
+                </div>
+
+                <div id="resultsState" class="hidden space-y-8 animate-in fade-in duration-500">
+                    <div class="grid md:grid-cols-3 gap-6" id="cardContainer">
+                        </div>
+
+                    <div class="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm">
+                        <h4 class="text-sm font-black text-slate-800 uppercase flex items-center gap-2 mb-4">
+                            <i class="fas fa-lightbulb text-yellow-500"></i> AI Insights
+                        </h4>
+                        <p id="aiInsight" class="text-slate-500 text-sm leading-relaxed font-medium italic">
+                            Analyzing feature contributions...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('predictionForm');
+        const welcomeState = document.getElementById('welcomeState');
+        const resultsState = document.getElementById('resultsState');
+        const submitBtn = document.getElementById('submitBtn');
+        const aiInsight = document.getElementById('aiInsight');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            submitBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> CALCULATING PROBABILITIES...`;
+            submitBtn.disabled = true;
+
+            // Gather data (Mapping ALL 19 features)
+            const data = {
+                HighChol: document.getElementById('HighChol').checked ? 1 : 0,
+                CholCheck: document.getElementById('CholCheck').checked ? 1 : 0,
+                BMI: parseFloat(document.getElementById('BMI').value),
+                Smoker: document.getElementById('Smoker').checked ? 1 : 0,
+                Stroke: document.getElementById('Stroke').checked ? 1 : 0,
+                PhysActivity: document.getElementById('PhysActivity').checked ? 1 : 0,
+                Fruits: 1, // Hardcoded standard
+                Veggies: 1, // Hardcoded standard
+                HvyAlcoholConsump: 0,
+                AnyHealthcare: 1,
+                NoDocbcCost: 0,
+                GenHlth: parseInt(document.getElementById('GenHlth').value),
+                MentHlth: 0,
+                PhysHlth: 0,
+                DiffWalk: document.getElementById('DiffWalk').checked ? 1 : 0,
+                Sex: parseInt(document.getElementById('Sex').value),
+                Age: parseInt(document.getElementById('Age').value),
+                Education: 5,
+                Income: 6
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                displayResults(result, data);
+            } catch (err) {
+                alert("Connection failed! Check if uvicorn is running on port 8000.");
+            } finally {
+                submitBtn.innerHTML = `RUN AI DIAGNOSIS <i class="fas fa-chevron-right text-[10px]"></i>`;
+                submitBtn.disabled = false;
+            }
+        };
+
+        function displayResults(data, input) {
+            welcomeState.classList.add('hidden');
+            resultsState.classList.remove('hidden');
+            
+            const cardContainer = document.getElementById('cardContainer');
+            const metrics = [
+                { name: 'Diabetes', key: 'diabetes', icon: 'fa-dna' },
+                { name: 'Hypertension', key: 'hypertension', icon: 'fa-heartbeat' },
+                { name: 'Cardio Risk', key: 'heart_disease', icon: 'fa-lungs' }
+            ];
+
+            cardContainer.innerHTML = metrics.map(m => {
+                const percentage = parseFloat(data[m.key]);
+                const isHigh = percentage > 50;
+                const statusColor = isHigh ? 'text-red-600' : 'text-emerald-600';
+                const borderColor = isHigh ? 'border-red-100' : 'border-emerald-100';
+                const bgColor = isHigh ? 'bg-red-50' : 'bg-emerald-50';
+
+                return `
+                    <div class="risk-card bg-white p-8 rounded-[2rem] border-2 ${borderColor} text-center">
+                        <div class="w-12 h-12 ${bgColor} ${statusColor} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                            <i class="fas ${m.icon} text-xl"></i>
+                        </div>
+                        <h4 class="text-[10px] font-black uppercase text-slate-400 tracking-widest">${m.name}</h4>
+                        <div class="text-4xl font-black mt-1 ${statusColor}">${data[m.key]}</div>
+                        <div class="mt-4 px-4 py-1 rounded-full text-[9px] font-black uppercase inline-block ${isHigh ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}">
+                            ${isHigh ? 'High Risk Factor' : 'Within Safety Range'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Simple AI reasoning text
+            if (input.BMI > 30 || input.GenHlth > 3) {
+                aiInsight.innerText = "Diagnosis flags elevated due to High BMI and subjective Health Rating. Recommendation: Targeted weight management and cardiovascular screening.";
+            } else {
+                aiInsight.innerText = "Indicators suggest low immediate risk. Maintain current physical activity levels and routine cholesterol monitoring.";
+            }
+        }
+    </script>
+</body>
+</html>
