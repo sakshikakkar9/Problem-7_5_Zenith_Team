@@ -8,58 +8,59 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; letter-spacing: -0.01em; }
-        .glass-card { background: #ffffff; border: 1px solid #e2e8f0; transition: all 0.3s ease; }
-        .nav-link.active { background: #1e293b; color: white !important; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; letter-spacing: -0.01em; color: #0f172a; }
+        .glass-card { background: #ffffff; border: 1px solid #f1f5f9; transition: all 0.3s ease; }
+        .nav-link.active { background: #1e293b; color: white !important; }
         .page-content { display: none; }
         .page-content.active { display: block; }
-        .text-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; }
-        .input-group { background: #f8fafc; border: 1px solid #f1f5f9; padding: 12px; border-radius: 16px; }
+        .text-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
+        .input-group { background: #f8fafc; border: 1px solid #f1f5f9; padding: 16px; border-radius: 12px; }
         input[type="number"]::-webkit-inner-spin-button { display: none; }
         .patient-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+        button, select, input { transition: all 0.2s ease; }
     </style>
 </head>
 <body class="bg-[#f8fafc] text-slate-900">
 
-    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 flex flex-col z-50">
-        <div class="p-8 border-b border-slate-50 mb-4">
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-100 flex flex-col z-50">
+        <div class="p-6 border-b border-slate-50 mb-4">
             <div class="flex items-center gap-3">
-                <div class="bg-blue-600 p-2 rounded-xl text-white shadow-lg shadow-blue-200"><i class="fas fa-microchip text-xs"></i></div>
-                <h1 class="text-sm font-black tracking-tighter uppercase">Vitalis <span class="text-blue-600">Pro</span></h1>
+                <div class="bg-slate-900 p-2 rounded-lg text-white"><i class="fas fa-microchip text-xs"></i></div>
+                <h1 class="text-sm font-medium tracking-tight uppercase">Vitalis <span class="text-slate-500">Pro</span></h1>
             </div>
         </div>
         <nav class="px-4 space-y-1">
-            <button onclick="showPage('predictor', this)" class="nav-link active w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-[11px] text-slate-500 transition-all uppercase">
+            <button onclick="showPage('predictor', this)" class="nav-link active w-full flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-xs text-slate-500 uppercase">
                 <i class="fas fa-brain w-4"></i> AI Predictor
             </button>
-            <button onclick="showPage('bmi', this)" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-[11px] text-slate-500 transition-all uppercase">
+            <button onclick="showPage('bmi', this)" class="nav-link w-full flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-xs text-slate-500 uppercase">
                 <i class="fas fa-sliders w-4"></i> BMI Architect
             </button>
-            <button onclick="showPage('bp', this)" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-[11px] text-slate-500 transition-all uppercase">
+            <button onclick="showPage('bp', this)" class="nav-link w-full flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-xs text-slate-500 uppercase">
                 <i class="fas fa-wave-square w-4"></i> BP Analyser
             </button>
             <div class="pt-6 pb-2 px-4 text-label">Prescription</div>
-            <button onclick="showPage('diet', this)" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-[11px] text-slate-500 transition-all uppercase">
+            <button onclick="showPage('diet', this)" class="nav-link w-full flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-xs text-slate-500 uppercase">
                 <i class="fas fa-leaf w-4"></i> Precision Diet
             </button>
-            <button onclick="showPage('yoga', this)" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-[11px] text-slate-500 transition-all uppercase">
+            <button onclick="showPage('yoga', this)" class="nav-link w-full flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-xs text-slate-500 uppercase">
                 <i class="fas fa-spa w-4"></i> Yoga OS
             </button>
         </nav>
     </aside>
 
-    <main class="ml-64 p-10 min-h-screen">
+    <main class="ml-64 p-8 min-h-screen">
 
         <section id="predictor" class="page-content active">
-            <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-100 pb-6">
                 <div>
-                    <h1 class="text-2xl font-black tracking-tight text-slate-800 uppercase">NCD <span class="text-blue-600">Inference</span></h1>
-                    <p class="text-slate-400 font-bold text-[10px] tracking-widest uppercase">Multi-Label Neural Diagnostic Tool</p>
+                    <h1 class="text-xl font-medium tracking-tight text-slate-900 uppercase">NCD <span class="text-slate-500">Inference</span></h1>
+                    <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Multi-Label Neural Diagnostic Tool</p>
                 </div>
-                <div class="flex items-center gap-3 bg-white p-2 rounded-2xl border border-slate-200">
-                    <span class="text-[9px] font-black uppercase text-slate-400 ml-2">Active Patient:</span>
-                    <select id="globalPatientSelector" onchange="syncPatientData(this.value)" class="bg-slate-50 border-none text-[11px] font-black uppercase px-4 py-2 rounded-xl outline-none text-blue-600">
+                <div class="flex items-center gap-3 bg-white p-2 rounded-lg border border-slate-100">
+                    <span class="text-xs font-medium uppercase text-slate-400 ml-2">Active Patient:</span>
+                    <select id="globalPatientSelector" onchange="syncPatientData(this.value)" class="bg-slate-50 border-none text-xs font-medium uppercase px-4 py-2 rounded-md outline-none text-slate-900">
                         <option value="p1">Sarah Connor (ID: 9021)</option>
                         <option value="p2">John Doe (ID: 4432)</option>
                         <option value="p3">Elena Gilbert (ID: 1109)</option>
@@ -69,60 +70,94 @@
 
             <div class="grid lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-4">
-                    <form id="predictionForm" class="bg-white rounded-[2.5rem] shadow-sm border border-slate-200 p-8 space-y-6">
+                    <form id="predictionForm" class="bg-white rounded-xl border border-slate-100 p-6 space-y-6">
                         <div class="space-y-4 custom-scrollbar overflow-y-auto max-h-[55vh] pr-2">
                             <div class="space-y-3">
-                                <span class="text-label text-blue-600">01. Biometrics</span>
+                                <span class="text-label text-slate-900">01. Biometrics</span>
                                 <div class="input-group">
-                                    <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Body Mass Index (BMI)</label>
-                                    <input type="number" id="BMI" value="28.2" step="0.1" class="w-full bg-transparent font-black text-sm outline-none">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Body Mass Index (BMI)</label>
+                                    <input type="number" id="BMI" value="28.2" step="0.1" class="w-full bg-transparent font-medium text-sm outline-none">
                                 </div>
                             </div>
                             <div class="space-y-3">
-                                <span class="text-label text-blue-600">02. Clinical Risk</span>
+                                <span class="text-label text-slate-900">02. Clinical Risk</span>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-[10px] font-bold uppercase"><span>High Chol</span><input type="checkbox" id="HighChol" checked class="accent-blue-600"></label>
-                                    <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-[10px] font-bold uppercase"><span>Chol Check</span><input type="checkbox" id="CholCheck" checked class="accent-blue-600"></label>
+                                    <label class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs font-medium uppercase"><span>High Chol</span><input type="checkbox" id="HighChol" checked class="accent-slate-900"></label>
+                                    <label class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs font-medium uppercase"><span>Chol Check</span><input type="checkbox" id="CholCheck" checked class="accent-slate-900"></label>
                                 </div>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-[10px] font-bold uppercase"><span>Smoker</span><input type="checkbox" id="Smoker" checked class="accent-blue-600"></label>
-                                    <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-[10px] font-bold uppercase"><span>Stroke Hist.</span><input type="checkbox" id="Stroke" class="accent-blue-600"></label>
+                                    <label class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs font-medium uppercase"><span>Smoker</span><input type="checkbox" id="Smoker" checked class="accent-slate-900"></label>
+                                    <label class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs font-medium uppercase"><span>Stroke Hist.</span><input type="checkbox" id="Stroke" class="accent-slate-900"></label>
                                 </div>
                             </div>
                             <div class="space-y-3">
-                                <span class="text-label text-blue-600">03. Patient Profile</span>
+                                <span class="text-label text-slate-900">03. Patient Profile</span>
                                 <div class="input-group">
-                                    <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">General Health Perception (1-5)</label>
-                                    <input type="range" id="GenHlth" min="1" max="5" value="3" class="w-full cursor-pointer">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">General Health Perception (1-5)</label>
+                                    <input type="range" id="GenHlth" min="1" max="5" value="3" class="w-full cursor-pointer accent-slate-900">
                                 </div>
                                 <div class="grid grid-cols-2 gap-3">
                                     <div class="input-group">
-                                        <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Age Group</label>
-                                        <input type="number" id="Age" value="13" class="w-full bg-transparent font-black text-sm outline-none">
+                                        <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Age Group</label>
+                                        <input type="number" id="Age" value="13" class="w-full bg-transparent font-medium text-sm outline-none">
                                     </div>
                                     <div class="input-group">
-                                        <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Biological Sex</label>
-                                        <select id="Sex" class="w-full bg-transparent font-black text-[11px] outline-none uppercase"><option value="0">Female</option><option value="1">Male</option></select>
+                                        <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Biological Sex</label>
+                                        <select id="Sex" class="w-full bg-transparent font-medium text-xs outline-none uppercase"><option value="0">Female</option><option value="1">Male</option></select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 uppercase tracking-tighter text-xs hover:bg-blue-600 transition-all">Run AI Diagnosis</button>
+                        <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-3 uppercase tracking-tight text-xs hover:bg-slate-800 transition-all">Run AI Diagnosis</button>
                     </form>
                 </div>
 
                 <div class="lg:col-span-8">
-                    <div id="welcomeState" class="h-full flex flex-col items-center justify-center border-4 border-dashed border-slate-200 rounded-[3rem] p-12 text-center bg-white/30">
-                        <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4"><i class="fas fa-wave-pulse text-blue-400"></i></div>
-                        <h3 class="text-lg font-black text-slate-800 uppercase tracking-tight">Ready for Data Input</h3>
-                        <p class="text-[11px] text-slate-400 font-bold max-w-xs uppercase mt-2">Adjust clinical profile and trigger inference engine</p>
+                    <div id="welcomeState" class="h-full flex flex-col items-center justify-center border border-dashed border-slate-100 rounded-xl p-12 text-center bg-white">
+                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-4"><i class="fas fa-wave-pulse text-slate-400"></i></div>
+                        <h3 class="text-base font-medium text-slate-900 uppercase tracking-tight">Ready for Data Input</h3>
+                        <p class="text-xs text-slate-500 font-normal max-w-xs uppercase mt-2 leading-relaxed">Adjust clinical profile and trigger inference engine</p>
                     </div>
                     <div id="resultsState" class="hidden space-y-6">
                         <div class="grid md:grid-cols-3 gap-4" id="cardContainer"></div>
-                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden">
-                            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-quote-right text-4xl"></i></div>
-                            <span class="text-label text-blue-600 mb-3 block">AI Clinical Insight</span>
-                            <p id="aiInsight" class="text-sm font-medium text-slate-600 leading-relaxed"></p>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white p-6 rounded-xl border border-slate-100">
+                                <span class="text-label text-slate-900 mb-4 block">Metabolic Profile</span>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center pb-2 border-b border-slate-50">
+                                        <span class="text-xs text-slate-500 uppercase">Insulin (Est.)</span>
+                                        <span id="estInsulin" class="text-xs font-medium text-slate-900">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center pb-2 border-b border-slate-50">
+                                        <span class="text-xs text-slate-500 uppercase">Glucose (Est.)</span>
+                                        <span id="estGlucose" class="text-xs font-medium text-slate-900">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl border border-slate-100">
+                                <span class="text-label text-slate-900 mb-4 block">Inflammatory Markers</span>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center pb-2 border-b border-slate-50">
+                                        <span class="text-xs text-slate-500 uppercase">hs-CRP (Est.)</span>
+                                        <span id="estCRP" class="text-xs font-medium text-slate-900">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center pb-2 border-b border-slate-50">
+                                        <span class="text-xs text-slate-500 uppercase">IL-6 (Est.)</span>
+                                        <span id="estIL6" class="text-xs font-medium text-slate-900">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-slate-100">
+                            <span class="text-label text-slate-900 mb-3 block">Risk Narrative</span>
+                            <p id="riskNarrative" class="text-xs font-normal text-slate-600 leading-relaxed italic"></p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-slate-100 relative overflow-hidden">
+                            <span class="text-label text-slate-900 mb-3 block">AI Clinical Insight</span>
+                            <p id="aiInsight" class="text-xs font-normal text-slate-600 leading-relaxed"></p>
                         </div>
                     </div>
                 </div>
@@ -130,49 +165,78 @@
         </section>
 
         <section id="bmi" class="page-content">
-            <header class="mb-8">
-                <h1 class="text-2xl font-black tracking-tight text-slate-800 uppercase">BMI <span class="text-blue-600">Architect</span></h1>
-                <p class="text-slate-400 font-bold text-[10px] tracking-widest uppercase">Body Composition Structural Analysis</p>
+            <header class="mb-8 border-b border-slate-100 pb-6">
+                <h1 class="text-xl font-medium tracking-tight text-slate-900 uppercase">Clinical <span class="text-slate-500">Calculator</span></h1>
+                <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Advanced Metabolic Metric Analysis</p>
             </header>
-            <div class="grid lg:grid-cols-2 gap-8">
-                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm space-y-6">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="input-group">
-                            <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Weight (kg)</label>
-                            <input type="number" id="bmi_weight" oninput="calculateBMI()" value="75" class="w-full bg-transparent font-black text-xl outline-none">
+            <div class="grid lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-4 bg-white p-6 rounded-xl border border-slate-100 space-y-6">
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Weight (kg)</label>
+                                <input type="number" id="bmi_weight" oninput="calculateClinicalMetrics()" value="75" class="w-full bg-transparent font-medium text-sm outline-none">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Height (cm)</label>
+                                <input type="number" id="bmi_height" oninput="calculateClinicalMetrics()" value="175" class="w-full bg-transparent font-medium text-sm outline-none">
+                            </div>
                         </div>
-                        <div class="input-group">
-                            <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Height (cm)</label>
-                            <input type="number" id="bmi_height" oninput="calculateBMI()" value="175" class="w-full bg-transparent font-black text-xl outline-none">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Age (yr)</label>
+                                <input type="number" id="bmi_age" oninput="calculateClinicalMetrics()" value="45" class="w-full bg-transparent font-medium text-sm outline-none">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Gender</label>
+                                <select id="bmi_gender" onchange="calculateClinicalMetrics()" class="w-full bg-transparent font-medium text-xs outline-none uppercase">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="p-8 bg-slate-900 rounded-[2rem] text-center text-white relative overflow-hidden">
-                        <div class="text-label text-slate-400 mb-2">Calculated BMI Score</div>
-                        <div id="bmi_result_val" class="text-5xl font-black mb-2">24.5</div>
-                        <div id="bmi_status_tag" class="inline-block px-4 py-1 rounded-full text-[10px] font-black uppercase bg-emerald-500">Normal</div>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm flex flex-col justify-center">
-                    <h4 class="text-label text-blue-600 mb-4">Metric Significance</h4>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center pb-3 border-b border-slate-50"><span class="text-xs font-bold text-slate-400">Underweight</span><span class="text-xs font-black">&lt; 18.5</span></div>
-                        <div class="flex justify-between items-center pb-3 border-b border-slate-50"><span class="text-xs font-bold text-slate-400">Normal</span><span class="text-xs font-black">18.5 – 24.9</span></div>
-                        <div class="flex justify-between items-center pb-3 border-b border-slate-50"><span class="text-xs font-bold text-slate-400">Overweight</span><span class="text-xs font-black">25.0 – 29.9</span></div>
-                        <div class="flex justify-between items-center"><span class="text-xs font-bold text-slate-400">Obese</span><span class="text-xs font-black">30.0 +</span></div>
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="bg-slate-900 p-6 rounded-xl text-center text-white">
+                            <div class="text-[10px] font-medium text-slate-400 mb-2 uppercase tracking-wider">BMI Score</div>
+                            <div id="res_bmi" class="text-2xl font-medium mb-1">24.5</div>
+                            <div id="tag_bmi" class="text-[10px] uppercase font-medium text-emerald-400">Normal</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-slate-100 text-center">
+                            <div class="text-[10px] font-medium text-slate-500 mb-2 uppercase tracking-wider">BMR (kcal/day)</div>
+                            <div id="res_bmr" class="text-2xl font-medium mb-1 text-slate-900">--</div>
+                            <div class="text-[10px] uppercase font-medium text-slate-400">Metabolic Base</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-slate-100 text-center">
+                            <div class="text-[10px] font-medium text-slate-500 mb-2 uppercase tracking-wider">Ideal Weight (kg)</div>
+                            <div id="res_ibw" class="text-2xl font-medium mb-1 text-slate-900">--</div>
+                            <div class="text-[10px] uppercase font-medium text-slate-400">Devine Formula</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-100">
+                        <h4 class="text-label text-slate-900 mb-4">Metric Significance</h4>
+                        <div class="grid grid-cols-2 gap-x-8 gap-y-3">
+                            <div class="flex justify-between items-center pb-2 border-b border-slate-50"><span class="text-xs font-normal text-slate-500 uppercase">Underweight</span><span class="text-xs font-medium text-slate-900">&lt; 18.5</span></div>
+                            <div class="flex justify-between items-center pb-2 border-b border-slate-50"><span class="text-xs font-normal text-slate-500 uppercase">Normal</span><span class="text-xs font-medium text-slate-900">18.5 – 24.9</span></div>
+                            <div class="flex justify-between items-center pb-2 border-b border-slate-50"><span class="text-xs font-normal text-slate-500 uppercase">Overweight</span><span class="text-xs font-medium text-slate-900">25.0 – 29.9</span></div>
+                            <div class="flex justify-between items-center pb-2 border-b border-slate-50"><span class="text-xs font-normal text-slate-500 uppercase">Obese</span><span class="text-xs font-medium text-slate-900">30.0 +</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="bp" class="page-content">
-            <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
                 <div>
-                    <h1 class="text-2xl font-black tracking-tight text-slate-800 uppercase">BP <span class="text-blue-600">Analyser</span></h1>
-                    <p class="text-slate-400 font-bold text-[10px] tracking-widest uppercase">Vascular Pressure Monitoring</p>
+                    <h1 class="text-xl font-medium tracking-tight text-slate-900 uppercase">BP <span class="text-slate-500">Analyser</span></h1>
+                    <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Vascular Pressure Monitoring</p>
                 </div>
-                <div class="flex items-center gap-3 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm">
-                    <i class="fas fa-user-circle text-blue-500 ml-2"></i>
-                    <select id="bpPatientSelector" onchange="syncPatientData(this.value)" class="bg-transparent border-none text-[11px] font-black uppercase pr-4 outline-none">
+                <div class="flex items-center gap-3 bg-white p-2 rounded-lg border border-slate-100">
+                    <i class="fas fa-user-circle text-slate-400 ml-2"></i>
+                    <select id="bpPatientSelector" onchange="syncPatientData(this.value)" class="bg-transparent border-none text-xs font-medium uppercase pr-4 outline-none text-slate-900">
                         <option value="p1">Sarah Connor</option>
                         <option value="p2">John Doe</option>
                         <option value="p3">Elena Gilbert</option>
@@ -180,36 +244,90 @@
                 </div>
             </header>
             <div class="grid lg:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-[2rem] text-center">
-                    <span class="text-label text-blue-600">Latest Systolic</span>
-                    <div id="bp_sys_val" class="text-4xl font-black mt-2 text-slate-800">118 <span class="text-xs text-slate-400">mmHg</span></div>
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <span class="text-label text-slate-900">Latest Systolic</span>
+                    <div id="bp_sys_val" class="text-3xl font-medium mt-2 text-slate-900">118 <span class="text-xs text-slate-400 font-normal">mmHg</span></div>
                 </div>
-                <div class="glass-card p-6 rounded-[2rem] text-center">
-                    <span class="text-label text-emerald-600">Latest Diastolic</span>
-                    <div id="bp_dia_val" class="text-4xl font-black mt-2 text-slate-800">76 <span class="text-xs text-slate-400">mmHg</span></div>
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <span class="text-label text-slate-900">Latest Diastolic</span>
+                    <div id="bp_dia_val" class="text-3xl font-medium mt-2 text-slate-900">76 <span class="text-xs text-slate-400 font-normal">mmHg</span></div>
                 </div>
-                <div class="glass-card p-6 rounded-[2rem] text-center">
-                    <span class="text-label text-slate-400">Pulse Rate</span>
-                    <div class="text-4xl font-black mt-2 text-slate-800">72 <span class="text-xs text-slate-400">BPM</span></div>
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <span class="text-label text-slate-900">Pulse Rate</span>
+                    <div class="text-3xl font-medium mt-2 text-slate-900">72 <span class="text-xs text-slate-400 font-normal">BPM</span></div>
                 </div>
-                <div class="lg:col-span-3 bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
-                    <h4 class="text-label mb-6">Historical Pressure Map</h4>
+                <div class="lg:col-span-3 bg-white p-6 rounded-xl border border-slate-100">
+                    <h4 class="text-label mb-6 text-slate-900">Historical Pressure Map</h4>
                     <canvas id="bpChart" height="100"></canvas>
                 </div>
+
+            <div class="lg:col-span-1 bg-white p-6 rounded-xl border border-slate-100 space-y-6">
+                <h4 class="text-label text-slate-900">Patient Management</h4>
+                <form id="addPatientForm" onsubmit="addNewPatient(event)" class="space-y-4">
+                    <div class="input-group">
+                        <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Name</label>
+                        <input type="text" id="new_pat_name" required class="w-full bg-transparent font-medium text-sm outline-none" placeholder="Enter patient name">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Age</label>
+                            <input type="number" id="new_pat_age" required class="w-full bg-transparent font-medium text-sm outline-none">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">BP (Sys/Dia)</label>
+                            <input type="text" id="new_pat_bp" required class="w-full bg-transparent font-medium text-sm outline-none" placeholder="120/80">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-slate-900 text-white font-medium py-3 rounded-lg uppercase tracking-tight text-xs hover:bg-slate-800">Add Patient</button>
+                </form>
+            </div>
+
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-slate-100">
+                <h4 class="text-label text-slate-900 mb-4">Historical Log</h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-slate-50">
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-2">Date</th>
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-2">Patient</th>
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-2">Reading</th>
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bpHistoryLog">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             </div>
         </section>
 
         <section id="diet" class="page-content">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-lg font-black uppercase">Precision Diet</h2>
-                <div id="dietTag" class="px-4 py-1 bg-blue-50 text-blue-600 rounded-full text-[9px] font-black uppercase border border-blue-100">Standard Plan</div>
-            </div>
+            <header class="flex justify-between items-center mb-8 border-b border-slate-100 pb-6">
+                <h2 class="text-xl font-medium tracking-tight uppercase text-slate-900">Precision Diet</h2>
+                <div id="dietTag" class="px-4 py-1 bg-slate-50 text-slate-500 rounded-full text-xs font-medium uppercase border border-slate-100">Standard Plan</div>
+            </header>
             <div class="grid md:grid-cols-3 gap-6" id="dietGrid"></div>
         </section>
 
         <section id="yoga" class="page-content">
-            <h2 class="text-lg font-black uppercase mb-8">Yoga Protocol</h2>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" id="yogaGrid"></div>
+            <header class="mb-8 border-b border-slate-100 pb-6">
+                <h2 class="text-xl font-medium tracking-tight uppercase text-slate-900">Yoga Protocol</h2>
+            </header>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="yogaGrid"></div>
+
+            <div class="bg-white p-6 rounded-xl border border-slate-100">
+                <h4 class="text-label text-slate-900 mb-4">Video Tutorial</h4>
+                <div class="aspect-video bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100 relative overflow-hidden">
+                    <div class="text-center">
+                        <i class="fas fa-play-circle text-4xl text-slate-300 mb-2"></i>
+                        <p class="text-xs text-slate-500">Select a pose to watch instructional video</p>
+                    </div>
+                    <!-- Placeholder for actual YouTube iframe -->
+                    <div id="videoPlaceholder" class="hidden absolute inset-0 bg-black"></div>
+                </div>
+            </div>
         </section>
 
     </main>
@@ -224,22 +342,67 @@
 
         let currentRisk = "low";
         let bpChart = null;
+        const bpHistory = [
+            { date: '2023-10-24', pat: 'Sarah Connor', val: '118/76', status: 'Normal', color: 'emerald-500' },
+            { date: '2023-10-23', pat: 'John Doe', val: '145/92', status: 'Stage 1', color: 'orange-500' },
+            { date: '2023-10-22', pat: 'Elena Gilbert', val: '110/70', status: 'Normal', color: 'emerald-500' },
+            { date: '2023-10-21', pat: 'John Doe', val: '180/110', status: 'Crisis', color: 'red-500' },
+            { date: '2023-10-20', pat: 'Sarah Connor', val: '122/82', status: 'Normal', color: 'emerald-500' }
+        ];
+
+        function renderBPHistory() {
+            const log = document.getElementById('bpHistoryLog');
+            if(!log) return;
+            log.innerHTML = bpHistory.slice(0, 5).map(h => `
+                <tr class="border-b border-slate-50">
+                    <td class="text-xs py-3 text-slate-500">${h.date}</td>
+                    <td class="text-xs py-3 text-slate-900">${h.pat}</td>
+                    <td class="text-xs py-3 text-slate-900 font-medium">${h.val}</td>
+                    <td class="text-xs py-3"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-medium bg-${h.color.replace('500', '50').replace('600', '50')} text-${h.color}">${h.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function addNewPatient(e) {
+            e.preventDefault();
+            const name = document.getElementById('new_pat_name').value;
+            const age = document.getElementById('new_pat_age').value;
+            const bp = document.getElementById('new_pat_bp').value;
+            const sys = parseInt(bp.split('/')[0]);
+
+            let status = 'Normal', color = 'emerald-500';
+            if (sys >= 180) { status = 'Crisis'; color = 'red-500'; }
+            else if (sys >= 140) { status = 'Stage 2'; color = 'orange-600'; }
+            else if (sys >= 130) { status = 'Stage 1'; color = 'orange-500'; }
+            else if (sys >= 120) { status = 'Elevated'; color = 'amber-500'; }
+
+            bpHistory.unshift({
+                date: new Date().toISOString().split('T')[0],
+                pat: name,
+                val: bp,
+                status: status,
+                color: color
+            });
+
+            renderBPHistory();
+            document.getElementById('addPatientForm').reset();
+        }
 
         function showPage(id, btn) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             if(btn) btn.classList.add('active');
-            
+
             if(id === 'diet') renderDiet();
             if(id === 'yoga') renderYoga();
-            if(id === 'bp') renderBPChart();
+            if(id === 'bp') { renderBPChart(); renderBPHistory(); }
         }
 
         // GLOBAL SYNC LOGIC
         function syncPatientData(patientId) {
             const p = patientData[patientId];
-            
+
             // Sync UI Selectors
             document.getElementById('globalPatientSelector').value = patientId;
             document.getElementById('bpPatientSelector').value = patientId;
@@ -254,7 +417,7 @@
             // Update BP Analyser Display
             document.getElementById('bp_sys_val').innerHTML = `${p.sys} <span class="text-xs text-slate-400">mmHg</span>`;
             document.getElementById('bp_dia_val').innerHTML = `${p.dia} <span class="text-xs text-slate-400">mmHg</span>`;
-            
+
             currentRisk = p.risk;
 
             // Update components if they are visible
@@ -263,18 +426,41 @@
             renderYoga();
         }
 
-        // BMI Logic
-        function calculateBMI() {
+        // Clinical Metrics Logic
+        function calculateClinicalMetrics() {
             const w = parseFloat(document.getElementById('bmi_weight').value);
-            const h = parseFloat(document.getElementById('bmi_height').value) / 100;
-            if(w && h) {
-                const bmi = (w / (h * h)).toFixed(1);
-                document.getElementById('bmi_result_val').innerText = bmi;
-                const tag = document.getElementById('bmi_status_tag');
-                if(bmi < 18.5) { tag.innerText = "Underweight"; tag.style.background = "#fbbf24"; }
-                else if(bmi < 25) { tag.innerText = "Normal"; tag.style.background = "#10b981"; }
-                else if(bmi < 30) { tag.innerText = "Overweight"; tag.style.background = "#f59e0b"; }
-                else { tag.innerText = "Obese"; tag.style.background = "#ef4444"; }
+            const h_cm = parseFloat(document.getElementById('bmi_height').value);
+            const h_m = h_cm / 100;
+            const age = parseInt(document.getElementById('bmi_age').value);
+            const gender = document.getElementById('bmi_gender').value;
+
+            if(w && h_m) {
+                // BMI
+                const bmi = (w / (h_m * h_m)).toFixed(1);
+                document.getElementById('res_bmi').innerText = bmi;
+                const tag = document.getElementById('tag_bmi');
+                if(bmi < 18.5) { tag.innerText = "Underweight"; tag.className = "text-[10px] uppercase font-medium text-amber-500"; }
+                else if(bmi < 25) { tag.innerText = "Normal"; tag.className = "text-[10px] uppercase font-medium text-emerald-400"; }
+                else if(bmi < 30) { tag.innerText = "Overweight"; tag.className = "text-[10px] uppercase font-medium text-orange-500"; }
+                else { tag.innerText = "Obese"; tag.className = "text-[10px] uppercase font-medium text-red-500"; }
+
+                // BMR (Mifflin-St Jeor)
+                let bmr = (10 * w) + (6.25 * h_cm) - (5 * age);
+                bmr = gender === 'male' ? bmr + 5 : bmr - 161;
+                document.getElementById('res_bmr').innerText = Math.round(bmr);
+
+                // Ideal Body Weight (Devine Formula)
+                // Height in inches
+                const h_in = h_cm / 2.54;
+                const baseHeight = 60; // 5 feet
+                let ibw = 0;
+                if (h_in > baseHeight) {
+                    const excess = h_in - baseHeight;
+                    ibw = gender === 'male' ? 50 + (2.3 * excess) : 45.5 + (2.3 * excess);
+                } else {
+                    ibw = gender === 'male' ? 50 : 45.5;
+                }
+                document.getElementById('res_ibw').innerText = ibw.toFixed(1);
             }
         }
 
@@ -282,7 +468,7 @@
         function renderBPChart() {
             const ctx = document.getElementById('bpChart').getContext('2d');
             if(bpChart) bpChart.destroy();
-            
+
             const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
             const sysData = currentRisk === 'high' ? [142, 138, 145, 140, 135, 139, 141] : [118, 120, 115, 119, 121, 117, 118];
             const diaData = currentRisk === 'high' ? [92, 88, 95, 90, 88, 91, 89] : [76, 78, 75, 79, 80, 77, 76];
@@ -298,9 +484,9 @@
                 },
                 options: {
                     plugins: { legend: { display: false } },
-                    scales: { 
-                        y: { grid: { display: false }, ticks: { font: { size: 10, weight: 'bold' } } },
-                        x: { grid: { display: false }, ticks: { font: { size: 10, weight: 'bold' } } }
+                    scales: {
+                        y: { grid: { display: false }, ticks: { font: { size: 10, weight: 'medium' } } },
+                        x: { grid: { display: false }, ticks: { font: { size: 10, weight: 'medium' } } }
                     }
                 }
             });
@@ -311,19 +497,19 @@
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> CALCULATING...`;
-            
+
             setTimeout(() => {
                 document.getElementById('welcomeState').classList.add('hidden');
                 document.getElementById('resultsState').classList.remove('hidden');
-                
+
                 const bmi = parseFloat(document.getElementById('BMI').value);
                 const isHighChol = document.getElementById('HighChol').checked;
                 const isSmoker = document.getElementById('Smoker').checked;
 
                 currentRisk = (bmi > 28 || isHighChol || isSmoker) ? "high" : "low";
 
-                let res = currentRisk === "high" 
-                    ? { d: "68%", h: "74%", c: "45%" } 
+                let res = currentRisk === "high"
+                    ? { d: "68%", h: "74%", c: "45%" }
                     : { d: "12%", h: "15%", c: "04%" };
 
                 const data = [
@@ -333,16 +519,26 @@
                 ];
 
                 document.getElementById('cardContainer').innerHTML = data.map(i => `
-                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 text-center shadow-sm">
-                        <div class="text-blue-500 mb-3 opacity-30"><i class="fas ${i.icon} text-lg"></i></div>
-                        <h4 class="text-label">${i.label}</h4>
-                        <div class="text-3xl font-black mt-2 ${parseInt(i.val) > 40 ? 'text-red-500' : 'text-emerald-500'}">${i.val}</div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-100 text-center">
+                        <div class="text-slate-400 mb-3"><i class="fas ${i.icon} text-lg"></i></div>
+                        <h4 class="text-label text-slate-500">${i.label}</h4>
+                        <div class="text-3xl font-medium mt-2 ${parseInt(i.val) > 40 ? 'text-red-500' : 'text-slate-900'}">${i.val}</div>
                     </div>
                 `).join('');
 
-                document.getElementById('aiInsight').innerText = currentRisk === "high" 
+                document.getElementById('aiInsight').innerText = currentRisk === "high"
                     ? "Alert: Critical metabolic indicators detected. We have updated protocols for " + patientData[document.getElementById('globalPatientSelector').value].name + "."
                     : "Stable Profile: Metabolic indicators within range. Maintenance protocols active.";
+
+                // Update placeholders
+                document.getElementById('estInsulin').innerText = currentRisk === "high" ? "18.5 µU/mL" : "8.2 µU/mL";
+                document.getElementById('estGlucose').innerText = currentRisk === "high" ? "112 mg/dL" : "88 mg/dL";
+                document.getElementById('estCRP').innerText = currentRisk === "high" ? "3.2 mg/L" : "0.8 mg/L";
+                document.getElementById('estIL6').innerText = currentRisk === "high" ? "2.5 pg/mL" : "1.1 pg/mL";
+
+                document.getElementById('riskNarrative').innerText = currentRisk === "high"
+                    ? "Patient exhibits multi-label risk markers above clinical thresholds. The elevated BMI and lipid profile suggest a pro-inflammatory state, increasing the probability of Type 2 Diabetes and Cardiovascular complications. Immediate intervention recommended."
+                    : "Patient profile aligns with low-risk physiological benchmarks. Metabolic stability is maintained through optimal biometrics and clinical history. Continued monitoring of wellness indicators advised.";
 
                 btn.innerHTML = "Run AI Diagnosis";
                 renderDiet();
@@ -353,52 +549,91 @@
         function renderDiet() {
             const grid = document.getElementById('dietGrid');
             const tag = document.getElementById('dietTag');
-            const menu = currentRisk === "high" 
+            const menu = currentRisk === "high"
                 ? [
-                    { t: "Morning", f: "Warm Lemon Water & Walnuts", d: "Alkaline Start" },
-                    { t: "Noon", f: "Quinoa with Sautéed Spinach", d: "Low Glycemic" },
-                    { t: "Night", f: "Clear Vegetable Broth", d: "Digestive Rest" }
+                    { t: "Pre-breakfast", f: "Warm Lemon Water & Walnuts", d: "Alkaline Start", time: "07:00" },
+                    { t: "Breakfast", f: "Oatmeal with Flaxseeds", d: "Slow-release Carbs", time: "08:30" },
+                    { t: "Lunch", f: "Quinoa with Sautéed Spinach", d: "Low Glycemic", time: "13:00" },
+                    { t: "Evening Snack", f: "Green Tea & Almonds", d: "Antioxidant Rich", time: "16:30" },
+                    { t: "Dinner", f: "Clear Vegetable Broth", d: "Digestive Rest", time: "19:30" }
                   ]
                 : [
-                    { t: "Morning", f: "Greek Yogurt & Granola", d: "Protein Boost" },
-                    { t: "Noon", f: "Grilled Chicken/Tofu Salad", d: "Muscle Maint." },
-                    { t: "Night", f: "Brown Rice & Lentils", d: "Balanced Energy" }
+                    { t: "Pre-breakfast", f: "Infused Water", d: "Hydration", time: "07:00" },
+                    { t: "Breakfast", f: "Greek Yogurt & Granola", d: "Protein Boost", time: "08:30" },
+                    { t: "Lunch", f: "Grilled Chicken/Tofu Salad", d: "Muscle Maint.", time: "13:00" },
+                    { t: "Evening Snack", f: "Fruit Bowl", d: "Natural Vitamins", time: "16:30" },
+                    { t: "Dinner", f: "Brown Rice & Lentils", d: "Balanced Energy", time: "19:30" }
                   ];
 
-            tag.innerText = currentRisk === "high" ? "Therapeutic Plan" : "Standard Plan";
-            tag.className = `px-4 py-1 ${currentRisk==='high'?'bg-red-50 text-red-600 border-red-100':'bg-blue-50 text-blue-600 border-blue-100'} rounded-full text-[9px] font-black uppercase border`;
+            const targets = currentRisk === "high"
+                ? { cal: 1600, pro: "65g", carb: "180g", fat: "45g" }
+                : { cal: 2200, pro: "95g", carb: "260g", fat: "65g" };
 
-            grid.innerHTML = menu.map(m => `
-                <div class="glass-card p-6 rounded-[2rem] hover:border-blue-300">
-                    <span class="text-label text-blue-500">${m.t}</span>
-                    <h4 class="text-sm font-black mt-2">${m.f}</h4>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase mt-1 italic">${m.d}</p>
+            tag.innerText = currentRisk === "high" ? "Therapeutic Plan" : "Standard Plan";
+            tag.className = `px-4 py-1 ${currentRisk==='high'?'bg-red-50 text-red-600 border-red-100':'bg-slate-50 text-slate-500 border-slate-100'} rounded-full text-xs font-medium uppercase border`;
+
+            grid.className = "space-y-4 max-w-2xl mx-auto";
+            grid.innerHTML = `
+                <div class="relative border-l-2 border-slate-100 ml-4 pl-8 space-y-8">
+                    ${menu.map(m => `
+                        <div class="relative">
+                            <div class="absolute -left-[41px] top-0 w-4 h-4 bg-white border-2 border-slate-200 rounded-full"></div>
+                            <div class="glass-card p-4 rounded-xl">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <span class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">${m.time} — ${m.t}</span>
+                                        <h4 class="text-sm font-medium mt-1 text-slate-900">${m.f}</h4>
+                                        <p class="text-xs text-slate-400 font-normal uppercase mt-1 italic">${m.d}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
                 </div>
-            `).join('');
+                <div class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-center">
+                    <span class="text-label text-slate-900">Macronutrient Target</span>
+                    <div class="flex gap-6">
+                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Calories</div><div class="text-sm font-medium text-slate-900">${targets.cal}</div></div>
+                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Protein</div><div class="text-sm font-medium text-slate-900">${targets.pro}</div></div>
+                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Carbs</div><div class="text-sm font-medium text-slate-900">${targets.carb}</div></div>
+                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Fats</div><div class="text-sm font-medium text-slate-900">${targets.fat}</div></div>
+                    </div>
+                </div>
+            `;
         }
 
         function renderYoga() {
             const grid = document.getElementById('yogaGrid');
             const poses = [
-                { n: "Paschimottanasana", c: "Therapy", img: "https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=400" },
-                { n: "Balasana", c: "Calming", img: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=400" },
-                { n: "Savasana", c: "Restorative", img: "https://images.pexels.com/photos/3759657/pexels-photo-3759657.jpeg?auto=compress&cs=tinysrgb&w=400" },
-                { n: "Vrikshasana", c: "Balance", img: "https://images.pexels.com/photos/3823039/pexels-photo-3823039.jpeg?auto=compress&cs=tinysrgb&w=400" }
+                { n: "Paschimottanasana", c: "Neuromuscular coordination", img: "https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { n: "Balasana", c: "Lumbar stability", img: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { n: "Savasana", c: "Autonomic regulation", img: "https://images.pexels.com/photos/3759657/pexels-photo-3759657.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { n: "Vrikshasana", c: "Vestibular balance", img: "https://images.pexels.com/photos/3823039/pexels-photo-3823039.jpeg?auto=compress&cs=tinysrgb&w=400" }
             ];
 
             grid.innerHTML = poses.map(y => `
-                <div class="glass-card rounded-[2rem] overflow-hidden group">
-                    <img src="${y.img}" class="h-40 w-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="p-5">
-                        <div class="flex justify-between items-center mb-1"><span class="text-[10px] font-black text-blue-600 uppercase">${y.n}</span><span class="text-[8px] font-black bg-slate-100 px-2 py-0.5 rounded uppercase">${y.c}</span></div>
+                <div class="glass-card rounded-xl overflow-hidden group">
+                    <img src="${y.img}" class="h-32 w-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="p-4">
+                        <div class="mb-2">
+                            <span class="text-xs font-medium text-slate-900 uppercase block">${y.n}</span>
+                            <span class="text-[10px] text-slate-400 uppercase mt-0.5 block">Clinical Focus: ${y.c}</span>
+                        </div>
+                        <button onclick="watchInstruction('${y.n}')" class="w-full py-2 bg-slate-50 border border-slate-100 rounded text-[10px] font-medium text-slate-600 uppercase hover:bg-slate-100">Watch Instruction</button>
                     </div>
                 </div>
             `).join('');
         }
 
+        function watchInstruction(pose) {
+            const vp = document.getElementById('videoPlaceholder');
+            vp.classList.remove('hidden');
+            vp.innerHTML = `<div class="w-full h-full flex items-center justify-center text-white text-xs uppercase tracking-widest">Streaming Instruction: ${pose}</div>`;
+        }
+
         // Initialize components
         window.onload = () => {
-            calculateBMI();
+            calculateClinicalMetrics();
             syncPatientData('p1');
         };
     </script>
