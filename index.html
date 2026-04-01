@@ -6,19 +6,48 @@
     <title>Vitalis Health OS | v8.5 Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; letter-spacing: -0.01em; color: #0f172a; }
-        .glass-card { background: #ffffff; border: 1px solid #f1f5f9; transition: all 0.3s ease; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+        body { font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: -0.01em; color: #0f172a; -webkit-font-smoothing: antialiased; }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); opacity: 0.2; }
+            14% { transform: scale(1.3); opacity: 0.4; }
+            28% { transform: scale(1); opacity: 0.2; }
+            42% { transform: scale(1.3); opacity: 0.4; }
+            70% { transform: scale(1); opacity: 0.2; }
+        }
+        .animate-heart { animation: heartBeat 0.8s infinite; }
+
+        .glass-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
         .nav-link.active { background: #1e293b; color: white !important; }
         .page-content { display: none; }
         .page-content.active { display: block; }
         .text-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
-        .input-group { background: #f8fafc; border: 1px solid #f1f5f9; padding: 16px; border-radius: 12px; }
+        .input-group { background: rgba(248, 250, 252, 0.5); border: 1px solid rgba(241, 245, 249, 0.5); padding: 16px; border-radius: 12px; }
         input[type="number"]::-webkit-inner-spin-button { display: none; }
         .patient-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-        button, select, input { transition: all 0.2s ease; }
+        button, select, input, .nav-link, .glass-card { transition: all 0.3s ease; }
+
+        /* Premium UI Elements */
+        .status-badge {
+            display: inline-flex;
+            items-center: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .lucide { width: 12px; height: 12px; stroke-width: 2px; }
     </style>
 </head>
 <body class="bg-[#f8fafc] text-slate-900">
@@ -170,17 +199,21 @@
                 <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Advanced Metabolic Metric Analysis</p>
             </header>
             <div class="grid lg:grid-cols-12 gap-8">
-                <div class="lg:col-span-4 bg-white p-6 rounded-xl border border-slate-100 space-y-6">
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="input-group">
-                                <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Weight (kg)</label>
-                                <input type="number" id="bmi_weight" oninput="calculateClinicalMetrics()" value="75" class="w-full bg-transparent font-medium text-sm outline-none">
+                <div class="lg:col-span-4 bg-white/80 backdrop-blur-md p-6 rounded-xl border border-slate-100 space-y-6">
+                    <div class="space-y-6">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs font-medium text-slate-500 uppercase">Weight (kg)</label>
+                                <span id="weight_val" class="text-sm font-medium text-slate-900">75</span>
                             </div>
-                            <div class="input-group">
-                                <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Height (cm)</label>
-                                <input type="number" id="bmi_height" oninput="calculateClinicalMetrics()" value="175" class="w-full bg-transparent font-medium text-sm outline-none">
+                            <input type="range" id="bmi_weight" min="30" max="200" value="75" oninput="calculateClinicalMetrics()" class="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-slate-900">
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs font-medium text-slate-500 uppercase">Height (cm)</label>
+                                <span id="height_val" class="text-sm font-medium text-slate-900">175</span>
                             </div>
+                            <input type="range" id="bmi_height" min="100" max="250" value="175" oninput="calculateClinicalMetrics()" class="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-slate-900">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="input-group">
@@ -199,20 +232,27 @@
                 </div>
                 <div class="lg:col-span-8 space-y-6">
                     <div class="grid grid-cols-3 gap-4">
-                        <div class="bg-slate-900 p-6 rounded-xl text-center text-white">
+                        <div class="bg-slate-900 p-6 rounded-xl text-center text-white relative">
                             <div class="text-[10px] font-medium text-slate-400 mb-2 uppercase tracking-wider">BMI Score</div>
                             <div id="res_bmi" class="text-2xl font-medium mb-1">24.5</div>
                             <div id="tag_bmi" class="text-[10px] uppercase font-medium text-emerald-400">Normal</div>
+                            <svg class="absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-12 opacity-50" viewBox="0 0 100 50">
+                                <path d="M 10 45 A 40 40 0 0 1 90 45" fill="none" stroke="#1e293b" stroke-width="6" />
+                                <path id="bmi_needle" d="M 50 45 L 50 10" stroke="#10b981" stroke-width="2" transform-origin="50 45" />
+                            </svg>
                         </div>
                         <div class="bg-white p-6 rounded-xl border border-slate-100 text-center">
                             <div class="text-[10px] font-medium text-slate-500 mb-2 uppercase tracking-wider">BMR (kcal/day)</div>
                             <div id="res_bmr" class="text-2xl font-medium mb-1 text-slate-900">--</div>
                             <div class="text-[10px] uppercase font-medium text-slate-400">Metabolic Base</div>
                         </div>
-                        <div class="bg-white p-6 rounded-xl border border-slate-100 text-center">
+                        <div class="bg-white p-6 rounded-xl border border-slate-100 text-center relative overflow-hidden group">
                             <div class="text-[10px] font-medium text-slate-500 mb-2 uppercase tracking-wider">Ideal Weight (kg)</div>
                             <div id="res_ibw" class="text-2xl font-medium mb-1 text-slate-900">--</div>
-                            <div class="text-[10px] uppercase font-medium text-slate-400">Devine Formula</div>
+                            <div id="res_diff" class="text-[10px] uppercase font-medium text-slate-400">Devine Formula</div>
+                            <div class="absolute inset-0 bg-slate-900/5 backdrop-blur-sm flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform cursor-help">
+                                <span class="text-[10px] font-medium text-slate-600 uppercase px-4 text-center" id="res_diff_action">Calculate differential for actionable insight</span>
+                            </div>
                         </div>
                     </div>
                     <div class="bg-white p-6 rounded-xl border border-slate-100">
@@ -234,8 +274,8 @@
                     <h1 class="text-xl font-medium tracking-tight text-slate-900 uppercase">BP <span class="text-slate-500">Analyser</span></h1>
                     <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Vascular Pressure Monitoring</p>
                 </div>
-                <div class="flex items-center gap-3 bg-white p-2 rounded-lg border border-slate-100">
-                    <i class="fas fa-user-circle text-slate-400 ml-2"></i>
+                <div class="flex items-center gap-3 bg-white/50 backdrop-blur-md p-2 rounded-lg border border-slate-100">
+                    <i data-lucide="user-circle" class="text-slate-400 ml-2"></i>
                     <select id="bpPatientSelector" onchange="syncPatientData(this.value)" class="bg-transparent border-none text-xs font-medium uppercase pr-4 outline-none text-slate-900">
                         <option value="p1">Sarah Connor</option>
                         <option value="p2">John Doe</option>
@@ -252,9 +292,10 @@
                     <span class="text-label text-slate-900">Latest Diastolic</span>
                     <div id="bp_dia_val" class="text-3xl font-medium mt-2 text-slate-900">76 <span class="text-xs text-slate-400 font-normal">mmHg</span></div>
                 </div>
-                <div class="glass-card p-6 rounded-xl text-center">
+                <div class="glass-card p-6 rounded-xl text-center relative overflow-hidden group">
                     <span class="text-label text-slate-900">Pulse Rate</span>
                     <div class="text-3xl font-medium mt-2 text-slate-900">72 <span class="text-xs text-slate-400 font-normal">BPM</span></div>
+                    <i data-lucide="heart" class="absolute -right-2 -bottom-2 text-red-500 w-12 h-12 opacity-20 animate-heart"></i>
                 </div>
                 <div class="lg:col-span-3 bg-white p-6 rounded-xl border border-slate-100">
                     <h4 class="text-label mb-6 text-slate-900">Historical Pressure Map</h4>
@@ -317,15 +358,49 @@
             </header>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="yogaGrid"></div>
 
-            <div class="bg-white p-6 rounded-xl border border-slate-100">
-                <h4 class="text-label text-slate-900 mb-4">Video Tutorial</h4>
-                <div class="aspect-video bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100 relative overflow-hidden">
-                    <div class="text-center">
-                        <i class="fas fa-play-circle text-4xl text-slate-300 mb-2"></i>
-                        <p class="text-xs text-slate-500">Select a pose to watch instructional video</p>
+            <div class="grid lg:grid-cols-10 gap-8">
+                <div class="lg:col-span-6 bg-white p-6 rounded-xl border border-slate-100">
+                    <h4 class="text-label text-slate-900 mb-4">Instructional Stream</h4>
+                    <div class="aspect-video bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100 relative overflow-hidden">
+                        <div class="text-center">
+                            <i data-lucide="play-circle" class="w-12 h-12 text-slate-300 mx-auto mb-3"></i>
+                            <p class="text-xs text-slate-500">Select a pose to initialize neural stream</p>
+                        </div>
+                        <div id="videoPlaceholder" class="hidden absolute inset-0 bg-black"></div>
                     </div>
-                    <!-- Placeholder for actual YouTube iframe -->
-                    <div id="videoPlaceholder" class="hidden absolute inset-0 bg-black"></div>
+                </div>
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-100 h-full">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-label text-slate-900">Key Focus Points</h4>
+                            <button class="text-[10px] uppercase font-medium text-emerald-500 flex items-center gap-2" id="formCheckBtn">
+                                <i data-lucide="scan-face"></i> Check My Form
+                            </button>
+                        </div>
+                        <ul class="space-y-4" id="focusChecklist">
+                            <li class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                                <i data-lucide="info" class="text-slate-400 mt-0.5"></i>
+                                <div>
+                                    <p class="text-xs font-medium text-slate-900">Spinal Alignment</p>
+                                    <p class="text-[10px] text-slate-400 uppercase mt-0.5">Keep cervical-thoracic junction neutral</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100 opacity-50">
+                                <i data-lucide="info" class="text-slate-400 mt-0.5"></i>
+                                <div>
+                                    <p class="text-xs font-medium text-slate-900">Breath Synchronization</p>
+                                    <p class="text-[10px] text-slate-400 uppercase mt-0.5">Match diaphragmatic expansion with movement</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100 opacity-50">
+                                <i data-lucide="info" class="text-slate-400 mt-0.5"></i>
+                                <div>
+                                    <p class="text-xs font-medium text-slate-900">Anterior Core Engagement</p>
+                                    <p class="text-[10px] text-slate-400 uppercase mt-0.5">Maintain lumbar-pelvic stability</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -353,14 +428,24 @@
         function renderBPHistory() {
             const log = document.getElementById('bpHistoryLog');
             if(!log) return;
-            log.innerHTML = bpHistory.slice(0, 5).map(h => `
+            log.innerHTML = bpHistory.slice(0, 5).map(h => {
+                let icon = 'check-circle';
+                if (h.status === 'Crisis') icon = 'alert-octagon';
+                else if (h.status.includes('Stage') || h.status === 'Elevated') icon = 'alert-circle';
+
+                return `
                 <tr class="border-b border-slate-50">
                     <td class="text-xs py-3 text-slate-500">${h.date}</td>
                     <td class="text-xs py-3 text-slate-900">${h.pat}</td>
                     <td class="text-xs py-3 text-slate-900 font-medium">${h.val}</td>
-                    <td class="text-xs py-3"><span class="px-2 py-0.5 rounded text-[10px] uppercase font-medium bg-${h.color.replace('500', '50').replace('600', '50')} text-${h.color}">${h.status}</span></td>
+                    <td class="text-xs py-3">
+                        <span class="status-badge bg-${h.color.replace('500', '50').replace('600', '50')} text-${h.color}">
+                            <i data-lucide="${icon}"></i> ${h.status}
+                        </span>
+                    </td>
                 </tr>
-            `).join('');
+            `}).join('');
+            lucide.createIcons();
         }
 
         function addNewPatient(e) {
@@ -427,6 +512,25 @@
         }
 
         // Clinical Metrics Logic
+        let bmiAnimation = null;
+        function animateValue(id, start, end, duration) {
+            if (bmiAnimation) clearInterval(bmiAnimation);
+            const obj = document.getElementById(id);
+            const range = end - start;
+            let current = start;
+            const increment = end > start ? 0.1 : -0.1;
+            const stepTime = Math.abs(Math.floor(duration / (range / 0.1)));
+            bmiAnimation = setInterval(function() {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    obj.innerText = end.toFixed(1);
+                    clearInterval(bmiAnimation);
+                } else {
+                    obj.innerText = current.toFixed(1);
+                }
+            }, stepTime || 10);
+        }
+
         function calculateClinicalMetrics() {
             const w = parseFloat(document.getElementById('bmi_weight').value);
             const h_cm = parseFloat(document.getElementById('bmi_height').value);
@@ -434,10 +538,15 @@
             const age = parseInt(document.getElementById('bmi_age').value);
             const gender = document.getElementById('bmi_gender').value;
 
+            document.getElementById('weight_val').innerText = w;
+            document.getElementById('height_val').innerText = h_cm;
+
             if(w && h_m) {
                 // BMI
-                const bmi = (w / (h_m * h_m)).toFixed(1);
-                document.getElementById('res_bmi').innerText = bmi;
+                const bmi = parseFloat((w / (h_m * h_m)).toFixed(1));
+                const old_bmi = parseFloat(document.getElementById('res_bmi').innerText) || 0;
+                animateValue('res_bmi', old_bmi, bmi, 300);
+
                 const tag = document.getElementById('tag_bmi');
                 if(bmi < 18.5) { tag.innerText = "Underweight"; tag.className = "text-[10px] uppercase font-medium text-amber-500"; }
                 else if(bmi < 25) { tag.innerText = "Normal"; tag.className = "text-[10px] uppercase font-medium text-emerald-400"; }
@@ -450,7 +559,6 @@
                 document.getElementById('res_bmr').innerText = Math.round(bmr);
 
                 // Ideal Body Weight (Devine Formula)
-                // Height in inches
                 const h_in = h_cm / 2.54;
                 const baseHeight = 60; // 5 feet
                 let ibw = 0;
@@ -461,6 +569,16 @@
                     ibw = gender === 'male' ? 50 : 45.5;
                 }
                 document.getElementById('res_ibw').innerText = ibw.toFixed(1);
+
+                // Comparative Insight
+                const diff = (w - ibw).toFixed(1);
+                const action = diff > 0 ? `You are ${diff}kg above ideal weight` : `You are ${Math.abs(diff)}kg below ideal weight`;
+                document.getElementById('res_diff_action').innerText = action;
+
+                // Gauge Needle (Angle between -90 and 90)
+                let angle = ((bmi - 18.5) / (35 - 18.5)) * 180 - 90;
+                angle = Math.max(-90, Math.min(90, angle));
+                document.getElementById('bmi_needle').style.transform = `rotate(${angle}deg)`;
             }
         }
 
@@ -473,19 +591,40 @@
             const sysData = currentRisk === 'high' ? [142, 138, 145, 140, 135, 139, 141] : [118, 120, 115, 119, 121, 117, 118];
             const diaData = currentRisk === 'high' ? [92, 88, 95, 90, 88, 91, 89] : [76, 78, 75, 79, 80, 77, 76];
 
+            const advice = (val) => {
+                if (val >= 140) return "Alert: Stage 2 level. Rest and re-measure.";
+                if (val >= 130) return "Elevated: Consider limiting sodium intake.";
+                return "Stable: Maintain current lifestyle protocols.";
+            };
+
             bpChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [
-                        { label: 'Systolic', data: sysData, borderColor: '#3b82f6', tension: 0.4, borderWidth: 3, pointRadius: 0 },
-                        { label: 'Diastolic', data: diaData, borderColor: '#10b981', tension: 0.4, borderWidth: 3, pointRadius: 0 }
+                        { label: 'Systolic', data: sysData, borderColor: '#3b82f6', tension: 0.4, borderWidth: 3, pointRadius: 4, pointHoverRadius: 6 },
+                        { label: 'Diastolic', data: diaData, borderColor: '#10b981', tension: 0.4, borderWidth: 3, pointRadius: 4, pointHoverRadius: 6 }
                     ]
                 },
                 options: {
-                    plugins: { legend: { display: false } },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.dataset.label}: ${context.parsed.y} mmHg`,
+                                afterLabel: (context) => `Advice: ${advice(context.parsed.y)}`
+                            },
+                            padding: 12,
+                            titleFont: { weight: 'medium' },
+                            bodyFont: { size: 11 }
+                        }
+                    },
                     scales: {
-                        y: { grid: { display: false }, ticks: { font: { size: 10, weight: 'medium' } } },
+                        y: {
+                            grid: { color: 'rgba(0,0,0,0.02)' },
+                            ticks: { font: { size: 10, weight: 'medium' } },
+                            min: 60, max: 180
+                        },
                         x: { grid: { display: false }, ticks: { font: { size: 10, weight: 'medium' } } }
                     }
                 }
@@ -551,18 +690,18 @@
             const tag = document.getElementById('dietTag');
             const menu = currentRisk === "high"
                 ? [
-                    { t: "Pre-breakfast", f: "Warm Lemon Water & Walnuts", d: "Alkaline Start", time: "07:00" },
-                    { t: "Breakfast", f: "Oatmeal with Flaxseeds", d: "Slow-release Carbs", time: "08:30" },
-                    { t: "Lunch", f: "Quinoa with Sautéed Spinach", d: "Low Glycemic", time: "13:00" },
-                    { t: "Evening Snack", f: "Green Tea & Almonds", d: "Antioxidant Rich", time: "16:30" },
-                    { t: "Dinner", f: "Clear Vegetable Broth", d: "Digestive Rest", time: "19:30" }
+                    { t: "Pre-breakfast", f: "Warm Lemon Water & Walnuts", d: "Alkaline Start", time: "07:00", ing: "1 Cup Warm Water, 1/2 Lemon, 4 Walnuts", prep: "5 mins", alt: "Substitute Walnuts with Almonds" },
+                    { t: "Breakfast", f: "Oatmeal with Flaxseeds", d: "Slow-release Carbs", time: "08:30", ing: "1/2 Cup Oats, 1 tbsp Flaxseeds, 1 Cup Water/Milk", prep: "10 mins", alt: "Swap for Chia Seeds if unavailable" },
+                    { t: "Lunch", f: "Quinoa with Sautéed Spinach", d: "Low Glycemic", time: "13:00", ing: "1/2 Cup Quinoa, 1 Cup Spinach, 1 tsp Olive Oil", prep: "20 mins", alt: "Substitute with Brown Rice" },
+                    { t: "Evening Snack", f: "Green Tea & Almonds", d: "Antioxidant Rich", time: "16:30", ing: "1 Cup Green Tea, 6 Almonds", prep: "5 mins", alt: "Substitute with Walnuts" },
+                    { t: "Dinner", f: "Clear Vegetable Broth", d: "Digestive Rest", time: "19:30", ing: "2 Cups Water, Seasonal Vegetables, Salt/Pepper", prep: "15 mins", alt: "Include 50g Tofu" }
                   ]
                 : [
-                    { t: "Pre-breakfast", f: "Infused Water", d: "Hydration", time: "07:00" },
-                    { t: "Breakfast", f: "Greek Yogurt & Granola", d: "Protein Boost", time: "08:30" },
-                    { t: "Lunch", f: "Grilled Chicken/Tofu Salad", d: "Muscle Maint.", time: "13:00" },
-                    { t: "Evening Snack", f: "Fruit Bowl", d: "Natural Vitamins", time: "16:30" },
-                    { t: "Dinner", f: "Brown Rice & Lentils", d: "Balanced Energy", time: "19:30" }
+                    { t: "Pre-breakfast", f: "Infused Water", d: "Hydration", time: "07:00", ing: "1 Cup Water, Lemon or Mint", prep: "2 mins", alt: "Coconut Water" },
+                    { t: "Breakfast", f: "Greek Yogurt & Granola", d: "Protein Boost", time: "08:30", ing: "1 Cup Yogurt, 1/4 Cup Granola, Berries", prep: "5 mins", alt: "Skyr with Walnuts" },
+                    { t: "Lunch", f: "Grilled Chicken/Tofu Salad", d: "Muscle Maint.", time: "13:00", ing: "150g Chicken or Tofu, Mixed Greens", prep: "15 mins", alt: "Tuna Salad" },
+                    { t: "Evening Snack", f: "Fruit Bowl", d: "Natural Vitamins", time: "16:30", ing: "1 Apple, 1 Banana, Handful Berries", prep: "5 mins", alt: "1 Cup Mixed Nuts" },
+                    { t: "Dinner", f: "Brown Rice & Lentils", d: "Balanced Energy", time: "19:30", ing: "1/2 Cup Rice, 1/2 Cup Lentils, Spices", prep: "25 mins", alt: "Wheat Pasta" }
                   ];
 
             const targets = currentRisk === "high"
@@ -572,23 +711,50 @@
             tag.innerText = currentRisk === "high" ? "Therapeutic Plan" : "Standard Plan";
             tag.className = `px-4 py-1 ${currentRisk==='high'?'bg-red-50 text-red-600 border-red-100':'bg-slate-50 text-slate-500 border-slate-100'} rounded-full text-xs font-medium uppercase border`;
 
+            setTimeout(() => lucide.createIcons(), 0);
+
+            const now = new Date();
+            const currentHour = now.getHours();
+
             grid.className = "space-y-4 max-w-2xl mx-auto";
             grid.innerHTML = `
                 <div class="relative border-l-2 border-slate-100 ml-4 pl-8 space-y-8">
-                    ${menu.map(m => `
-                        <div class="relative">
-                            <div class="absolute -left-[41px] top-0 w-4 h-4 bg-white border-2 border-slate-200 rounded-full"></div>
-                            <div class="glass-card p-4 rounded-xl">
+                    ${menu.map(m => {
+                        const mealHour = parseInt(m.time.split(':')[0]);
+                        const isNext = mealHour >= currentHour;
+                        const isCurrent = currentHour >= mealHour && currentHour < (mealHour + 3);
+
+                        return `
+                        <div class="relative group">
+                            <div class="absolute -left-[41px] top-0 w-4 h-4 bg-white border-2 ${isCurrent ? 'border-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'border-slate-200'} rounded-full z-10"></div>
+                            <div class="glass-card p-4 rounded-xl cursor-pointer hover:border-slate-300 ${isCurrent ? 'ring-1 ring-emerald-500/20' : ''}" onclick="this.querySelector('.details').classList.toggle('hidden')">
                                 <div class="flex justify-between items-start">
                                     <div>
-                                        <span class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">${m.time} — ${m.t}</span>
+                                        <span class="text-[10px] font-medium ${isCurrent ? 'text-emerald-500' : 'text-slate-400'} uppercase tracking-wider">${m.time} — ${m.t}</span>
                                         <h4 class="text-sm font-medium mt-1 text-slate-900">${m.f}</h4>
                                         <p class="text-xs text-slate-400 font-normal uppercase mt-1 italic">${m.d}</p>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="text-slate-300 w-4 h-4"></i>
+                                </div>
+                                <div class="details hidden mt-4 pt-4 border-t border-slate-50 space-y-3">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <span class="text-[10px] font-medium text-slate-500 uppercase">Ingredients</span>
+                                            <p class="text-[11px] text-slate-600 mt-1">${m.ing}</p>
+                                        </div>
+                                        <div>
+                                            <span class="text-[10px] font-medium text-slate-500 uppercase">Preparation</span>
+                                            <p class="text-[11px] text-slate-600 mt-1">${m.prep}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] font-medium text-slate-500 uppercase">Alternatives</span>
+                                        <p class="text-[11px] text-slate-400 mt-1 italic">${m.alt}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
                 <div class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-center">
                     <span class="text-label text-slate-900">Macronutrient Target</span>
@@ -629,12 +795,14 @@
             const vp = document.getElementById('videoPlaceholder');
             vp.classList.remove('hidden');
             vp.innerHTML = `<div class="w-full h-full flex items-center justify-center text-white text-xs uppercase tracking-widest">Streaming Instruction: ${pose}</div>`;
+            document.getElementById('focusChecklist').querySelectorAll('li').forEach(l => l.classList.remove('opacity-50'));
         }
 
         // Initialize components
         window.onload = () => {
             calculateClinicalMetrics();
             syncPatientData('p1');
+            lucide.createIcons();
         };
     </script>
 </body>
