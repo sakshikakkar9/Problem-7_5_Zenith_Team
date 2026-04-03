@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
-        body { font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: -0.01em; color: #e2e8f0; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: -0.01em; color: #0f172a; -webkit-font-smoothing: antialiased; }
 
         @keyframes heartBeat {
             0% { transform: scale(1); opacity: 0.2; }
@@ -22,35 +22,34 @@
         .animate-heart { animation: heartBeat 0.8s infinite; }
 
         @keyframes pulse-red {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); }
             50% { box-shadow: 0 0 20px 10px rgba(239, 68, 68, 0); }
         }
         .animate-pulse-red { animation: pulse-red 2s infinite; }
 
         @keyframes pulse-blue {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.2); }
             50% { box-shadow: 0 0 15px 5px rgba(59, 130, 246, 0); }
         }
         .animate-pulse-blue { animation: pulse-blue 2s infinite; }
 
         .glass-card {
-            backdrop-filter: blur(20px);
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .glass-card:hover { background: rgba(30, 41, 59, 0.7); border-color: rgba(255, 255, 255, 0.15); }
+        .glass-card:hover { border-color: #e2e8f0; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
 
-        .nav-link { color: #94a3b8 !important; transition: all 0.3s ease; }
-        .nav-link.active { background: rgba(59, 130, 246, 0.1); color: #60a5fa !important; border-right: 2px solid #3b82f6; }
-        .nav-link:hover:not(.active) { background: rgba(255, 255, 255, 0.05); color: #e2e8f0 !important; }
+        .nav-link { color: #64748b !important; transition: all 0.3s ease; }
+        .nav-link.active { background: #f8fafc; color: #3b82f6 !important; border-right: 2px solid #3b82f6; }
+        .nav-link:hover:not(.active) { background: #f1f5f9; color: #0f172a !important; }
 
         .page-content { display: none; }
         .page-content.active { display: block; }
-        .text-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; }
+        .text-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
 
-        .input-group { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 12px; transition: all 0.3s ease; }
-        .input-group:focus-within { border-color: #3b82f6; background: rgba(15, 23, 42, 0.8); }
+        .input-group { background: #f8fafc; border: 1px solid #f1f5f9; padding: 16px; border-radius: 12px; transition: all 0.3s ease; }
+        .input-group:focus-within { border-color: #3b82f6; background: #ffffff; }
 
         input[type="number"]::-webkit-inner-spin-button { display: none; }
         button, select, input, .nav-link, .glass-card { transition: all 0.3s ease; }
@@ -71,41 +70,33 @@
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+        ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
 
         .paper-block {
-            background: #f8fafc;
-            color: #1e293b;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.05);
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             position: relative;
-        }
-        .paper-block::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            border-width: 0 16px 16px 0;
-            border-style: solid;
-            border-color: #e2e8f0 #020617;
-            display: block; width: 0;
         }
     </style>
 </head>
-<body class="bg-[#020617] text-slate-200">
+<body class="bg-slate-50 text-slate-900">
 
     <!-- Mobile Header -->
-    <header class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/50 flex items-center justify-between px-6 z-[60]">
+    <header class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-xl border-b border-slate-100 flex items-center justify-between px-6 z-[60]">
         <div class="flex items-center gap-3">
             <div class="bg-blue-600 p-1.5 rounded text-white"><i class="fas fa-microchip text-[10px]"></i></div>
             <h1 class="text-xs font-medium uppercase tracking-tight">Vitalis <span class="text-slate-500">Pro</span></h1>
         </div>
-        <button onclick="toggleSidebar()" class="p-2 text-slate-400 hover:text-white transition-colors">
+        <button onclick="toggleSidebar()" class="p-2 text-slate-500 hover:text-slate-900 transition-colors">
             <i data-lucide="menu" id="menuIcon"></i>
         </button>
     </header>
 
-    <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-slate-900/90 lg:bg-slate-900/40 backdrop-blur-xl border-r border-slate-800/50 flex flex-col z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0">
-        <div class="p-6 border-b border-slate-800/50 mb-4 hidden lg:block">
+    <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-100 flex flex-col z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0">
+        <div class="p-6 border-b border-slate-100 mb-4 hidden lg:block">
             <div class="flex items-center gap-3">
                 <div class="bg-blue-600 p-2 rounded-lg text-white shadow-lg shadow-blue-600/20"><i class="fas fa-microchip text-xs"></i></div>
                 <h1 class="text-sm font-medium tracking-tight uppercase">Vitalis <span class="text-slate-500">Pro</span></h1>
@@ -134,14 +125,14 @@
     <main class="lg:ml-64 p-6 md:p-8 min-h-screen pt-24 lg:pt-8">
 
         <section id="predictor" class="page-content active">
-            <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-800/50 pb-6">
+            <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-100 pb-6">
                 <div>
-                    <h1 class="text-xl font-medium tracking-tight text-slate-100 uppercase">NCD <span class="text-slate-500">Inference</span></h1>
+                    <h1 class="text-xl font-medium tracking-tight text-slate-900 uppercase">NCD <span class="text-slate-500">Inference</span></h1>
                     <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Multi-Label Neural Diagnostic Tool</p>
                 </div>
-                <div class="flex items-center gap-3 bg-slate-900/50 backdrop-blur-md p-2 rounded-lg border border-slate-800/50">
-                    <span class="text-xs font-medium uppercase text-slate-400 ml-2">Active Patient:</span>
-                    <select id="globalPatientSelector" onchange="syncPatientData(this.value)" class="bg-transparent border-none text-xs font-medium uppercase px-4 py-2 rounded-md outline-none text-slate-100">
+                <div class="flex items-center gap-3 bg-white p-2 rounded-lg border border-slate-100">
+                    <span class="text-xs font-medium uppercase text-slate-500 ml-2">Active Patient:</span>
+                    <select id="globalPatientSelector" onchange="syncPatientData(this.value)" class="bg-transparent border-none text-xs font-medium uppercase px-4 py-2 rounded-md outline-none text-slate-900">
                         <option value="p1">Sarah Connor (ID: 9021)</option>
                         <option value="p2">John Doe (ID: 4432)</option>
                         <option value="p3">Elena Gilbert (ID: 1109)</option>
@@ -152,12 +143,12 @@
             <div class="grid lg:grid-cols-12 gap-8">
                 <!-- Vertical Progress Stepper Section -->
                 <div class="lg:col-span-4">
-                    <div class="glass-card rounded-xl border border-white/5 p-6 h-full flex flex-col">
+                    <div class="glass-card rounded-xl border border-slate-100 p-6 h-full flex flex-col">
                         <div class="mb-8 flex items-center justify-between">
-                            <h3 class="text-label text-slate-100">Diagnostic Input</h3>
+                            <h3 class="text-label text-slate-900">Diagnostic Input</h3>
                             <div class="flex items-center gap-2">
-                                <span class="text-[10px] text-slate-400 uppercase">Confidence</span>
-                                <span id="confidenceScore" class="text-xs font-medium text-blue-400">0%</span>
+                                <span class="text-[10px] text-slate-500 uppercase">Confidence</span>
+                                <span id="confidenceScore" class="text-xs font-medium text-blue-600">0%</span>
                             </div>
                         </div>
 
@@ -166,45 +157,45 @@
                             <div id="step1" class="stepper-step space-y-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-6 h-6 rounded-full bg-blue-600 text-[10px] flex items-center justify-center text-white">01</div>
-                                    <span class="text-xs font-medium uppercase tracking-wider text-slate-200">Biometrics</span>
+                                    <span class="text-xs font-medium uppercase tracking-wider text-slate-900">Biometrics</span>
                                 </div>
                                 <div class="input-group">
                                     <label class="block text-[10px] font-medium text-slate-500 mb-2 uppercase">Body Mass Index (BMI)</label>
-                                    <input type="number" id="BMI" value="28.2" step="0.1" oninput="updateConfidence()" class="w-full bg-transparent font-medium text-sm outline-none text-slate-100" placeholder="e.g. 22.5">
+                                    <input type="number" id="BMI" value="28.2" step="0.1" oninput="updateConfidence()" class="w-full bg-transparent font-medium text-sm outline-none text-slate-900" placeholder="e.g. 22.5">
                                     <div id="val_bmi" class="text-[9px] text-red-500 mt-1 hidden italic">Required: valid numerical range</div>
                                 </div>
-                                <button onclick="nextStep(2)" class="w-full py-2 bg-slate-800 text-slate-200 rounded-lg text-xs font-medium uppercase hover:bg-slate-700">Continue</button>
+                                <button onclick="nextStep(2)" class="w-full py-2 bg-slate-800 text-white rounded-lg text-xs font-medium uppercase hover:bg-slate-700">Continue</button>
                             </div>
 
                             <!-- Step 2: Clinical Risk -->
                             <div id="step2" class="stepper-step space-y-4 hidden opacity-0 transition-all duration-300 translate-x-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-6 h-6 rounded-full bg-blue-600 text-[10px] flex items-center justify-center text-white">02</div>
-                                    <span class="text-xs font-medium uppercase tracking-wider text-slate-200">Clinical Risk</span>
+                                    <span class="text-xs font-medium uppercase tracking-wider text-slate-900">Clinical Risk</span>
                                 </div>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-white/5 text-[10px] font-medium uppercase cursor-pointer hover:bg-slate-800 transition-colors">
+                                    <label class="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-100 text-[10px] font-medium uppercase cursor-pointer hover:bg-slate-50 transition-colors">
                                         <span>High Chol</span>
-                                        <input type="checkbox" id="HighChol" checked onchange="updateConfidence()" class="accent-blue-500 w-3 h-3">
+                                        <input type="checkbox" id="HighChol" checked onchange="updateConfidence()" class="accent-blue-600 w-3 h-3">
                                     </label>
-                                    <label class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-white/5 text-[10px] font-medium uppercase cursor-pointer hover:bg-slate-800 transition-colors">
+                                    <label class="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-100 text-[10px] font-medium uppercase cursor-pointer hover:bg-slate-50 transition-colors">
                                         <span>Chol Check</span>
-                                        <input type="checkbox" id="CholCheck" checked onchange="updateConfidence()" class="accent-blue-500 w-3 h-3">
+                                        <input type="checkbox" id="CholCheck" checked onchange="updateConfidence()" class="accent-blue-600 w-3 h-3">
                                     </label>
                                 </div>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-white/5 text-[10px] font-medium uppercase cursor-pointer hover:bg-slate-800 transition-colors">
+                                    <label class="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-100 text-[10px] font-medium uppercase cursor-pointer hover:bg-slate-50 transition-colors">
                                         <span>Smoker</span>
-                                        <input type="checkbox" id="Smoker" checked onchange="updateConfidence()" class="accent-blue-500 w-3 h-3">
+                                        <input type="checkbox" id="Smoker" checked onchange="updateConfidence()" class="accent-blue-600 w-3 h-3">
                                     </label>
-                                    <label class="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-white/5 text-[10px] font-medium uppercase cursor-pointer hover:bg-slate-800 transition-colors">
+                                    <label class="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-100 text-[10px] font-medium uppercase cursor-pointer hover:bg-slate-50 transition-colors">
                                         <span>Stroke Hist.</span>
-                                        <input type="checkbox" id="Stroke" onchange="updateConfidence()" class="accent-blue-500 w-3 h-3">
+                                        <input type="checkbox" id="Stroke" onchange="updateConfidence()" class="accent-blue-600 w-3 h-3">
                                     </label>
                                 </div>
                                 <div class="flex gap-2">
-                                    <button onclick="nextStep(1)" class="w-1/3 py-2 border border-white/10 text-slate-400 rounded-lg text-xs font-medium uppercase">Back</button>
-                                    <button onclick="nextStep(3)" class="w-2/3 py-2 bg-slate-800 text-slate-200 rounded-lg text-xs font-medium uppercase hover:bg-slate-700">Continue</button>
+                                    <button onclick="nextStep(1)" class="w-1/3 py-2 border border-slate-100 text-slate-500 rounded-lg text-xs font-medium uppercase">Back</button>
+                                    <button onclick="nextStep(3)" class="w-2/3 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium uppercase hover:bg-slate-800">Continue</button>
                                 </div>
                             </div>
 
@@ -212,23 +203,23 @@
                             <div id="step3" class="stepper-step space-y-4 hidden opacity-0 transition-all duration-300 translate-x-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-6 h-6 rounded-full bg-blue-600 text-[10px] flex items-center justify-center text-white">03</div>
-                                    <span class="text-xs font-medium uppercase tracking-wider text-slate-200">Patient Profile</span>
+                                    <span class="text-xs font-medium uppercase tracking-wider text-slate-900">Patient Profile</span>
                                 </div>
                                 <div class="input-group">
                                     <label class="block text-[10px] font-medium text-slate-500 mb-2 uppercase">General Health Perception (1-5)</label>
-                                    <input type="range" id="GenHlth" min="1" max="5" value="3" oninput="updateConfidence()" class="w-full cursor-pointer accent-blue-600 bg-slate-800 h-1 rounded-lg">
+                                    <input type="range" id="GenHlth" min="1" max="5" value="3" oninput="updateConfidence()" class="w-full cursor-pointer accent-blue-600 bg-slate-200 h-1 rounded-lg">
                                 </div>
                                 <div class="grid grid-cols-2 gap-3">
                                     <div class="input-group">
                                         <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Age Group</label>
-                                        <input type="number" id="Age" value="13" oninput="updateConfidence()" class="w-full bg-transparent font-medium text-sm outline-none text-slate-100">
+                                        <input type="number" id="Age" value="13" oninput="updateConfidence()" class="w-full bg-transparent font-medium text-sm outline-none text-slate-900">
                                     </div>
                                     <div class="input-group">
                                         <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Sex</label>
-                                        <select id="Sex" onchange="updateConfidence()" class="w-full bg-transparent font-medium text-xs outline-none uppercase text-slate-100"><option value="0" class="bg-slate-900">Female</option><option value="1" class="bg-slate-900">Male</option></select>
+                                        <select id="Sex" onchange="updateConfidence()" class="w-full bg-transparent font-medium text-xs outline-none uppercase text-slate-900"><option value="0" class="bg-white">Female</option><option value="1" class="bg-white">Male</option></select>
                                     </div>
                                 </div>
-                                <button onclick="nextStep(2)" class="w-full py-2 border border-white/10 text-slate-400 rounded-lg text-xs font-medium uppercase">Back to Risk</button>
+                                <button onclick="nextStep(2)" class="w-full py-2 border border-slate-100 text-slate-500 rounded-lg text-xs font-medium uppercase">Back to Risk</button>
                             </div>
                         </div>
 
@@ -241,9 +232,9 @@
                 <!-- Results and Visualization Section -->
                 <div class="lg:col-span-8 space-y-6">
                     <!-- Welcome / Default State -->
-                    <div id="welcomeState" class="h-full flex flex-col items-center justify-center border border-dashed border-slate-800 rounded-xl p-12 text-center glass-card">
-                        <div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-4"><i data-lucide="activity" class="text-blue-500"></i></div>
-                        <h3 class="text-base font-medium text-slate-200 uppercase tracking-tight">Ready for Inference</h3>
+                    <div id="welcomeState" class="h-full flex flex-col items-center justify-center border border-dashed border-slate-200 rounded-xl p-12 text-center glass-card">
+                        <div class="w-12 h-12 bg-blue-500/5 rounded-full flex items-center justify-center mb-4"><i data-lucide="activity" class="text-blue-600"></i></div>
+                        <h3 class="text-base font-medium text-slate-900 uppercase tracking-tight">Ready for Inference</h3>
                         <p class="text-xs text-slate-500 font-normal max-w-xs uppercase mt-2 leading-relaxed">Adjust clinical profile and trigger inference engine</p>
                     </div>
 
@@ -257,22 +248,30 @@
                         <!-- Metabolic and Inflammatory Context -->
                         <div class="grid md:grid-cols-2 gap-6">
                             <!-- Metabolic Profile -->
-                            <div class="glass-card p-6 rounded-xl border border-white/5">
+                            <div class="glass-card p-6 rounded-xl border border-slate-100">
                                 <div class="flex justify-between items-center mb-6">
-                                    <span class="text-label text-slate-100">Metabolic Profile</span>
-                                    <button onclick="toggleReferenceMode()" id="refModeBtn" class="text-[10px] uppercase font-medium text-slate-400 border border-white/10 px-2 py-1 rounded-md hover:bg-white/5">Reference Mode: Off</button>
+                                    <span class="text-label text-slate-900">Metabolic Profile</span>
+                                    <button onclick="toggleReferenceMode()" id="refModeBtn" class="text-[10px] uppercase font-medium text-slate-500 border border-slate-200 px-2 py-1 rounded-md hover:bg-slate-50">Reference Mode: Off</button>
                                 </div>
                                 <div class="space-y-6" id="metabolicGrid">
                                     <!-- Populated by JS -->
                                 </div>
                             </div>
                             <!-- Inflammatory Markers -->
-                            <div class="glass-card p-6 rounded-xl border border-white/5">
-                                <span class="text-label text-slate-100 mb-6 block">Inflammatory Markers</span>
+                            <div class="glass-card p-6 rounded-xl border border-slate-100">
+                                <span class="text-label text-slate-900 mb-6 block">Inflammatory Markers</span>
                                 <div class="space-y-6" id="inflammatoryGrid">
                                     <!-- Populated by JS -->
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Risk Narrative -->
+                        <div class="glass-card p-6 rounded-xl border border-slate-100">
+                            <span class="text-label text-slate-900 mb-4 block">Risk Narrative</span>
+                            <p id="riskNarrative" class="text-sm text-slate-600 leading-relaxed italic">
+                                <!-- Populated by JS -->
+                            </p>
                         </div>
 
                         <!-- Clinical Impression & Protocol -->
@@ -298,77 +297,77 @@
         </section>
 
         <section id="bmi" class="page-content">
-            <header class="mb-8 border-b border-slate-800/50 pb-6">
-                <h1 class="text-xl font-medium tracking-tight text-slate-100 uppercase">Metabolic <span class="text-slate-500">Suite</span></h1>
+            <header class="mb-8 border-b border-slate-100 pb-6">
+                <h1 class="text-xl font-medium tracking-tight text-slate-900 uppercase">Metabolic <span class="text-slate-500">Suite</span></h1>
                 <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Advanced Clinical Composition Analysis</p>
             </header>
             <div class="grid lg:grid-cols-12 gap-8">
                 <!-- Advanced Inputs -->
                 <div class="lg:col-span-4 space-y-6">
-                    <div class="glass-card p-6 rounded-xl border border-white/5 space-y-6">
-                        <h3 class="text-label text-slate-100">Anthropometric Data</h3>
+                    <div class="glass-card p-6 rounded-xl border border-slate-100 space-y-6">
+                        <h3 class="text-label text-slate-900">Anthropometric Data</h3>
 
                         <div class="space-y-4">
                             <div class="flex justify-between items-center">
                                 <label class="text-[10px] font-medium text-slate-500 uppercase">Weight (kg)</label>
-                                <span id="weight_val" class="text-xs font-mono font-medium text-slate-100">75.0</span>
+                                <span id="weight_val" class="text-xs font-mono font-medium text-slate-900">75.0</span>
                             </div>
-                            <input type="range" id="bmi_weight" min="30" max="200" step="0.5" value="75" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                            <input type="range" id="bmi_weight" min="30" max="200" step="0.5" value="75" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600">
                         </div>
 
                         <div class="space-y-4">
                             <div class="flex justify-between items-center">
                                 <label class="text-[10px] font-medium text-slate-500 uppercase">Height (cm)</label>
-                                <span id="height_val" class="text-xs font-mono font-medium text-slate-100">175</span>
+                                <span id="height_val" class="text-xs font-mono font-medium text-slate-900">175</span>
                             </div>
-                            <input type="range" id="bmi_height" min="100" max="250" value="175" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                            <input type="range" id="bmi_height" min="100" max="250" value="175" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600">
                         </div>
 
                         <div class="space-y-4">
                             <div class="flex justify-between items-center">
                                 <label class="text-[10px] font-medium text-slate-500 uppercase">Waist (cm)</label>
-                                <span id="waist_val" class="text-xs font-mono font-medium text-slate-100">85</span>
+                                <span id="waist_val" class="text-xs font-mono font-medium text-slate-900">85</span>
                             </div>
-                            <input type="range" id="bmi_waist" min="50" max="150" value="85" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                            <input type="range" id="bmi_waist" min="50" max="150" value="85" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600">
                         </div>
 
                         <div class="space-y-4">
                             <div class="flex justify-between items-center">
                                 <label class="text-[10px] font-medium text-slate-500 uppercase">Hip (cm)</label>
-                                <span id="hip_val" class="text-xs font-mono font-medium text-slate-100">95</span>
+                                <span id="hip_val" class="text-xs font-mono font-medium text-slate-900">95</span>
                             </div>
-                            <input type="range" id="bmi_hip" min="50" max="150" value="95" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                            <input type="range" id="bmi_hip" min="50" max="150" value="95" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600">
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <div class="input-group p-3">
                                 <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Age (yr)</label>
-                                <input type="number" id="bmi_age" oninput="calculateMetabolicSuite()" value="45" class="w-full bg-transparent font-mono font-medium text-xs outline-none text-slate-100">
+                                <input type="number" id="bmi_age" oninput="calculateMetabolicSuite()" value="45" class="w-full bg-transparent font-mono font-medium text-xs outline-none text-slate-900">
                             </div>
                             <div class="input-group p-3">
                                 <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Gender</label>
-                                <select id="bmi_gender" onchange="calculateMetabolicSuite()" class="w-full bg-transparent font-medium text-[10px] outline-none uppercase text-slate-100">
-                                    <option value="male" class="bg-slate-900">Male</option>
-                                    <option value="female" class="bg-slate-900">Female</option>
+                                <select id="bmi_gender" onchange="calculateMetabolicSuite()" class="w-full bg-transparent font-medium text-[10px] outline-none uppercase text-slate-900">
+                                    <option value="male" class="bg-white">Male</option>
+                                    <option value="female" class="bg-white">Female</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="input-group p-3">
                             <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Activity Level</label>
-                            <select id="bmi_activity" onchange="calculateMetabolicSuite()" class="w-full bg-transparent font-medium text-[10px] outline-none uppercase text-slate-100">
-                                <option value="1.2" class="bg-slate-900">Sedentary (Office job)</option>
-                                <option value="1.375" class="bg-slate-900">Lightly Active (1-2 days/wk)</option>
-                                <option value="1.55" class="bg-slate-900" selected>Moderately Active (3-5 days/wk)</option>
-                                <option value="1.725" class="bg-slate-900">Very Active (6-7 days/wk)</option>
-                                <option value="1.9" class="bg-slate-900">Athlete (2x training/day)</option>
+                            <select id="bmi_activity" onchange="calculateMetabolicSuite()" class="w-full bg-transparent font-medium text-[10px] outline-none uppercase text-slate-900">
+                                <option value="1.2" class="bg-white">Sedentary (Office job)</option>
+                                <option value="1.375" class="bg-white">Lightly Active (1-2 days/wk)</option>
+                                <option value="1.55" class="bg-white" selected>Moderately Active (3-5 days/wk)</option>
+                                <option value="1.725" class="bg-white">Very Active (6-7 days/wk)</option>
+                                <option value="1.9" class="bg-white">Athlete (2x training/day)</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Anatomical Map Placeholder -->
-                    <div class="glass-card p-6 rounded-xl border border-white/5 relative h-64 overflow-hidden flex items-center justify-center">
-                        <div class="absolute top-4 left-6 text-label text-slate-100">Anatomical Map</div>
+                    <div class="glass-card p-6 rounded-xl border border-slate-100 relative h-64 overflow-hidden flex items-center justify-center">
+                        <div class="absolute top-4 left-6 text-label text-slate-900">Anatomical Map</div>
                         <svg id="anatomical_silhouette" viewBox="0 0 100 200" class="h-full opacity-60">
                             <!-- Basic Human Silhouette -->
                             <path id="body_outline" d="M50 10 Q60 10 60 25 T50 40 T40 25 T50 10
@@ -389,56 +388,62 @@
 
                 <!-- Advanced Metrics Display -->
                 <div class="lg:col-span-8 space-y-6">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                         <!-- Card 1: BMI -->
-                        <div class="glass-card p-4 rounded-xl border border-white/5 text-center relative">
+                        <div class="glass-card p-4 rounded-xl border border-slate-100 text-center relative">
                             <div class="text-[9px] font-medium text-slate-500 mb-2 uppercase tracking-wider">BMI INDEX</div>
-                            <div id="res_bmi" class="text-xl font-mono font-medium text-slate-100">24.5</div>
+                            <div id="res_bmi" class="text-xl font-mono font-medium text-slate-900">24.5</div>
                             <div id="tag_bmi" class="text-[9px] uppercase font-medium text-emerald-400 mt-1">Normal</div>
                         </div>
                         <!-- Card 2: BMR/TDEE -->
-                        <div class="glass-card p-4 rounded-xl border border-white/5 text-center bg-blue-600/5">
-                            <div class="text-[9px] font-medium text-blue-400 mb-2 uppercase tracking-wider">Daily TDEE</div>
-                            <div id="res_tdee" class="text-xl font-mono font-medium text-white">2,450</div>
-                            <div class="text-[9px] uppercase font-medium text-slate-400 mt-1">kcal maintenance</div>
+                        <div class="glass-card p-4 rounded-xl border border-slate-100 text-center bg-blue-600/5">
+                            <div class="text-[9px] font-medium text-blue-600 mb-2 uppercase tracking-wider">Daily TDEE</div>
+                            <div id="res_tdee" class="text-xl font-mono font-medium text-slate-900">2,450</div>
+                            <div class="text-[9px] uppercase font-medium text-slate-500 mt-1">kcal maintenance</div>
                         </div>
                         <!-- Card 3: Body Fat % -->
-                        <div class="glass-card p-4 rounded-xl border border-white/5 text-center">
+                        <div class="glass-card p-4 rounded-xl border border-slate-100 text-center">
                             <div class="text-[9px] font-medium text-slate-500 mb-2 uppercase tracking-wider">Body Fat %</div>
-                            <div id="res_bfp" class="text-xl font-mono font-medium text-slate-100">18.2%</div>
-                            <div id="tag_bfp" class="text-[9px] uppercase font-medium text-slate-400 mt-1">Fitness Range</div>
+                            <div id="res_bfp" class="text-xl font-mono font-medium text-slate-900">18.2%</div>
+                            <div id="tag_bfp" class="text-[9px] uppercase font-medium text-slate-500 mt-1">Fitness Range</div>
                         </div>
                         <!-- Card 4: WHR Index -->
-                        <div class="glass-card p-4 rounded-xl border border-white/5 text-center relative overflow-hidden group">
+                        <div class="glass-card p-4 rounded-xl border border-slate-100 text-center relative overflow-hidden group">
                             <div class="text-[9px] font-medium text-slate-500 mb-2 uppercase tracking-wider">WHR Ratio</div>
-                            <div id="res_whr" class="text-xl font-mono font-medium text-slate-100">0.89</div>
-                            <div id="tag_whr" class="text-[9px] uppercase font-medium text-orange-400 mt-1">Android</div>
+                            <div id="res_whr" class="text-xl font-mono font-medium text-slate-900">0.89</div>
+                            <div id="tag_whr" class="text-[9px] uppercase font-medium text-orange-600 mt-1">Android</div>
+                        </div>
+                        <!-- Card 5: IBW (Devine) -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-100 text-center">
+                            <div class="text-[9px] font-medium text-slate-500 mb-2 uppercase tracking-wider">Ideal Weight</div>
+                            <div id="res_ibw" class="text-xl font-mono font-medium text-slate-900">70.0</div>
+                            <div class="text-[9px] uppercase font-medium text-slate-500 mt-1">kg (Devine)</div>
                         </div>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <!-- Lean Body Mass Section -->
-                        <div class="glass-card p-6 rounded-xl border border-white/5">
+                        <div class="glass-card p-6 rounded-xl border border-slate-100">
                             <div class="flex justify-between items-center mb-6">
-                                <span class="text-label text-slate-100">Body Composition Breakdown</span>
+                                <span class="text-label text-slate-900">Body Composition Breakdown</span>
                                 <i data-lucide="dumbbell" class="text-slate-500 w-4 h-4"></i>
                             </div>
                             <div class="space-y-6">
                                 <div>
                                     <div class="flex justify-between text-[10px] uppercase font-medium mb-2">
-                                        <span class="text-slate-400">Lean Body Mass</span>
-                                        <span id="res_lbm" class="text-slate-100 font-mono">61.5 kg</span>
+                                        <span class="text-slate-500">Lean Body Mass</span>
+                                        <span id="res_lbm" class="text-slate-900 font-mono">61.5 kg</span>
                                     </div>
-                                    <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                                        <div id="bar_lbm" class="h-full bg-blue-500 transition-all duration-1000" style="width: 82%"></div>
+                                    <div class="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                        <div id="bar_lbm" class="h-full bg-blue-600 transition-all duration-1000" style="width: 82%"></div>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-[10px] uppercase font-medium mb-2">
-                                        <span class="text-slate-400">Essential Fat Mass</span>
-                                        <span id="res_fat" class="text-slate-100 font-mono">13.5 kg</span>
+                                        <span class="text-slate-500">Essential Fat Mass</span>
+                                        <span id="res_fat" class="text-slate-900 font-mono">13.5 kg</span>
                                     </div>
-                                    <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                                         <div id="bar_fat" class="h-full bg-orange-500 transition-all duration-1000" style="width: 18%"></div>
                                     </div>
                                 </div>
@@ -446,62 +451,62 @@
                         </div>
 
                         <!-- BMR Decomposition -->
-                        <div class="glass-card p-6 rounded-xl border border-white/5">
+                        <div class="glass-card p-6 rounded-xl border border-slate-100">
                             <div class="flex justify-between items-center mb-6">
-                                <span class="text-label text-slate-100">BMR Breakdown (Base)</span>
+                                <span class="text-label text-slate-900">BMR Breakdown (Base)</span>
                                 <i data-lucide="flame" class="text-slate-500 w-4 h-4"></i>
                             </div>
                             <div class="flex items-center gap-4">
                                 <div class="relative w-24 h-24">
                                     <svg viewBox="0 0 36 36" class="w-full h-full">
-                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#1e293b" stroke-width="3" />
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f5f9" stroke-width="3" />
                                         <path id="donut_organ" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#3b82f6" stroke-width="3" stroke-dasharray="70, 100" />
                                         <path id="donut_tef" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eab308" stroke-width="3" stroke-dasharray="10, 100" stroke-dashoffset="-70" />
                                         <path id="donut_neat" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="20, 100" stroke-dashoffset="-80" />
                                     </svg>
                                     <div class="absolute inset-0 flex items-center justify-center flex-col">
-                                        <span id="res_bmr_val" class="text-xs font-mono font-medium text-slate-100">1624</span>
+                                        <span id="res_bmr_val" class="text-xs font-mono font-medium text-slate-900">1624</span>
                                         <span class="text-[7px] text-slate-500 uppercase">BMR</span>
                                     </div>
                                 </div>
                                 <div class="flex-grow space-y-2">
-                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-[9px] uppercase text-slate-400">Organs</span></div><span class="text-[10px] font-mono text-slate-100">70%</span></div>
-                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-[9px] uppercase text-slate-400">Activity</span></div><span class="text-[10px] font-mono text-slate-100">20%</span></div>
-                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-yellow-500"></div><span class="text-[9px] uppercase text-slate-400">Thermic</span></div><span class="text-[10px] font-mono text-slate-100">10%</span></div>
+                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-[9px] uppercase text-slate-500">Organs</span></div><span class="text-[10px] font-mono text-slate-900">70%</span></div>
+                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-[9px] uppercase text-slate-500">Activity</span></div><span class="text-[10px] font-mono text-slate-900">20%</span></div>
+                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-yellow-500"></div><span class="text-[9px] uppercase text-slate-500">Thermic</span></div><span class="text-[10px] font-mono text-slate-900">10%</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Clinical Status Table -->
-                    <div class="glass-card p-6 rounded-xl border border-white/5">
-                        <h4 class="text-label text-slate-100 mb-6">Clinical Metric Significance</h4>
+                    <div class="glass-card p-6 rounded-xl border border-slate-100">
+                        <h4 class="text-label text-slate-900 mb-6">Clinical Metric Significance</h4>
                         <div class="space-y-1">
                             <div id="row_underweight" class="flex justify-between items-center p-3 rounded-lg border border-transparent transition-all duration-500">
-                                <span class="text-xs font-normal text-slate-400 uppercase">Underweight Range</span>
+                                <span class="text-xs font-normal text-slate-500 uppercase">Underweight Range</span>
                                 <div class="flex items-center gap-4">
-                                    <span class="text-[10px] font-mono text-slate-300">&lt; 18.5</span>
+                                    <span class="text-[10px] font-mono text-slate-400">&lt; 18.5</span>
                                     <span class="status-badge bg-amber-500/10 text-amber-500 hidden opacity-0 transition-opacity">Increased Risk</span>
                                 </div>
                             </div>
                             <div id="row_normal" class="flex justify-between items-center p-3 rounded-lg border border-transparent transition-all duration-500">
-                                <span class="text-xs font-normal text-slate-400 uppercase">Normal Physiological Range</span>
+                                <span class="text-xs font-normal text-slate-500 uppercase">Normal Physiological Range</span>
                                 <div class="flex items-center gap-4">
-                                    <span class="text-[10px] font-mono text-slate-300">18.5 – 24.9</span>
+                                    <span class="text-[10px] font-mono text-slate-400">18.5 – 24.9</span>
                                     <span class="status-badge bg-emerald-500/10 text-emerald-500 hidden opacity-0 transition-opacity">Optimal Target</span>
                                 </div>
                             </div>
                             <div id="row_overweight" class="flex justify-between items-center p-3 rounded-lg border border-transparent transition-all duration-500">
-                                <span class="text-xs font-normal text-slate-400 uppercase">Overweight Range</span>
+                                <span class="text-xs font-normal text-slate-500 uppercase">Overweight Range</span>
                                 <div class="flex items-center gap-4">
-                                    <span class="text-[10px] font-mono text-slate-300">25.0 – 29.9</span>
+                                    <span class="text-[10px] font-mono text-slate-400">25.0 – 29.9</span>
                                     <span class="status-badge bg-orange-500/10 text-orange-500 hidden opacity-0 transition-opacity">Metabolic Strain</span>
                                 </div>
                             </div>
                             <div id="row_obese" class="flex justify-between items-center p-3 rounded-lg border border-transparent transition-all duration-500">
-                                <span class="text-xs font-normal text-slate-400 uppercase">Clinical Obesity</span>
+                                <span class="text-xs font-normal text-slate-500 uppercase">Clinical Obesity</span>
                                 <div class="flex items-center gap-4">
-                                    <span class="text-[10px] font-mono text-slate-300">30.0 +</span>
+                                    <span class="text-[10px] font-mono text-slate-400">30.0 +</span>
                                     <span class="status-badge bg-red-500/10 text-red-500 hidden opacity-0 transition-opacity">High NCD Risk</span>
                                 </div>
                             </div>
@@ -512,56 +517,56 @@
         </section>
 
         <section id="bp" class="page-content">
-            <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/50 pb-6">
+            <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
                 <div>
-                    <h1 class="text-xl font-medium tracking-tight text-slate-100 uppercase">Hemodynamic <span class="text-slate-500">Intelligence</span></h1>
+                    <h1 class="text-xl font-medium tracking-tight text-slate-900 uppercase">Hemodynamic <span class="text-slate-500">Intelligence</span></h1>
                     <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Vascular Pressure Monitoring & Perfusion Metrics</p>
                 </div>
-                <div class="flex items-center gap-3 bg-slate-900/50 backdrop-blur-md p-2 rounded-lg border border-slate-800/50">
+                <div class="flex items-center gap-3 bg-white p-2 rounded-lg border border-slate-100">
                     <i data-lucide="user-circle" class="text-slate-400 ml-2"></i>
-                    <select id="bpPatientSelector" onchange="syncPatientData(this.value)" class="bg-transparent border-none text-xs font-medium uppercase pr-4 outline-none text-slate-100">
-                        <option value="p1" class="bg-slate-900">Sarah Connor</option>
-                        <option value="p2" class="bg-slate-900">John Doe</option>
-                        <option value="p3" class="bg-slate-900">Elena Gilbert</option>
+                    <select id="bpPatientSelector" onchange="syncPatientData(this.value)" class="bg-transparent border-none text-xs font-medium uppercase pr-4 outline-none text-slate-900">
+                        <option value="p1" class="bg-white">Sarah Connor</option>
+                        <option value="p2" class="bg-white">John Doe</option>
+                        <option value="p3" class="bg-white">Elena Gilbert</option>
                     </select>
                 </div>
             </header>
 
             <!-- Vitals Summary Grid -->
             <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-                <div class="glass-card p-4 rounded-xl text-center border border-white/5">
+                <div class="glass-card p-4 rounded-xl text-center border border-slate-100">
                     <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Systolic</span>
-                    <div id="bp_sys_val" class="text-2xl font-mono font-medium mt-1 text-slate-100">118</div>
+                    <div id="bp_sys_val" class="text-2xl font-mono font-medium mt-1 text-slate-900">118</div>
                     <span class="text-[8px] text-slate-500">mmHg</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl text-center border border-white/5">
+                <div class="glass-card p-4 rounded-xl text-center border border-slate-100">
                     <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Diastolic</span>
-                    <div id="bp_dia_val" class="text-2xl font-mono font-medium mt-1 text-slate-100">76</div>
+                    <div id="bp_dia_val" class="text-2xl font-mono font-medium mt-1 text-slate-900">76</div>
                     <span class="text-[8px] text-slate-500">mmHg</span>
                 </div>
-                <div id="pulse_rate_card" class="glass-card p-4 rounded-xl text-center border border-white/5 relative overflow-hidden group">
+                <div id="pulse_rate_card" class="glass-card p-4 rounded-xl text-center border border-slate-100 relative overflow-hidden group">
                     <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Pulse Rate</span>
-                    <div id="pulse_val" class="text-2xl font-mono font-medium mt-1 text-slate-100">72</div>
+                    <div id="pulse_val" class="text-2xl font-mono font-medium mt-1 text-slate-900">72</div>
                     <span class="text-[8px] text-slate-500">BPM</span>
-                    <div id="pulse_animation" class="absolute -right-1 -bottom-1 text-red-500/20"><i data-lucide="heart" class="w-8 h-8"></i></div>
+                    <div id="pulse_animation" class="absolute -right-1 -bottom-1 text-red-500/10"><i data-lucide="heart" class="w-8 h-8"></i></div>
                 </div>
-                <div class="glass-card p-4 rounded-xl text-center border border-white/5">
-                    <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wider">MAP Index</span>
-                    <div id="res_map" class="text-2xl font-mono font-medium mt-1 text-blue-400">90</div>
+                <div class="glass-card p-4 rounded-xl text-center border border-slate-100">
+                    <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">MAP Index</span>
+                    <div id="res_map" class="text-2xl font-mono font-medium mt-1 text-blue-600">90</div>
                     <span class="text-[8px] text-slate-500">mmHg perfusion</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl text-center border border-white/5">
-                    <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wider">Pulse Pressure</span>
-                    <div id="res_pp" class="text-2xl font-mono font-medium mt-1 text-emerald-400">42</div>
-                    <span id="tag_pp" class="text-[8px] text-emerald-500 uppercase font-medium">Normal</span>
+                <div class="glass-card p-4 rounded-xl text-center border border-slate-100">
+                    <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Pulse Pressure</span>
+                    <div id="res_pp" class="text-2xl font-mono font-medium mt-1 text-emerald-600">42</div>
+                    <span id="tag_pp" class="text-[8px] text-emerald-600 uppercase font-medium">Normal</span>
                 </div>
             </div>
 
             <div class="grid lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-3 space-y-6">
-                    <div class="glass-card p-6 rounded-xl border border-white/5 relative">
+                    <div class="glass-card p-6 rounded-xl border border-slate-100 relative">
                         <div class="flex justify-between items-center mb-6">
-                            <h4 class="text-label text-slate-100">Historical Hemodynamics Map</h4>
+                            <h4 class="text-label text-slate-900">Historical Hemodynamics Map</h4>
                             <div class="flex gap-4">
                                 <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-red-500/20"></div><span class="text-[8px] text-slate-500 uppercase">Stage 2</span></div>
                                 <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-orange-500/20"></div><span class="text-[8px] text-slate-500 uppercase">Stage 1</span></div>
@@ -582,42 +587,42 @@
                     </div>
                 </div>
 
-            <div class="lg:col-span-1 glass-card p-6 rounded-xl border border-white/5 space-y-6">
-                <h4 class="text-label text-slate-100">Patient Management</h4>
+            <div class="lg:col-span-1 glass-card p-6 rounded-xl border border-slate-100 space-y-6">
+                <h4 class="text-label text-slate-900">Patient Management</h4>
                 <form id="addPatientForm" onsubmit="addNewPatient(event)" class="space-y-4">
                     <div class="input-group">
                         <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Name</label>
-                        <input type="text" id="new_pat_name" required class="w-full bg-transparent font-medium text-sm outline-none text-slate-100" placeholder="Enter patient name">
+                        <input type="text" id="new_pat_name" required class="w-full bg-transparent font-medium text-sm outline-none text-slate-900" placeholder="Enter patient name">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="input-group">
                             <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Age</label>
-                            <input type="number" id="new_pat_age" required class="w-full bg-transparent font-medium text-sm outline-none text-slate-100">
+                            <input type="number" id="new_pat_age" required class="w-full bg-transparent font-medium text-sm outline-none text-slate-900">
                         </div>
                         <div class="input-group">
                             <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">BP (Sys/Dia)</label>
-                            <input type="text" id="new_pat_bp" required class="w-full bg-transparent font-medium text-sm outline-none text-slate-100" placeholder="120/80">
+                            <input type="text" id="new_pat_bp" required class="w-full bg-transparent font-medium text-sm outline-none text-slate-900" placeholder="120/80">
                         </div>
                     </div>
                     <button type="submit" class="w-full bg-blue-600 text-white font-medium py-3 rounded-lg uppercase tracking-tight text-xs hover:bg-blue-700 shadow-lg shadow-blue-600/20">Add Patient</button>
                 </form>
             </div>
 
-            <div class="lg:col-span-2 glass-card p-6 rounded-xl border border-white/5">
+            <div class="lg:col-span-2 glass-card p-6 rounded-xl border border-slate-100">
                 <div class="flex justify-between items-center mb-4">
-                    <h4 class="text-label text-slate-100">Validated Historical Log</h4>
+                    <h4 class="text-label text-slate-900">Validated Historical Log</h4>
                     <div class="flex gap-2">
-                        <input type="text" id="logSearch" oninput="filterLog()" placeholder="Search Patient..." class="bg-slate-900/50 border border-white/5 rounded px-3 py-1 text-[10px] text-slate-300 outline-none focus:border-blue-500/50">
+                        <input type="text" id="logSearch" oninput="filterLog()" placeholder="Search Patient..." class="bg-slate-50 border border-slate-200 rounded px-3 py-1 text-[10px] text-slate-900 outline-none focus:border-blue-500/50">
                     </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="border-b border-white/5">
-                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3">Date</th>
-                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3">Patient</th>
-                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3">Reading</th>
-                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3">Status</th>
+                            <tr class="border-b border-slate-100">
+                                <th class="text-[10px] font-medium text-slate-500 uppercase py-3">Date</th>
+                                <th class="text-[10px] font-medium text-slate-500 uppercase py-3">Patient</th>
+                                <th class="text-[10px] font-medium text-slate-500 uppercase py-3">Reading</th>
+                                <th class="text-[10px] font-medium text-slate-500 uppercase py-3">Status</th>
                                 <th class="text-[10px] font-medium text-slate-400 uppercase py-3 text-center">Flag</th>
                             </tr>
                         </thead>
@@ -635,48 +640,48 @@
         </section>
 
         <section id="diet" class="page-content">
-            <header class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 border-b border-slate-800/50 pb-6">
+            <header class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 border-b border-slate-100 pb-6">
                 <div>
-                    <h2 class="text-xl font-medium tracking-tight uppercase text-slate-100">Prescription <span class="text-slate-500">Timeline</span></h2>
+                    <h2 class="text-xl font-medium tracking-tight uppercase text-slate-900">Prescription <span class="text-slate-500">Timeline</span></h2>
                     <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Metabolic Load & Nutrient Timing</p>
                 </div>
-                <div id="dietTag" class="px-4 py-1 bg-slate-900/50 text-slate-500 rounded-full text-[10px] font-medium uppercase border border-slate-800/50 transition-all duration-500">Standard Plan</div>
+                <div id="dietTag" class="px-4 py-1 bg-white text-slate-500 rounded-full text-[10px] font-medium uppercase border border-slate-100 transition-all duration-500">Standard Plan</div>
             </header>
 
             <!-- Metabolic Summary Bar -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div class="glass-card p-4 rounded-xl border border-white/5 bg-blue-600/5">
-                    <span class="text-[9px] font-medium text-blue-400 uppercase tracking-wider">Target Calories</span>
+                <div class="glass-card p-4 rounded-xl border border-slate-100 bg-blue-50/50">
+                    <span class="text-[9px] font-medium text-blue-600 uppercase tracking-wider">Target Calories</span>
                     <div class="flex items-baseline gap-2 mt-1">
-                        <div id="summary_kcal" class="text-xl font-mono font-medium text-white">2200</div>
+                        <div id="summary_kcal" class="text-xl font-mono font-medium text-slate-900">2200</div>
                         <span class="text-[10px] text-slate-500 uppercase">kcal/day</span>
                     </div>
                 </div>
-                <div class="glass-card p-4 rounded-xl border border-white/5">
+                <div class="glass-card p-4 rounded-xl border border-slate-100">
                     <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Protein Target</span>
                     <div class="flex items-baseline gap-2 mt-1">
-                        <div id="summary_protein" class="text-xl font-mono font-medium text-slate-100">92</div>
+                        <div id="summary_protein" class="text-xl font-mono font-medium text-slate-900">92</div>
                         <span class="text-[10px] text-slate-500 uppercase">g (1.6/kg)</span>
                     </div>
                 </div>
-                <div class="glass-card p-4 rounded-xl border border-white/5">
+                <div class="glass-card p-4 rounded-xl border border-slate-100">
                     <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Sodium Cap</span>
                     <div class="flex items-baseline gap-2 mt-1">
-                        <div id="summary_sodium" class="text-xl font-mono font-medium text-slate-100">2300</div>
+                        <div id="summary_sodium" class="text-xl font-mono font-medium text-slate-900">2300</div>
                         <span class="text-[10px] text-slate-500 uppercase">mg limit</span>
                     </div>
                 </div>
-                <div class="glass-card p-4 rounded-xl border border-white/5 flex items-center justify-between group cursor-pointer" onclick="logWater()">
+                <div class="glass-card p-4 rounded-xl border border-slate-100 flex items-center justify-between group cursor-pointer" onclick="logWater()">
                     <div>
-                        <span class="text-[9px] font-medium text-blue-400 uppercase tracking-wider">Hydration</span>
+                        <span class="text-[9px] font-medium text-blue-600 uppercase tracking-wider">Hydration</span>
                         <div class="flex items-baseline gap-2 mt-1">
-                            <div id="water_count" class="text-xl font-mono font-medium text-white">0</div>
+                            <div id="water_count" class="text-xl font-mono font-medium text-slate-900">0</div>
                             <span class="text-[10px] text-slate-500 uppercase">/ 8 Cups</span>
                         </div>
                     </div>
-                    <div class="relative w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center overflow-hidden">
+                    <div class="relative w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
                         <div id="water_wave" class="absolute bottom-0 left-0 right-0 bg-blue-500 transition-all duration-1000" style="height: 0%"></div>
-                        <i data-lucide="droplets" class="text-white relative z-10 w-4 h-4"></i>
+                        <i data-lucide="droplets" class="text-blue-600 relative z-10 w-4 h-4"></i>
                     </div>
                 </div>
             </div>
@@ -687,16 +692,16 @@
         </section>
 
         <section id="yoga" class="page-content">
-            <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/50 pb-6">
+            <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
                 <div>
-                    <h2 class="text-xl font-medium tracking-tight uppercase text-slate-100">Neural-Sensing <span class="text-slate-500">Interface</span></h2>
+                    <h2 class="text-xl font-medium tracking-tight uppercase text-slate-900">Neural-Sensing <span class="text-slate-500">Interface</span></h2>
                     <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Kinesthetic Prescription & Biometric Alignment</p>
                 </div>
                 <div class="flex items-center gap-4">
-                    <div class="bg-blue-600/10 px-3 py-1.5 rounded-lg border border-blue-500/20 flex items-center gap-2">
-                        <span class="text-[9px] font-medium text-blue-400 uppercase tracking-wider">Metabolic Dose:</span>
-                        <span id="metabolic_dose" class="text-xs font-mono font-medium text-white">0.0</span>
-                        <span class="text-[8px] text-blue-500 uppercase">min</span>
+                    <div class="bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 flex items-center gap-2">
+                        <span class="text-[9px] font-medium text-blue-600 uppercase tracking-wider">Metabolic Dose:</span>
+                        <span id="metabolic_dose" class="text-xs font-mono font-medium text-slate-900">0.0</span>
+                        <span class="text-[8px] text-blue-600 uppercase">min</span>
                     </div>
                 </div>
             </header>
@@ -707,34 +712,34 @@
             <div class="grid lg:grid-cols-10 gap-8">
                 <!-- Pro Video Controller UI -->
                 <div class="lg:col-span-6 space-y-4">
-                    <div class="glass-card rounded-2xl border border-white/5 relative overflow-hidden group">
-                        <!-- Glow Background -->
-                        <div id="playerGlow" class="absolute inset-0 bg-gradient-to-br from-blue-600/0 to-indigo-600/0 transition-all duration-1000"></div>
+                    <div class="glass-card rounded-2xl border border-slate-100 relative overflow-hidden group">
 
-                        <div class="relative aspect-video bg-slate-900 flex items-center justify-center group">
+                        <div class="relative aspect-video bg-slate-100 flex items-center justify-center group">
                             <div id="videoPlaceholder" class="text-center transition-all duration-700">
-                                <div class="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center mb-4 mx-auto border border-blue-500/20 group-hover:scale-110 transition-transform">
-                                    <i data-lucide="play" class="text-blue-500 fill-blue-500 w-6 h-6 ml-1"></i>
+                                <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4 mx-auto border border-blue-100 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="play" class="text-blue-600 fill-blue-600 w-6 h-6 ml-1"></i>
                                 </div>
                                 <p class="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-medium">Initialize Neural Stream</p>
                             </div>
 
-                            <div id="activePlayer" class="hidden absolute inset-0 bg-black flex items-center justify-center overflow-hidden">
-                                <video id="yogaVideo" class="w-full h-full object-cover" ontimeupdate="updateVideoProgress()"></video>
+                            <div id="activePlayer" class="hidden absolute inset-0 bg-slate-100 flex items-center justify-center overflow-hidden">
+                                <div id="yogaPlayerContainer" class="w-full h-full">
+                                    <video id="yogaVideo" class="w-full h-full object-cover" ontimeupdate="updateVideoProgress()"></video>
+                                </div>
 
                                 <!-- Sleek Overlay Controls -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                                    <div class="w-full bg-white/10 h-1 rounded-full mb-6 overflow-hidden cursor-pointer" onclick="seekVideo(event)">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                                    <div class="w-full bg-white/20 h-1 rounded-full mb-6 overflow-hidden cursor-pointer" onclick="seekVideo(event)">
                                         <div id="videoProgressBar" class="h-full bg-blue-500 w-0"></div>
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center gap-6">
                                             <button onclick="toggleVideoPlay()" class="text-white hover:text-blue-400 transition-colors"><i data-lucide="pause" id="playPauseIcon" class="w-5 h-5"></i></button>
                                             <button onclick="restartVideo()" class="text-white hover:text-blue-400 transition-colors"><i data-lucide="rotate-ccw" class="w-5 h-5"></i></button>
-                                            <span id="videoTime" class="text-[10px] font-mono text-slate-400">00:00 / 00:00</span>
+                                            <span id="videoTime" class="text-[10px] font-mono text-white/80">00:00 / 00:00</span>
                                         </div>
                                         <div class="flex items-center gap-4">
-                                            <span class="text-[9px] font-medium text-slate-500 uppercase tracking-widest">4K Neural Stream</span>
+                                            <span class="text-[9px] font-medium text-white/60 uppercase tracking-widest">4K Neural Stream</span>
                                             <i data-lucide="maximize" class="text-white w-4 h-4 cursor-pointer"></i>
                                         </div>
                                     </div>
@@ -743,15 +748,15 @@
                         </div>
 
                         <!-- Footer Gauge -->
-                        <div class="p-4 bg-slate-900/50 border-t border-white/5 flex justify-between items-center">
+                        <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center">
                             <div class="flex gap-6">
                                 <div>
                                     <span class="text-[8px] text-slate-500 uppercase font-medium">Estimated Burn</span>
-                                    <div class="text-xs font-mono text-slate-100"><span id="burn_val">--</span> kcal</div>
+                                    <div class="text-xs font-mono text-slate-900"><span id="burn_val">--</span> kcal</div>
                                 </div>
                                 <div>
                                     <span class="text-[8px] text-slate-500 uppercase font-medium">HRV Impact</span>
-                                    <div class="text-xs font-mono text-emerald-400">+<span id="hrv_val">--</span> ms</div>
+                                    <div class="text-xs font-mono text-emerald-600">+<span id="hrv_val">--</span> ms</div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-2">
@@ -764,42 +769,42 @@
 
                 <!-- Focus Points & Bio-Sync -->
                 <div class="lg:col-span-4 space-y-6">
-                    <div class="glass-card p-6 rounded-2xl border border-white/5 h-full flex flex-col">
+                    <div class="glass-card p-6 rounded-2xl border border-slate-100 h-full flex flex-col">
                         <div class="flex justify-between items-center mb-8">
                             <div>
-                                <h4 class="text-label text-slate-100">Bio-Alignment Points</h4>
+                                <h4 class="text-label text-slate-900">Bio-Alignment Points</h4>
                                 <p class="text-[9px] text-slate-500 uppercase mt-0.5">Real-time Form Validation</p>
                             </div>
-                            <button onclick="toggleFormCheck()" class="px-3 py-1.5 rounded-lg border border-blue-500/30 text-[9px] uppercase font-medium text-blue-400 flex items-center gap-2 hover:bg-blue-500/10 transition-all" id="formCheckBtn">
+                            <button onclick="toggleFormCheck()" class="px-3 py-1.5 rounded-lg border border-blue-500/30 text-[9px] uppercase font-medium text-blue-600 flex items-center gap-2 hover:bg-blue-50 transition-all" id="formCheckBtn">
                                 <i data-lucide="scan-eye" class="w-3 h-3"></i> Check My Form
                             </button>
                         </div>
 
                         <ul class="space-y-4 flex-grow" id="focusChecklist">
-                            <li data-timestamp="5" class="flex items-start gap-3 p-4 rounded-xl border border-white/5 bg-slate-900/30 opacity-40 transition-all duration-500">
-                                <div class="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center flex-shrink-0 check-indicator">
+                            <li data-timestamp="5" class="flex items-start gap-3 p-4 rounded-xl border border-slate-50 bg-slate-50/50 opacity-40 transition-all duration-500">
+                                <div class="w-5 h-5 rounded-full border border-slate-200 flex items-center justify-center flex-shrink-0 check-indicator">
                                     <i data-lucide="check" class="w-3 h-3 text-emerald-500 hidden"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-mono font-medium text-slate-100 uppercase tracking-tight">Spinal Alignment</p>
+                                    <p class="text-xs font-mono font-medium text-slate-900 uppercase tracking-tight">Spinal Alignment</p>
                                     <p class="text-[9px] text-slate-500 uppercase mt-1 leading-relaxed">Maintain cervical-thoracic neutrality</p>
                                 </div>
                             </li>
-                            <li data-timestamp="15" class="flex items-start gap-3 p-4 rounded-xl border border-white/5 bg-slate-900/30 opacity-40 transition-all duration-500">
-                                <div class="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center flex-shrink-0 check-indicator">
+                            <li data-timestamp="15" class="flex items-start gap-3 p-4 rounded-xl border border-slate-50 bg-slate-50/50 opacity-40 transition-all duration-500">
+                                <div class="w-5 h-5 rounded-full border border-slate-200 flex items-center justify-center flex-shrink-0 check-indicator">
                                     <i data-lucide="check" class="w-3 h-3 text-emerald-500 hidden"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-mono font-medium text-slate-100 uppercase tracking-tight">Vagus Stimulation</p>
+                                    <p class="text-xs font-mono font-medium text-slate-900 uppercase tracking-tight">Vagus Stimulation</p>
                                     <p class="text-[9px] text-slate-500 uppercase mt-1 leading-relaxed">Sync diaphragmatic wave with movement</p>
                                 </div>
                             </li>
-                            <li data-timestamp="30" class="flex items-start gap-3 p-4 rounded-xl border border-white/5 bg-slate-900/30 opacity-40 transition-all duration-500">
-                                <div class="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center flex-shrink-0 check-indicator">
+                            <li data-timestamp="30" class="flex items-start gap-3 p-4 rounded-xl border border-slate-50 bg-slate-50/50 opacity-40 transition-all duration-500">
+                                <div class="w-5 h-5 rounded-full border border-slate-200 flex items-center justify-center flex-shrink-0 check-indicator">
                                     <i data-lucide="check" class="w-3 h-3 text-emerald-500 hidden"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-mono font-medium text-slate-100 uppercase tracking-tight">Core Pelvic Stability</p>
+                                    <p class="text-xs font-mono font-medium text-slate-900 uppercase tracking-tight">Core Pelvic Stability</p>
                                     <p class="text-[9px] text-slate-500 uppercase mt-1 leading-relaxed">Engage deep anterior stabilizing unit</p>
                                 </div>
                             </li>
@@ -923,10 +928,10 @@
                 else if (h.status.includes('Stage 1') || h.status === 'Elevated') icon = 'alert-circle';
 
                 return `
-                <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
+                <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors group">
                     <td class="text-xs py-3 text-slate-500 font-mono">${h.date}</td>
-                    <td class="text-xs py-3 text-slate-200 font-medium">${h.pat}</td>
-                    <td class="text-xs py-3 text-slate-200 font-mono">${h.val}</td>
+                    <td class="text-xs py-3 text-slate-900 font-medium">${h.pat}</td>
+                    <td class="text-xs py-3 text-slate-900 font-mono">${h.val}</td>
                     <td class="text-xs py-3">
                         <span class="status-badge bg-${h.color}/10 text-${h.color} border border-${h.color}/20">
                             <i data-lucide="${icon}"></i> ${h.status}
@@ -1005,22 +1010,33 @@
             if (!p) return;
 
             // Sync UI Selectors
-            document.getElementById('globalPatientSelector').value = patientId;
-            document.getElementById('bpPatientSelector').value = patientId;
+            const gps = document.getElementById('globalPatientSelector');
+            const bps = document.getElementById('bpPatientSelector');
+            if(gps) gps.value = patientId;
+            if(bps) bps.value = patientId;
 
             // Update AI Predictor Fields
-            document.getElementById('BMI').value = p.bmi;
-            document.getElementById('Age').value = p.age;
-            document.getElementById('Sex').value = p.sex;
-            document.getElementById('HighChol').checked = p.chol;
-            document.getElementById('Smoker').checked = p.smoker;
+            const bmiEl = document.getElementById('BMI');
+            const ageEl = document.getElementById('Age');
+            const sexEl = document.getElementById('Sex');
+            const hcEl = document.getElementById('HighChol');
+            const smEl = document.getElementById('Smoker');
+
+            if(bmiEl) bmiEl.value = p.bmi;
+            if(ageEl) ageEl.value = p.age;
+            if(sexEl) sexEl.value = p.sex;
+            if(hcEl) hcEl.checked = p.chol;
+            if(smEl) smEl.checked = p.smoker;
 
             // Update Hemodynamic Display
-            document.getElementById('bp_sys_val').innerText = p.sys;
-            document.getElementById('bp_dia_val').innerText = p.dia;
+            const sysVal = document.getElementById('bp_sys_val');
+            const diaVal = document.getElementById('bp_dia_val');
+            const pulseVal = document.getElementById('pulse_val');
+            if(sysVal) sysVal.innerText = p.sys;
+            if(diaVal) diaVal.innerText = p.dia;
 
             const pulse = patientId === 'p2' ? 88 : 72;
-            document.getElementById('pulse_val').innerText = pulse;
+            if(pulseVal) pulseVal.innerText = pulse;
 
             // Trigger Heartbeat Animation based on BPM (Targeting container to avoid Lucide replacement issues)
             const pulseAnim = document.getElementById('pulse_animation');
@@ -1153,9 +1169,15 @@
                 const isHighRisk = (gender === 'male' && whr > 0.9) || (gender === 'female' && whr > 0.85);
 
                 whrTag.innerText = whr > 0.88 ? "Android (Apple)" : "Gynoid (Pear)";
-                whrTag.className = `text-[9px] uppercase font-medium mt-1 ${isHighRisk ? 'text-red-400' : 'text-emerald-400'}`;
+                whrTag.className = `text-[9px] uppercase font-medium mt-1 ${isHighRisk ? 'text-red-600' : 'text-emerald-600'}`;
 
-                // 5. Lean Body Mass (LBM)
+                // 5. Ideal Body Weight (Devine Formula)
+                const heightInches = h_cm / 2.54;
+                const inchesOver5ft = Math.max(0, heightInches - 60);
+                let ibw = gender === 'male' ? 50 + (2.3 * inchesOver5ft) : 45.5 + (2.3 * inchesOver5ft);
+                document.getElementById('res_ibw').innerText = ibw.toFixed(1);
+
+                // 6. Lean Body Mass (LBM)
                 const lbm = w * (1 - bfp/100);
                 const fatMass = w - lbm;
                 document.getElementById('res_lbm').innerText = `${lbm.toFixed(1)} kg`;
@@ -1364,6 +1386,12 @@
 
                 renderRadialGauges();
                 renderMetabolicContext();
+
+                const narrative = currentRisk === 'high'
+                    ? "The elevated risk score is primarily driven by the confluence of a high BMI and positive smoking history, which accelerates vascular aging. Estimated inflammatory markers (hs-CRP) suggest systemic stress, while the metabolic profile indicates reduced insulin sensitivity."
+                    : "The prediction indicates a stable clinical profile. Biometrics are within optimal ranges, and estimated metabolic markers suggest high insulin sensitivity and low systemic inflammation. Risk factors are currently well-managed through lifestyle consistency.";
+                document.getElementById('riskNarrative').innerText = narrative;
+
                 switchProtocolTab('acute');
 
                 btn.innerHTML = `<i data-lucide="zap" class="w-4 h-4"></i> Run AI Diagnosis`;
@@ -1406,18 +1434,18 @@
                                     stroke-dasharray="251.2" stroke-dashoffset="${251.2 - dash}" stroke-linecap="round" class="transition-all duration-1000"></circle>
                             </svg>
                             <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                <span class="text-xl font-medium text-slate-100">${g.v}%</span>
+                                <span class="text-xl font-medium text-slate-900">${g.v}%</span>
                                 <div class="flex items-center text-[8px] ${g.dc}">
                                     <i data-lucide="${g.di}" class="w-2 h-2"></i> ${g.d}
                                 </div>
                             </div>
                         </div>
-                        <h4 class="text-label text-slate-400 flex items-center justify-center gap-2">
+                        <h4 class="text-label text-slate-500 flex items-center justify-center gap-2">
                             <i data-lucide="${g.i}"></i> ${g.l}
                         </h4>
 
                         <!-- Tooltip -->
-                        <div class="absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full w-56 bg-slate-800 text-white p-3 rounded-lg text-[10px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 border border-white/10 shadow-2xl">
+                        <div class="absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full w-56 bg-slate-800 text-white p-3 rounded-lg text-[10px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 border border-slate-700 shadow-2xl">
                             <div class="font-medium mb-2 uppercase text-blue-400 border-b border-white/10 pb-1">Clinical Evidence</div>
                             <div class="space-y-1 text-left">
                                 ${g.f.map(item => `<div>${item}</div>`).join('')}
@@ -1442,8 +1470,8 @@
                 // Inflammatory markers pulse if above threshold
                 const warningGlow = (isOOR && (isReferenceMode || isInflammatory)) ? 'animate-pulse-red' : '';
 
-                let barUI = `<div class="h-1 w-full bg-slate-800 rounded-full mt-2 relative overflow-hidden">
-                    <div class="h-full bg-blue-500 transition-all duration-1000" style="width: ${Math.min(100, (i.v/i.std[1])*100)}%"></div>
+                let barUI = `<div class="h-1 w-full bg-slate-100 rounded-full mt-2 relative overflow-hidden">
+                    <div class="h-full bg-blue-600 transition-all duration-1000" style="width: ${Math.min(100, (i.v/i.std[1])*100)}%"></div>
                 </div>`;
 
                 if (isReferenceMode) {
@@ -1452,22 +1480,22 @@
                     const stdStart = (i.std[0] / maxBound) * 100;
                     const stdEnd = (i.std[1] / maxBound) * 100;
                     barUI = `
-                        <div class="h-4 w-full bg-slate-900 rounded mt-2 relative overflow-hidden border border-white/5">
-                            <div class="absolute h-full bg-emerald-500/20" style="left: ${stdStart}%; width: ${stdEnd - stdStart}%"></div>
-                            <div class="absolute h-full w-0.5 bg-blue-400 z-10 transition-all duration-1000 shadow-[0_0_8px_#3b82f6]" style="left: ${Math.min(99, pct)}%"></div>
+                        <div class="h-4 w-full bg-slate-50 rounded mt-2 relative overflow-hidden border border-slate-200">
+                            <div class="absolute h-full bg-emerald-500/10" style="left: ${stdStart}%; width: ${stdEnd - stdStart}%"></div>
+                            <div class="absolute h-full w-0.5 bg-blue-600 z-10 transition-all duration-1000 shadow-[0_0_8px_#3b82f6]" style="left: ${Math.min(99, pct)}%"></div>
                         </div>
                         <div class="flex justify-between text-[8px] text-slate-500 mt-1 uppercase">
                             <span>Range: ${i.std[0]}-${i.std[1]}</span>
-                            <span class="${isOOR ? 'text-red-400' : 'text-emerald-400'}">${isOOR ? 'Critical Deviation' : 'Within Reference'}</span>
+                            <span class="${isOOR ? 'text-red-600' : 'text-emerald-600'}">${isOOR ? 'Critical Deviation' : 'Within Reference'}</span>
                         </div>
                     `;
                 }
 
                 return `
-                    <div class="p-4 rounded-xl border border-white/5 bg-slate-900/30 transition-all duration-500 ${warningGlow}">
+                    <div class="p-4 rounded-xl border border-slate-100 bg-white transition-all duration-500 ${warningGlow}">
                         <div class="flex justify-between items-center mb-1">
-                            <span class="text-[10px] text-slate-400 uppercase tracking-tight">${i.l}</span>
-                            <span class="text-xs font-medium ${isOOR ? 'text-red-400' : 'text-slate-100'}">${i.v} <span class="text-[9px] text-slate-500 ml-1">${i.u}</span></span>
+                            <span class="text-[10px] text-slate-500 uppercase tracking-tight">${i.l}</span>
+                            <span class="text-xs font-medium ${isOOR ? 'text-red-600' : 'text-slate-900'}">${i.v} <span class="text-[9px] text-slate-500 ml-1">${i.u}</span></span>
                         </div>
                         ${barUI}
                     </div>
@@ -1586,7 +1614,7 @@
             const currentHour = now.getHours();
 
             container.innerHTML = `
-                <div class="relative ml-4 pl-8 border-l border-slate-800 space-y-12">
+                <div class="relative ml-4 pl-8 border-l border-slate-200 space-y-12">
                     ${timeline.map((m, i) => {
                         const mealHour = parseInt(m.time.split(':')[0]);
                         const isCurrent = currentHour >= mealHour && (i === timeline.length - 1 || currentHour < parseInt(timeline[i+1].time.split(':')[0]));
@@ -1595,24 +1623,24 @@
                         return `
                         <div class="relative group">
                             <!-- Timeline Dot -->
-                            <div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full border-2 bg-slate-900
-                                ${isCurrent ? 'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.6)] animate-pulse' : 'border-slate-700'} z-10 transition-all duration-500">
+                            <div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full border-2 bg-white
+                                ${isCurrent ? 'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.6)] animate-pulse' : 'border-slate-200'} z-10 transition-all duration-500">
                                 ${isCurrent ? '<div class="absolute inset-0 bg-blue-500 rounded-full scale-50"></div>' : ''}
                             </div>
 
                             <!-- Meal Card -->
-                            <div class="glass-card p-6 rounded-2xl border ${isCurrent ? 'border-blue-500/40 bg-blue-600/5' : 'border-white/5'} hover:border-white/20 transition-all duration-500 group-hover:-translate-y-1">
+                            <div class="glass-card p-6 rounded-2xl border ${isCurrent ? 'border-blue-500/40 bg-blue-50' : 'border-slate-100'} hover:border-slate-200 transition-all duration-500 group-hover:-translate-y-1">
                                 <div class="flex justify-between items-start mb-4">
                                     <div>
                                         <div class="flex items-center gap-3">
-                                            <span class="text-[10px] font-mono font-medium ${isCurrent ? 'text-blue-400' : 'text-slate-500'} uppercase tracking-widest">${m.time} — ${m.t}</span>
-                                            <span class="text-[8px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded uppercase border border-white/5">${m.b}</span>
+                                            <span class="text-[10px] font-mono font-medium ${isCurrent ? 'text-blue-600' : 'text-slate-500'} uppercase tracking-widest">${m.time} — ${m.t}</span>
+                                            <span class="text-[8px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded uppercase border border-slate-200">${m.b}</span>
                                         </div>
-                                        <h4 class="text-base font-medium mt-2 text-slate-100">${m.f}</h4>
+                                        <h4 class="text-base font-medium mt-2 text-slate-900">${m.f}</h4>
                                     </div>
                                     <div class="flex gap-2">
-                                        <button onclick="switchMealSubstitution('standard')" title="Standard" class="p-1.5 rounded-lg border border-white/5 hover:bg-white/5 ${activeDietSub==='standard'?'text-blue-400 bg-blue-400/10':''}"><i data-lucide="utensils" class="w-3 h-3"></i></button>
-                                        <button onclick="switchMealSubstitution('veg')" title="Vegetarian" class="p-1.5 rounded-lg border border-white/5 hover:bg-white/5 ${activeDietSub==='veg'?'text-emerald-400 bg-emerald-400/10':''}"><i data-lucide="leaf" class="w-3 h-3"></i></button>
+                                        <button onclick="switchMealSubstitution('standard')" title="Standard" class="p-1.5 rounded-lg border border-slate-100 hover:bg-slate-50 ${activeDietSub==='standard'?'text-blue-600 bg-blue-50':''}"><i data-lucide="utensils" class="w-3 h-3"></i></button>
+                                        <button onclick="switchMealSubstitution('veg')" title="Vegetarian" class="p-1.5 rounded-lg border border-slate-100 hover:bg-slate-50 ${activeDietSub==='veg'?'text-emerald-600 bg-emerald-50':''}"><i data-lucide="leaf" class="w-3 h-3"></i></button>
                                     </div>
                                 </div>
 
@@ -1620,9 +1648,9 @@
                                 <div class="mt-6">
                                     <div class="flex justify-between text-[8px] uppercase font-medium text-slate-500 mb-2">
                                         <span>Macro Profile (P/C/F)</span>
-                                        <span class="font-mono text-slate-300">${m.macros.p}g / ${m.macros.c}g / ${m.macros.f}g</span>
+                                        <span class="font-mono text-slate-600">${m.macros.p}g / ${m.macros.c}g / ${m.macros.f}g</span>
                                     </div>
-                                    <div class="h-1 w-full bg-slate-800 rounded-full flex overflow-hidden">
+                                    <div class="h-1 w-full bg-slate-100 rounded-full flex overflow-hidden">
                                         <div class="h-full bg-blue-500" style="width: ${(m.macros.p/totalMacros)*100}%"></div>
                                         <div class="h-full bg-emerald-500" style="width: ${(m.macros.c/totalMacros)*100}%"></div>
                                         <div class="h-full bg-orange-500" style="width: ${(m.macros.f/totalMacros)*100}%"></div>
@@ -1631,6 +1659,32 @@
                             </div>
                         </div>
                     `}).join('')}
+                </div>
+
+                <!-- Macronutrient Target Footer -->
+                <div class="mt-12 p-6 glass-card rounded-2xl border border-slate-100 bg-slate-50/50">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i data-lucide="target" class="text-blue-600 w-4 h-4"></i>
+                        <h4 class="text-label text-slate-900">Daily Macronutrient Targets</h4>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div>
+                            <span class="text-[10px] text-slate-500 uppercase block mb-1">Total Calories</span>
+                            <span class="text-xs font-mono font-medium text-slate-900">${tdeeRaw} kcal</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 uppercase block mb-1">Protein Goal</span>
+                            <span class="text-xs font-mono font-medium text-slate-900">${pGoal}g</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 uppercase block mb-1">Carbohydrates</span>
+                            <span class="text-xs font-mono font-medium text-slate-900">${Math.round(tdeeRaw * 0.45 / 4)}g</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 uppercase block mb-1">Dietary Fats</span>
+                            <span class="text-xs font-mono font-medium text-slate-900">${Math.round(tdeeRaw * 0.25 / 9)}g</span>
+                        </div>
+                    </div>
                 </div>
             `;
             lucide.createIcons();
@@ -1643,43 +1697,47 @@
         function renderYoga() {
             const grid = document.getElementById('yogaGrid');
             const poses = [
-                { n: "Paschimottanasana", c: "Metabolic Stimulation", b: "Glucose Uptake | Hamstring Length", img: "https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=400", burn: 45, hrv: 12 },
-                { n: "Balasana", c: "Parasympathetic Activation", b: "Reduces Systolic Pressure | Vagus Stimulation", img: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=400", burn: 20, hrv: 25 },
-                { n: "Savasana", c: "Autonomic Regulation", b: "Cortisol Reduction | CNS Recovery", img: "https://images.pexels.com/photos/3759657/pexels-photo-3759657.jpeg?auto=compress&cs=tinysrgb&w=400", burn: 10, hrv: 40 },
-                { n: "Vrikshasana", c: "Vestibular Balance", b: "Neuromuscular Coordination | Focus", img: "https://images.pexels.com/photos/3823039/pexels-photo-3823039.jpeg?auto=compress&cs=tinysrgb&w=400", burn: 35, hrv: 18 }
+                { n: "Paschimottanasana", c: "Metabolic Stimulation", b: "Glucose Uptake | Hamstring Length", f: "Lumbar stability", vid: "https://www.youtube.com/embed/T7SnaYAXg2w", img: "https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=400", burn: 45, hrv: 12 },
+                { n: "Balasana", c: "Parasympathetic Activation", b: "Reduces Systolic Pressure | Vagus Stimulation", f: "CNS Recovery", vid: "https://www.youtube.com/embed/2MJGg7_yPU8", img: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=400", burn: 20, hrv: 25 },
+                { n: "Savasana", c: "Autonomic Regulation", b: "Cortisol Reduction | CNS Recovery", f: "Neuromuscular coordination", vid: "https://www.youtube.com/embed/1v0pZ0S6i0A", img: "https://images.pexels.com/photos/3759657/pexels-photo-3759657.jpeg?auto=compress&cs=tinysrgb&w=400", burn: 10, hrv: 40 },
+                { n: "Vrikshasana", c: "Vestibular Balance", b: "Neuromuscular Coordination | Focus", f: "Lower limb stability", vid: "https://www.youtube.com/embed/Dic2933_T_c", img: "https://images.pexels.com/photos/3823039/pexels-photo-3823039.jpeg?auto=compress&cs=tinysrgb&w=400", burn: 35, hrv: 18 }
             ];
 
             grid.innerHTML = poses.map(y => `
-                <div class="glass-card rounded-2xl overflow-hidden group border border-white/5 hover:border-blue-500/30 transition-all duration-500">
+                <div class="glass-card rounded-2xl overflow-hidden group border border-slate-100 hover:border-blue-500/30 transition-all duration-500">
                     <div class="relative overflow-hidden h-28">
                         <img src="${y.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-white to-transparent"></div>
                     </div>
                     <div class="p-4 relative">
                         <div class="mb-4">
-                            <span class="text-[8px] font-medium text-blue-400 uppercase tracking-widest">${y.c}</span>
-                            <h4 class="text-xs font-medium text-slate-100 uppercase mt-1">${y.n}</h4>
+                            <span class="text-[8px] font-medium text-blue-600 uppercase tracking-widest">${y.c}</span>
+                            <h4 class="text-xs font-medium text-slate-900 uppercase mt-1">${y.n}</h4>
                             <p class="text-[8px] text-slate-500 uppercase mt-1 leading-relaxed">${y.b}</p>
+                            <div class="mt-2 p-2 bg-slate-50 rounded border border-slate-100">
+                                <span class="text-[8px] font-medium text-slate-400 uppercase block mb-1">Clinical Focus</span>
+                                <span class="text-[9px] text-slate-600">${y.f}</span>
+                            </div>
                         </div>
-                        <button onclick="watchInstruction('${y.n}', ${y.burn}, ${y.hrv})" class="w-full py-2 bg-blue-600/10 border border-blue-500/20 rounded-lg text-[9px] font-medium text-blue-400 uppercase hover:bg-blue-600 hover:text-white transition-all">Prescribe Session</button>
+                        <div class="flex gap-2">
+                            <button onclick="watchInstruction('${y.vid}', ${y.burn}, ${y.hrv})" class="flex-1 py-2 bg-blue-600 text-white rounded-lg text-[9px] font-medium uppercase hover:bg-blue-700 transition-all">Watch Instruction</button>
+                            <a href="${y.vid.replace('embed/', 'watch?v=')}" target="_blank" class="p-2 border border-slate-100 rounded-lg text-slate-400 hover:text-blue-600 transition-colors" title="Video Tutorial"><i data-lucide="external-link" class="w-3 h-3"></i></a>
+                        </div>
                     </div>
                 </div>
             `).join('');
+            lucide.createIcons();
         }
 
-        function watchInstruction(pose, burn, hrv) {
+        function watchInstruction(videoUrl, burn, hrv) {
             const vp = document.getElementById('videoPlaceholder');
             const ap = document.getElementById('activePlayer');
-            const video = document.getElementById('yogaVideo');
-            const glow = document.getElementById('playerGlow');
+            const container = document.getElementById('yogaPlayerContainer');
 
             vp.classList.add('hidden');
             ap.classList.remove('hidden');
-            glow.className = "absolute inset-0 bg-gradient-to-br from-blue-600/20 to-indigo-600/20 transition-all duration-1000";
 
-            // Mock video source (using a sample)
-            video.src = "https://www.w3schools.com/html/mov_bbb.mp4";
-            video.play();
+            container.innerHTML = `<iframe class="w-full h-full" src="${videoUrl}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
             document.getElementById('burn_val').innerText = burn;
             document.getElementById('hrv_val').innerText = hrv;
