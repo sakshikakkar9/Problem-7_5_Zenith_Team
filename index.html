@@ -299,73 +299,212 @@
 
         <section id="bmi" class="page-content">
             <header class="mb-8 border-b border-slate-800/50 pb-6">
-                <h1 class="text-xl font-medium tracking-tight text-slate-100 uppercase">Clinical <span class="text-slate-500">Calculator</span></h1>
-                <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Advanced Metabolic Metric Analysis</p>
+                <h1 class="text-xl font-medium tracking-tight text-slate-100 uppercase">Metabolic <span class="text-slate-500">Suite</span></h1>
+                <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Advanced Clinical Composition Analysis</p>
             </header>
             <div class="grid lg:grid-cols-12 gap-8">
-                <div class="lg:col-span-4 glass-card p-6 rounded-xl space-y-6">
-                    <div class="space-y-6">
+                <!-- Advanced Inputs -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="glass-card p-6 rounded-xl border border-white/5 space-y-6">
+                        <h3 class="text-label text-slate-100">Anthropometric Data</h3>
+
                         <div class="space-y-4">
                             <div class="flex justify-between items-center">
-                                <label class="text-xs font-medium text-slate-500 uppercase">Weight (kg)</label>
-                                <span id="weight_val" class="text-sm font-medium text-slate-100">75</span>
+                                <label class="text-[10px] font-medium text-slate-500 uppercase">Weight (kg)</label>
+                                <span id="weight_val" class="text-xs font-mono font-medium text-slate-100">75.0</span>
                             </div>
-                            <input type="range" id="bmi_weight" min="30" max="200" value="75" oninput="calculateClinicalMetrics()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                            <input type="range" id="bmi_weight" min="30" max="200" step="0.5" value="75" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
                         </div>
+
                         <div class="space-y-4">
                             <div class="flex justify-between items-center">
-                                <label class="text-xs font-medium text-slate-500 uppercase">Height (cm)</label>
-                                <span id="height_val" class="text-sm font-medium text-slate-100">175</span>
+                                <label class="text-[10px] font-medium text-slate-500 uppercase">Height (cm)</label>
+                                <span id="height_val" class="text-xs font-mono font-medium text-slate-100">175</span>
                             </div>
-                            <input type="range" id="bmi_height" min="100" max="250" value="175" oninput="calculateClinicalMetrics()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                            <input type="range" id="bmi_height" min="100" max="250" value="175" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
                         </div>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <label class="text-[10px] font-medium text-slate-500 uppercase">Waist (cm)</label>
+                                <span id="waist_val" class="text-xs font-mono font-medium text-slate-100">85</span>
+                            </div>
+                            <input type="range" id="bmi_waist" min="50" max="150" value="85" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <label class="text-[10px] font-medium text-slate-500 uppercase">Hip (cm)</label>
+                                <span id="hip_val" class="text-xs font-mono font-medium text-slate-100">95</span>
+                            </div>
+                            <input type="range" id="bmi_hip" min="50" max="150" value="95" oninput="calculateMetabolicSuite()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                        </div>
+
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="input-group">
-                                <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Age (yr)</label>
-                                <input type="number" id="bmi_age" oninput="calculateClinicalMetrics()" value="45" class="w-full bg-transparent font-medium text-sm outline-none text-slate-100">
+                            <div class="input-group p-3">
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Age (yr)</label>
+                                <input type="number" id="bmi_age" oninput="calculateMetabolicSuite()" value="45" class="w-full bg-transparent font-mono font-medium text-xs outline-none text-slate-100">
                             </div>
-                            <div class="input-group">
-                                <label class="block text-xs font-medium text-slate-500 mb-1 uppercase">Gender</label>
-                                <select id="bmi_gender" onchange="calculateClinicalMetrics()" class="w-full bg-transparent font-medium text-xs outline-none uppercase text-slate-100">
+                            <div class="input-group p-3">
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Gender</label>
+                                <select id="bmi_gender" onchange="calculateMetabolicSuite()" class="w-full bg-transparent font-medium text-[10px] outline-none uppercase text-slate-100">
                                     <option value="male" class="bg-slate-900">Male</option>
                                     <option value="female" class="bg-slate-900">Female</option>
                                 </select>
                             </div>
                         </div>
+
+                        <div class="input-group p-3">
+                            <label class="block text-[10px] font-medium text-slate-500 mb-1 uppercase">Activity Level</label>
+                            <select id="bmi_activity" onchange="calculateMetabolicSuite()" class="w-full bg-transparent font-medium text-[10px] outline-none uppercase text-slate-100">
+                                <option value="1.2" class="bg-slate-900">Sedentary (Office job)</option>
+                                <option value="1.375" class="bg-slate-900">Lightly Active (1-2 days/wk)</option>
+                                <option value="1.55" class="bg-slate-900" selected>Moderately Active (3-5 days/wk)</option>
+                                <option value="1.725" class="bg-slate-900">Very Active (6-7 days/wk)</option>
+                                <option value="1.9" class="bg-slate-900">Athlete (2x training/day)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Anatomical Map Placeholder -->
+                    <div class="glass-card p-6 rounded-xl border border-white/5 relative h-64 overflow-hidden flex items-center justify-center">
+                        <div class="absolute top-4 left-6 text-label text-slate-100">Anatomical Map</div>
+                        <svg id="anatomical_silhouette" viewBox="0 0 100 200" class="h-full opacity-60">
+                            <!-- Basic Human Silhouette -->
+                            <path id="body_outline" d="M50 10 Q60 10 60 25 T50 40 T40 25 T50 10
+                                     M50 40 Q70 40 75 60 T80 100 T75 140 T70 190
+                                     M50 40 Q30 40 25 60 T20 100 T25 140 T30 190"
+                                  fill="none" stroke="#3b82f6" stroke-width="1.5" />
+                            <circle id="visceral_glow" cx="50" cy="100" r="15" fill="url(#radial_warning)" class="opacity-0 transition-opacity duration-500" />
+                            <defs>
+                                <radialGradient id="radial_warning">
+                                    <stop offset="0%" stop-color="#ef4444" stop-opacity="0.6" />
+                                    <stop offset="100%" stop-color="#ef4444" stop-opacity="0" />
+                                </radialGradient>
+                            </defs>
+                        </svg>
+                        <div id="shape_label" class="absolute bottom-4 right-6 text-[10px] font-medium uppercase text-blue-400">Mesomorph Profile</div>
                     </div>
                 </div>
+
+                <!-- Advanced Metrics Display -->
                 <div class="lg:col-span-8 space-y-6">
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="bg-blue-600/20 border border-blue-500/30 p-6 rounded-xl text-center relative overflow-hidden">
-                            <div class="text-[10px] font-medium text-blue-400 mb-2 uppercase tracking-wider">BMI Score</div>
-                            <div id="res_bmi" class="text-2xl font-medium mb-1 text-white">24.5</div>
-                            <div id="tag_bmi" class="text-[10px] uppercase font-medium text-emerald-400">Normal</div>
-                            <svg class="absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-12 opacity-30" viewBox="0 0 100 50">
-                                <path d="M 10 45 A 40 40 0 0 1 90 45" fill="none" stroke="#1e293b" stroke-width="6" />
-                                <path id="bmi_needle" d="M 50 45 L 50 10" stroke="#3b82f6" stroke-width="2" transform-origin="50 45" />
-                            </svg>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <!-- Card 1: BMI -->
+                        <div class="glass-card p-4 rounded-xl border border-white/5 text-center relative">
+                            <div class="text-[9px] font-medium text-slate-500 mb-2 uppercase tracking-wider">BMI INDEX</div>
+                            <div id="res_bmi" class="text-xl font-mono font-medium text-slate-100">24.5</div>
+                            <div id="tag_bmi" class="text-[9px] uppercase font-medium text-emerald-400 mt-1">Normal</div>
                         </div>
-                        <div class="glass-card p-6 rounded-xl text-center">
-                            <div class="text-[10px] font-medium text-slate-500 mb-2 uppercase tracking-wider">BMR (kcal/day)</div>
-                            <div id="res_bmr" class="text-2xl font-medium mb-1 text-slate-100">--</div>
-                            <div class="text-[10px] uppercase font-medium text-slate-400">Metabolic Base</div>
+                        <!-- Card 2: BMR/TDEE -->
+                        <div class="glass-card p-4 rounded-xl border border-white/5 text-center bg-blue-600/5">
+                            <div class="text-[9px] font-medium text-blue-400 mb-2 uppercase tracking-wider">Daily TDEE</div>
+                            <div id="res_tdee" class="text-xl font-mono font-medium text-white">2,450</div>
+                            <div class="text-[9px] uppercase font-medium text-slate-400 mt-1">kcal maintenance</div>
                         </div>
-                        <div class="glass-card p-6 rounded-xl text-center relative overflow-hidden group">
-                            <div class="text-[10px] font-medium text-slate-500 mb-2 uppercase tracking-wider">Ideal Weight (kg)</div>
-                            <div id="res_ibw" class="text-2xl font-medium mb-1 text-slate-100">--</div>
-                            <div id="res_diff" class="text-[10px] uppercase font-medium text-slate-400">Devine Formula</div>
-                            <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform cursor-help">
-                                <span class="text-[10px] font-medium text-slate-300 uppercase px-4 text-center" id="res_diff_action">Calculate differential for actionable insight</span>
+                        <!-- Card 3: Body Fat % -->
+                        <div class="glass-card p-4 rounded-xl border border-white/5 text-center">
+                            <div class="text-[9px] font-medium text-slate-500 mb-2 uppercase tracking-wider">Body Fat %</div>
+                            <div id="res_bfp" class="text-xl font-mono font-medium text-slate-100">18.2%</div>
+                            <div id="tag_bfp" class="text-[9px] uppercase font-medium text-slate-400 mt-1">Fitness Range</div>
+                        </div>
+                        <!-- Card 4: WHR Index -->
+                        <div class="glass-card p-4 rounded-xl border border-white/5 text-center relative overflow-hidden group">
+                            <div class="text-[9px] font-medium text-slate-500 mb-2 uppercase tracking-wider">WHR Ratio</div>
+                            <div id="res_whr" class="text-xl font-mono font-medium text-slate-100">0.89</div>
+                            <div id="tag_whr" class="text-[9px] uppercase font-medium text-orange-400 mt-1">Android</div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Lean Body Mass Section -->
+                        <div class="glass-card p-6 rounded-xl border border-white/5">
+                            <div class="flex justify-between items-center mb-6">
+                                <span class="text-label text-slate-100">Body Composition Breakdown</span>
+                                <i data-lucide="dumbbell" class="text-slate-500 w-4 h-4"></i>
+                            </div>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex justify-between text-[10px] uppercase font-medium mb-2">
+                                        <span class="text-slate-400">Lean Body Mass</span>
+                                        <span id="res_lbm" class="text-slate-100 font-mono">61.5 kg</span>
+                                    </div>
+                                    <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <div id="bar_lbm" class="h-full bg-blue-500 transition-all duration-1000" style="width: 82%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-[10px] uppercase font-medium mb-2">
+                                        <span class="text-slate-400">Essential Fat Mass</span>
+                                        <span id="res_fat" class="text-slate-100 font-mono">13.5 kg</span>
+                                    </div>
+                                    <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <div id="bar_fat" class="h-full bg-orange-500 transition-all duration-1000" style="width: 18%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BMR Decomposition -->
+                        <div class="glass-card p-6 rounded-xl border border-white/5">
+                            <div class="flex justify-between items-center mb-6">
+                                <span class="text-label text-slate-100">BMR Breakdown (Base)</span>
+                                <i data-lucide="flame" class="text-slate-500 w-4 h-4"></i>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="relative w-24 h-24">
+                                    <svg viewBox="0 0 36 36" class="w-full h-full">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#1e293b" stroke-width="3" />
+                                        <path id="donut_organ" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#3b82f6" stroke-width="3" stroke-dasharray="70, 100" />
+                                        <path id="donut_tef" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eab308" stroke-width="3" stroke-dasharray="10, 100" stroke-dashoffset="-70" />
+                                        <path id="donut_neat" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="20, 100" stroke-dashoffset="-80" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center flex-col">
+                                        <span id="res_bmr_val" class="text-xs font-mono font-medium text-slate-100">1624</span>
+                                        <span class="text-[7px] text-slate-500 uppercase">BMR</span>
+                                    </div>
+                                </div>
+                                <div class="flex-grow space-y-2">
+                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-[9px] uppercase text-slate-400">Organs</span></div><span class="text-[10px] font-mono text-slate-100">70%</span></div>
+                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-[9px] uppercase text-slate-400">Activity</span></div><span class="text-[10px] font-mono text-slate-100">20%</span></div>
+                                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-yellow-500"></div><span class="text-[9px] uppercase text-slate-400">Thermic</span></div><span class="text-[10px] font-mono text-slate-100">10%</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="glass-card p-6 rounded-xl">
-                        <h4 class="text-label text-slate-100 mb-4">Metric Significance</h4>
-                        <div class="grid grid-cols-2 gap-x-8 gap-y-3">
-                            <div class="flex justify-between items-center pb-2 border-b border-white/5"><span class="text-xs font-normal text-slate-500 uppercase">Underweight</span><span class="text-xs font-medium text-slate-100">&lt; 18.5</span></div>
-                            <div class="flex justify-between items-center pb-2 border-b border-white/5"><span class="text-xs font-normal text-slate-500 uppercase">Normal</span><span class="text-xs font-medium text-slate-100">18.5 – 24.9</span></div>
-                            <div class="flex justify-between items-center pb-2 border-b border-white/5"><span class="text-xs font-normal text-slate-500 uppercase">Overweight</span><span class="text-xs font-medium text-slate-100">25.0 – 29.9</span></div>
-                            <div class="flex justify-between items-center pb-2 border-b border-white/5"><span class="text-xs font-normal text-slate-500 uppercase">Obese</span><span class="text-xs font-medium text-slate-100">30.0 +</span></div>
+
+                    <!-- Clinical Status Table -->
+                    <div class="glass-card p-6 rounded-xl border border-white/5">
+                        <h4 class="text-label text-slate-100 mb-6">Clinical Metric Significance</h4>
+                        <div class="space-y-1">
+                            <div id="row_underweight" class="flex justify-between items-center p-3 rounded-lg border border-transparent transition-all duration-500">
+                                <span class="text-xs font-normal text-slate-400 uppercase">Underweight Range</span>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-[10px] font-mono text-slate-300">&lt; 18.5</span>
+                                    <span class="status-badge bg-amber-500/10 text-amber-500 hidden opacity-0 transition-opacity">Increased Risk</span>
+                                </div>
+                            </div>
+                            <div id="row_normal" class="flex justify-between items-center p-3 rounded-lg border border-transparent transition-all duration-500">
+                                <span class="text-xs font-normal text-slate-400 uppercase">Normal Physiological Range</span>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-[10px] font-mono text-slate-300">18.5 – 24.9</span>
+                                    <span class="status-badge bg-emerald-500/10 text-emerald-500 hidden opacity-0 transition-opacity">Optimal Target</span>
+                                </div>
+                            </div>
+                            <div id="row_overweight" class="flex justify-between items-center p-3 rounded-lg border border-transparent transition-all duration-500">
+                                <span class="text-xs font-normal text-slate-400 uppercase">Overweight Range</span>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-[10px] font-mono text-slate-300">25.0 – 29.9</span>
+                                    <span class="status-badge bg-orange-500/10 text-orange-500 hidden opacity-0 transition-opacity">Metabolic Strain</span>
+                                </div>
+                            </div>
+                            <div id="row_obese" class="flex justify-between items-center p-3 rounded-lg border border-transparent transition-all duration-500">
+                                <span class="text-xs font-normal text-slate-400 uppercase">Clinical Obesity</span>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-[10px] font-mono text-slate-300">30.0 +</span>
+                                    <span class="status-badge bg-red-500/10 text-red-500 hidden opacity-0 transition-opacity">High NCD Risk</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -684,78 +823,168 @@
 
             // Update components if they are visible
             if(document.getElementById('bp').classList.contains('active')) renderBPChart();
+            calculateMetabolicSuite();
             renderDiet();
             renderYoga();
         }
 
-        // Clinical Metrics Logic
-        let bmiAnimation = null;
-        function animateValue(id, start, end, duration) {
-            if (bmiAnimation) clearInterval(bmiAnimation);
-            const obj = document.getElementById(id);
-            const range = end - start;
-            let current = start;
-            const increment = end > start ? 0.1 : -0.1;
-            const stepTime = Math.abs(Math.floor(duration / (range / 0.1)));
-            bmiAnimation = setInterval(function() {
-                current += increment;
-                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-                    obj.innerText = end.toFixed(1);
-                    clearInterval(bmiAnimation);
-                } else {
-                    obj.innerText = current.toFixed(1);
-                }
-            }, stepTime || 10);
-        }
-
-        function calculateClinicalMetrics() {
+        // Advanced Metabolic Suite Logic
+        function calculateMetabolicSuite() {
             const w = parseFloat(document.getElementById('bmi_weight').value);
             const h_cm = parseFloat(document.getElementById('bmi_height').value);
             const h_m = h_cm / 100;
             const age = parseInt(document.getElementById('bmi_age').value);
             const gender = document.getElementById('bmi_gender').value;
+            const waist = parseFloat(document.getElementById('bmi_waist').value);
+            const hip = parseFloat(document.getElementById('bmi_hip').value);
+            const activity = parseFloat(document.getElementById('bmi_activity').value);
 
-            document.getElementById('weight_val').innerText = w;
+            document.getElementById('weight_val').innerText = w.toFixed(1);
             document.getElementById('height_val').innerText = h_cm;
+            document.getElementById('waist_val').innerText = waist;
+            document.getElementById('hip_val').innerText = hip;
 
             if(w && h_m) {
-                // BMI
+                // 1. BMI Calculation
                 const bmi = parseFloat((w / (h_m * h_m)).toFixed(1));
-                const old_bmi = parseFloat(document.getElementById('res_bmi').innerText) || 0;
-                animateValue('res_bmi', old_bmi, bmi, 300);
+                document.getElementById('res_bmi').innerText = bmi;
 
+                // BMI Table Highlighting & Tagging
+                const rows = ['underweight', 'normal', 'overweight', 'obese'];
+                rows.forEach(r => {
+                    const el = document.getElementById(`row_${r}`);
+                    el.classList.remove('border-blue-500/50', 'bg-blue-600/5', 'animate-pulse');
+                    el.querySelector('.status-badge').classList.add('hidden', 'opacity-0');
+                });
+
+                let activeRow = '';
                 const tag = document.getElementById('tag_bmi');
-                if(bmi < 18.5) { tag.innerText = "Underweight"; tag.className = "text-[10px] uppercase font-medium text-amber-500"; }
-                else if(bmi < 25) { tag.innerText = "Normal"; tag.className = "text-[10px] uppercase font-medium text-emerald-400"; }
-                else if(bmi < 30) { tag.innerText = "Overweight"; tag.className = "text-[10px] uppercase font-medium text-orange-500"; }
-                else { tag.innerText = "Obese"; tag.className = "text-[10px] uppercase font-medium text-red-500"; }
+                if(bmi < 18.5) {
+                    activeRow = 'row_underweight';
+                    tag.innerText = "Underweight";
+                    tag.className = "text-[9px] uppercase font-medium text-amber-500 mt-1";
+                }
+                else if(bmi < 25) {
+                    activeRow = 'row_normal';
+                    tag.innerText = "Normal";
+                    tag.className = "text-[9px] uppercase font-medium text-emerald-400 mt-1";
+                }
+                else if(bmi < 30) {
+                    activeRow = 'row_overweight';
+                    tag.innerText = "Overweight";
+                    tag.className = "text-[9px] uppercase font-medium text-orange-500 mt-1";
+                }
+                else {
+                    activeRow = 'row_obese';
+                    tag.innerText = "Obese";
+                    tag.className = "text-[9px] uppercase font-medium text-red-500 mt-1";
+                }
 
-                // BMR (Mifflin-St Jeor)
+                const rowEl = document.getElementById(activeRow);
+                rowEl.classList.add('border-blue-500/50', 'bg-blue-600/5', 'animate-pulse');
+                rowEl.querySelector('.status-badge').classList.remove('hidden', 'opacity-0');
+
+                // 2. BMR & TDEE (Mifflin-St Jeor)
                 let bmr = (10 * w) + (6.25 * h_cm) - (5 * age);
                 bmr = gender === 'male' ? bmr + 5 : bmr - 161;
-                document.getElementById('res_bmr').innerText = Math.round(bmr);
+                const tdee = Math.round(bmr * activity);
 
-                // Ideal Body Weight (Devine Formula)
-                const h_in = h_cm / 2.54;
-                const baseHeight = 60; // 5 feet
-                let ibw = 0;
-                if (h_in > baseHeight) {
-                    const excess = h_in - baseHeight;
-                    ibw = gender === 'male' ? 50 + (2.3 * excess) : 45.5 + (2.3 * excess);
+                document.getElementById('res_bmr_val').innerText = Math.round(bmr);
+                document.getElementById('res_tdee').innerText = tdee.toLocaleString();
+
+                // BMR Breakdown Donut Update (Approximate clinical distribution)
+                const donutOrgan = document.getElementById('donut_organ');
+                const donutTef = document.getElementById('donut_tef');
+                const donutNeat = document.getElementById('donut_neat');
+
+                // Fixed percentages for breakdown visual as per clinical standard requested
+                const pOrgan = 70;
+                const pTef = 10;
+                const pNeat = 20;
+
+                donutOrgan.setAttribute('stroke-dasharray', `${pOrgan}, 100`);
+                donutTef.setAttribute('stroke-dasharray', `${pTef}, 100`);
+                donutTef.setAttribute('stroke-dashoffset', `-${pOrgan}`);
+                donutNeat.setAttribute('stroke-dasharray', `${pNeat}, 100`);
+                donutNeat.setAttribute('stroke-dashoffset', `-${pOrgan + pTef}`);
+
+                // 3. Body Fat % (BFP) - Deurenberg Formula
+                const genderVal = gender === 'male' ? 1 : 0;
+                const bfp = (1.20 * bmi) + (0.23 * age) - (10.8 * genderVal) - 5.4;
+                document.getElementById('res_bfp').innerText = `${bfp.toFixed(1)}%`;
+
+                const bfpTag = document.getElementById('tag_bfp');
+                if (gender === 'male') {
+                    if (bfp < 6) bfpTag.innerText = "Essential Fat";
+                    else if (bfp < 14) bfpTag.innerText = "Athlete";
+                    else if (bfp < 18) bfpTag.innerText = "Fitness";
+                    else if (bfp < 25) bfpTag.innerText = "Average";
+                    else bfpTag.innerText = "Obese";
                 } else {
-                    ibw = gender === 'male' ? 50 : 45.5;
+                    if (bfp < 14) bfpTag.innerText = "Essential Fat";
+                    else if (bfp < 21) bfpTag.innerText = "Athlete";
+                    else if (bfp < 25) bfpTag.innerText = "Fitness";
+                    else if (bfp < 32) bfpTag.innerText = "Average";
+                    else bfpTag.innerText = "Obese";
                 }
-                document.getElementById('res_ibw').innerText = ibw.toFixed(1);
 
-                // Comparative Insight
-                const diff = (w - ibw).toFixed(1);
-                const action = diff > 0 ? `You are ${diff}kg above ideal weight` : `You are ${Math.abs(diff)}kg below ideal weight`;
-                document.getElementById('res_diff_action').innerText = action;
+                // 4. WHR Ratio
+                const whr = parseFloat((waist / hip).toFixed(2));
+                document.getElementById('res_whr').innerText = whr;
+                const whrTag = document.getElementById('tag_whr');
+                const isHighRisk = (gender === 'male' && whr > 0.9) || (gender === 'female' && whr > 0.85);
 
-                // Gauge Needle (Angle between -90 and 90)
-                let angle = ((bmi - 18.5) / (35 - 18.5)) * 180 - 90;
-                angle = Math.max(-90, Math.min(90, angle));
-                document.getElementById('bmi_needle').style.transform = `rotate(${angle}deg)`;
+                whrTag.innerText = whr > 0.88 ? "Android (Apple)" : "Gynoid (Pear)";
+                whrTag.className = `text-[9px] uppercase font-medium mt-1 ${isHighRisk ? 'text-red-400' : 'text-emerald-400'}`;
+
+                // 5. Lean Body Mass (LBM)
+                const lbm = w * (1 - bfp/100);
+                const fatMass = w - lbm;
+                document.getElementById('res_lbm').innerText = `${lbm.toFixed(1)} kg`;
+                document.getElementById('res_fat').innerText = `${fatMass.toFixed(1)} kg`;
+
+                const lbmPct = (lbm / w) * 100;
+                document.getElementById('bar_lbm').style.width = `${lbmPct}%`;
+                document.getElementById('bar_fat').style.width = `${100 - lbmPct}%`;
+
+                // 6. Visual Silhouette & Visceral Glow
+                const glow = document.getElementById('visceral_glow');
+                const bodyPath = document.getElementById('body_outline');
+                const shapeLabel = document.getElementById('shape_label');
+
+                if (isHighRisk) {
+                    glow.classList.remove('opacity-0');
+                    glow.style.r = `${10 + (whr - 0.8) * 50}`;
+                    bodyPath.setAttribute('stroke', '#ef4444');
+                } else {
+                    glow.classList.add('opacity-0');
+                    bodyPath.setAttribute('stroke', '#3b82f6');
+                }
+
+                // Morph silhouette slightly based on BMI
+                const thickness = 40 + (bmi - 22) * 2;
+                const pathData = `M50 10 Q60 10 60 25 T50 40 T40 25 T50 10
+                                 M50 40 Q${thickness + 30} 40 ${thickness + 35} 60 T${thickness + 40} 100 T${thickness + 35} 140 T${thickness + 30} 190
+                                 M50 40 Q${70 - thickness} 40 ${65 - thickness} 60 T${60 - thickness} 100 T${65 - thickness} 140 T${70 - thickness} 190`;
+                bodyPath.setAttribute('d', pathData);
+
+                if (bmi > 28) shapeLabel.innerText = "Endomorph Profile";
+                else if (bmi < 19) shapeLabel.innerText = "Ectomorph Profile";
+                else shapeLabel.innerText = "Mesomorph Profile";
+
+                // Global Sync to Yoga
+                const focusItems = document.getElementById('focusChecklist').querySelectorAll('p.text-xs');
+                if (whr > 0.9) {
+                    focusItems[2].innerText = "Visceral core stabilization";
+                } else {
+                    focusItems[2].innerText = "Anterior Core Engagement";
+                }
+
+                // Global Sync to Diet
+                if(typeof renderDiet === 'function') {
+                    const targets = document.querySelectorAll('.diet-cal-target');
+                    targets.forEach(t => t.innerText = tdee);
+                }
             }
         }
 
@@ -977,6 +1206,9 @@
         function renderDiet() {
             const grid = document.getElementById('dietGrid');
             const tag = document.getElementById('dietTag');
+
+            const tdee = document.getElementById('res_tdee') ? document.getElementById('res_tdee').innerText.replace(',', '') : (currentRisk === "high" ? 1600 : 2200);
+
             const menu = currentRisk === "high"
                 ? [
                     { t: "Pre-breakfast", f: "Warm Lemon Water & Walnuts", d: "Alkaline Start", time: "07:00", ing: "1 Cup Warm Water, 1/2 Lemon, 4 Walnuts", prep: "5 mins", alt: "Substitute Walnuts with Almonds" },
@@ -994,8 +1226,8 @@
                   ];
 
             const targets = currentRisk === "high"
-                ? { cal: 1600, pro: "65g", carb: "180g", fat: "45g" }
-                : { cal: 2200, pro: "95g", carb: "260g", fat: "65g" };
+                ? { cal: tdee, pro: "65g", carb: "180g", fat: "45g" }
+                : { cal: tdee, pro: "95g", carb: "260g", fat: "65g" };
 
             tag.innerText = currentRisk === "high" ? "Therapeutic Plan" : "Standard Plan";
             tag.className = `px-4 py-1 ${currentRisk==='high'?'bg-red-50 text-red-600 border-red-100':'bg-slate-50 text-slate-500 border-slate-100'} rounded-full text-xs font-medium uppercase border`;
@@ -1048,10 +1280,10 @@
                 <div class="mt-8 p-6 bg-slate-900/50 rounded-xl border border-white/5 flex justify-between items-center">
                     <span class="text-label">Macronutrient Target</span>
                     <div class="flex gap-6">
-                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Calories</div><div class="text-sm font-medium text-slate-100">${targets.cal}</div></div>
-                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Protein</div><div class="text-sm font-medium text-slate-100">${targets.pro}</div></div>
-                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Carbs</div><div class="text-sm font-medium text-slate-100">${targets.carb}</div></div>
-                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Fats</div><div class="text-sm font-medium text-slate-100">${targets.fat}</div></div>
+                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Calories</div><div class="text-sm font-mono font-medium text-slate-100 diet-cal-target">${targets.cal}</div></div>
+                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Protein</div><div class="text-sm font-mono font-medium text-slate-100">${targets.pro}</div></div>
+                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Carbs</div><div class="text-sm font-mono font-medium text-slate-100">${targets.carb}</div></div>
+                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Fats</div><div class="text-sm font-mono font-medium text-slate-100">${targets.fat}</div></div>
                     </div>
                 </div>
             `;
@@ -1109,7 +1341,7 @@
 
         // Initialize components
         window.onload = () => {
-            calculateClinicalMetrics();
+            calculateMetabolicSuite();
             syncPatientData('p1');
             updateConfidence();
             lucide.createIcons();
