@@ -635,11 +635,55 @@
         </section>
 
         <section id="diet" class="page-content">
-            <header class="flex justify-between items-center mb-8 border-b border-slate-800/50 pb-6">
-                <h2 class="text-xl font-medium tracking-tight uppercase text-slate-100">Precision Diet</h2>
-                <div id="dietTag" class="px-4 py-1 bg-slate-900/50 text-slate-500 rounded-full text-xs font-medium uppercase border border-slate-800/50">Standard Plan</div>
+            <header class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 border-b border-slate-800/50 pb-6">
+                <div>
+                    <h2 class="text-xl font-medium tracking-tight uppercase text-slate-100">Prescription <span class="text-slate-500">Timeline</span></h2>
+                    <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Metabolic Load & Nutrient Timing</p>
+                </div>
+                <div id="dietTag" class="px-4 py-1 bg-slate-900/50 text-slate-500 rounded-full text-[10px] font-medium uppercase border border-slate-800/50 transition-all duration-500">Standard Plan</div>
             </header>
-            <div class="grid md:grid-cols-3 gap-6" id="dietGrid"></div>
+
+            <!-- Metabolic Summary Bar -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="glass-card p-4 rounded-xl border border-white/5 bg-blue-600/5">
+                    <span class="text-[9px] font-medium text-blue-400 uppercase tracking-wider">Target Calories</span>
+                    <div class="flex items-baseline gap-2 mt-1">
+                        <div id="summary_kcal" class="text-xl font-mono font-medium text-white">2200</div>
+                        <span class="text-[10px] text-slate-500 uppercase">kcal/day</span>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-xl border border-white/5">
+                    <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Protein Target</span>
+                    <div class="flex items-baseline gap-2 mt-1">
+                        <div id="summary_protein" class="text-xl font-mono font-medium text-slate-100">92</div>
+                        <span class="text-[10px] text-slate-500 uppercase">g (1.6/kg)</span>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-xl border border-white/5">
+                    <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Sodium Cap</span>
+                    <div class="flex items-baseline gap-2 mt-1">
+                        <div id="summary_sodium" class="text-xl font-mono font-medium text-slate-100">2300</div>
+                        <span class="text-[10px] text-slate-500 uppercase">mg limit</span>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-xl border border-white/5 flex items-center justify-between group cursor-pointer" onclick="logWater()">
+                    <div>
+                        <span class="text-[9px] font-medium text-blue-400 uppercase tracking-wider">Hydration</span>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <div id="water_count" class="text-xl font-mono font-medium text-white">0</div>
+                            <span class="text-[10px] text-slate-500 uppercase">/ 8 Cups</span>
+                        </div>
+                    </div>
+                    <div class="relative w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center overflow-hidden">
+                        <div id="water_wave" class="absolute bottom-0 left-0 right-0 bg-blue-500 transition-all duration-1000" style="height: 0%"></div>
+                        <i data-lucide="droplets" class="text-white relative z-10 w-4 h-4"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dietTimelineContainer" class="max-w-3xl mx-auto pb-12">
+                <!-- Populated by JS -->
+            </div>
         </section>
 
         <section id="yoga" class="page-content">
@@ -1388,90 +1432,130 @@
             document.getElementById('protocolContent').innerHTML = protocols[tab].join('<br>');
         }
 
+        let waterIntake = 0;
+        let activeDietSub = 'standard'; // 'standard', 'veg', 'heart'
+
+        function logWater() {
+            if (waterIntake < 8) waterIntake++;
+            document.getElementById('water_count').innerText = waterIntake;
+            document.getElementById('water_wave').style.height = `${(waterIntake / 8) * 100}%`;
+        }
+
+        function switchMealSubstitution(type) {
+            activeDietSub = type;
+            renderDiet();
+        }
+
         function renderDiet() {
-            const grid = document.getElementById('dietGrid');
+            const container = document.getElementById('dietTimelineContainer');
             const tag = document.getElementById('dietTag');
+            if(!container) return;
 
-            const tdee = document.getElementById('res_tdee') ? document.getElementById('res_tdee').innerText.replace(',', '') : (currentRisk === "high" ? 1600 : 2200);
+            const tdeeRaw = document.getElementById('res_tdee') ? document.getElementById('res_tdee').innerText.replace(',', '') : (currentRisk === "high" ? 1600 : 2200);
+            const lbm = parseFloat(document.getElementById('res_lbm')?.innerText || "70");
+            const sys = parseInt(document.getElementById('bp_sys_val')?.innerText || "120");
 
-            const menu = currentRisk === "high"
-                ? [
-                    { t: "Pre-breakfast", f: "Warm Lemon Water & Walnuts", d: "Alkaline Start", time: "07:00", ing: "1 Cup Warm Water, 1/2 Lemon, 4 Walnuts", prep: "5 mins", alt: "Substitute Walnuts with Almonds" },
-                    { t: "Breakfast", f: "Oatmeal with Flaxseeds", d: "Slow-release Carbs", time: "08:30", ing: "1/2 Cup Oats, 1 tbsp Flaxseeds, 1 Cup Water/Milk", prep: "10 mins", alt: "Swap for Chia Seeds if unavailable" },
-                    { t: "Lunch", f: "Quinoa with Sautéed Spinach", d: "Low Glycemic", time: "13:00", ing: "1/2 Cup Quinoa, 1 Cup Spinach, 1 tsp Olive Oil", prep: "20 mins", alt: "Substitute with Brown Rice" },
-                    { t: "Evening Snack", f: "Green Tea & Almonds", d: "Antioxidant Rich", time: "16:30", ing: "1 Cup Green Tea, 6 Almonds", prep: "5 mins", alt: "Substitute with Walnuts" },
-                    { t: "Dinner", f: "Clear Vegetable Broth", d: "Digestive Rest", time: "19:30", ing: "2 Cups Water, Seasonal Vegetables, Salt/Pepper", prep: "15 mins", alt: "Include 50g Tofu" }
-                  ]
-                : [
-                    { t: "Pre-breakfast", f: "Infused Water", d: "Hydration", time: "07:00", ing: "1 Cup Water, Lemon or Mint", prep: "2 mins", alt: "Coconut Water" },
-                    { t: "Breakfast", f: "Greek Yogurt & Granola", d: "Protein Boost", time: "08:30", ing: "1 Cup Yogurt, 1/4 Cup Granola, Berries", prep: "5 mins", alt: "Skyr with Walnuts" },
-                    { t: "Lunch", f: "Grilled Chicken/Tofu Salad", d: "Muscle Maint.", time: "13:00", ing: "150g Chicken or Tofu, Mixed Greens", prep: "15 mins", alt: "Tuna Salad" },
-                    { t: "Evening Snack", f: "Fruit Bowl", d: "Natural Vitamins", time: "16:30", ing: "1 Apple, 1 Banana, Handful Berries", prep: "5 mins", alt: "1 Cup Mixed Nuts" },
-                    { t: "Dinner", f: "Brown Rice & Lentils", d: "Balanced Energy", time: "19:30", ing: "1/2 Cup Rice, 1/2 Cup Lentils, Spices", prep: "25 mins", alt: "Wheat Pasta" }
-                  ];
+            // Goals Update
+            const pGoal = Math.round(lbm * 1.6);
+            const sCap = sys > 130 ? 1500 : 2300;
+            document.getElementById('summary_kcal').innerText = tdeeRaw;
+            document.getElementById('summary_protein').innerText = pGoal;
+            document.getElementById('summary_sodium').innerText = sCap;
 
-            const targets = currentRisk === "high"
-                ? { cal: tdee, pro: "65g", carb: "180g", fat: "45g" }
-                : { cal: tdee, pro: "95g", carb: "260g", fat: "65g" };
+            const dietDatabase = {
+                high: {
+                    standard: [
+                        { t: "Pre-breakfast", f: "Warm Lemon Water & Walnuts", b: "Alkaline | Anti-inflammatory", time: "07:00", macros: { p: 4, c: 2, f: 18 } },
+                        { t: "Breakfast", f: "Oatmeal with Flaxseeds", b: "Slow Glycemic | Fiber-rich", time: "08:30", macros: { p: 12, c: 45, f: 8 } },
+                        { t: "Lunch", f: "Quinoa with Grilled Chicken", b: "High Protein | Low Sodium", time: "13:00", macros: { p: 35, c: 40, f: 12 } },
+                        { t: "Evening Snack", f: "Green Tea & Almonds", b: "Antioxidant | Heart Healthy", time: "16:30", macros: { p: 6, c: 5, f: 14 } },
+                        { t: "Dinner", f: "Baked Salmon & Asparagus", b: "Omega-3 | Vascular Support", time: "19:30", macros: { p: 28, c: 10, f: 15 } }
+                    ],
+                    veg: [
+                        { t: "Pre-breakfast", f: "Warm Lemon Water & Walnuts", b: "Alkaline | Anti-inflammatory", time: "07:00", macros: { p: 4, c: 2, f: 18 } },
+                        { t: "Breakfast", f: "Chia Pudding with Berries", b: "High Fiber | Low Sugar", time: "08:30", macros: { p: 10, c: 25, f: 15 } },
+                        { t: "Lunch", f: "Tempeh & Quinoa Bowl", b: "Plant Protein | Low Sodium", time: "13:00", macros: { p: 25, c: 45, f: 10 } },
+                        { t: "Evening Snack", f: "Celery with Nut Butter", b: "Hydrating | Low Carb", time: "16:30", macros: { p: 5, c: 8, f: 12 } },
+                        { t: "Dinner", f: "Lentil Soup & Roasted Kale", b: "Potassium | BP Control", time: "19:30", macros: { p: 18, c: 35, f: 4 } }
+                    ]
+                },
+                low: {
+                    standard: [
+                        { t: "Pre-breakfast", f: "Infused Mint Water", b: "Hydration Focus", time: "07:00", macros: { p: 0, c: 1, f: 0 } },
+                        { t: "Breakfast", f: "Greek Yogurt & Granola", b: "Probiotic | Energy Base", time: "08:30", macros: { p: 20, c: 35, f: 8 } },
+                        { t: "Lunch", f: "Turkey & Avocado Wrap", b: "Balanced Macro | Muscle Maint.", time: "13:00", macros: { p: 28, c: 42, f: 18 } },
+                        { t: "Evening Snack", f: "Apple & Cheese String", b: "Steady Glucose", time: "16:30", macros: { p: 8, c: 22, f: 9 } },
+                        { t: "Dinner", f: "Steak & Sweet Potato", b: "Iron Rich | Complex Carb", time: "19:30", macros: { p: 35, c: 30, f: 14 } }
+                    ],
+                    veg: [
+                        { t: "Pre-breakfast", f: "Green Juice", b: "Micro-nutrient Boost", time: "07:00", macros: { p: 2, c: 12, f: 0 } },
+                        { t: "Breakfast", f: "Tofu Scramble & Toast", b: "Plant Protein Base", time: "08:30", macros: { p: 18, c: 40, f: 12 } },
+                        { t: "Lunch", f: "Chickpea & Spinach Curry", b: "High Fiber | Low Fat", time: "13:00", macros: { p: 15, c: 55, f: 8 } },
+                        { t: "Evening Snack", f: "Trail Mix", b: "Sustained Energy", time: "16:30", macros: { p: 7, c: 15, f: 20 } },
+                        { t: "Dinner", f: "Paneer & Brown Rice", b: "Complete Protein", time: "19:30", macros: { p: 22, c: 45, f: 18 } }
+                    ]
+                }
+            };
 
-            tag.innerText = currentRisk === "high" ? "Therapeutic Plan" : "Standard Plan";
-            tag.className = `px-4 py-1 ${currentRisk==='high'?'bg-red-50 text-red-600 border-red-100':'bg-slate-50 text-slate-500 border-slate-100'} rounded-full text-xs font-medium uppercase border`;
+            const riskKey = currentRisk === 'high' ? 'high' : 'low';
+            const subKey = activeDietSub === 'veg' ? 'veg' : 'standard';
+            const timeline = dietDatabase[riskKey][subKey];
 
-            setTimeout(() => lucide.createIcons(), 0);
+            tag.innerText = `${activeDietSub.toUpperCase()} PLAN`;
+            tag.className = `px-4 py-1 ${currentRisk==='high'?'bg-red-500/10 text-red-400 border-red-500/20':'bg-blue-500/10 text-blue-400 border-blue-500/20'} rounded-full text-[10px] font-medium uppercase border`;
 
             const now = new Date();
             const currentHour = now.getHours();
 
-            grid.className = "space-y-4 max-w-2xl mx-auto";
-            grid.innerHTML = `
-                <div class="relative border-l-2 border-slate-100 ml-4 pl-8 space-y-8">
-                    ${menu.map(m => {
+            container.innerHTML = `
+                <div class="relative ml-4 pl-8 border-l border-slate-800 space-y-12">
+                    ${timeline.map((m, i) => {
                         const mealHour = parseInt(m.time.split(':')[0]);
-                        const isNext = mealHour >= currentHour;
-                        const isCurrent = currentHour >= mealHour && currentHour < (mealHour + 3);
+                        const isCurrent = currentHour >= mealHour && (i === timeline.length - 1 || currentHour < parseInt(timeline[i+1].time.split(':')[0]));
+                        const totalMacros = m.macros.p + m.macros.c + m.macros.f;
 
                         return `
                         <div class="relative group">
-                            <div class="absolute -left-[41px] top-0 w-4 h-4 bg-white border-2 ${isCurrent ? 'border-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'border-slate-200'} rounded-full z-10"></div>
-                            <div class="glass-card p-4 rounded-xl cursor-pointer border border-white/5 hover:border-white/20 ${isCurrent ? 'ring-1 ring-emerald-500/20' : ''}" onclick="this.querySelector('.details').classList.toggle('hidden')">
-                                <div class="flex justify-between items-start">
+                            <!-- Timeline Dot -->
+                            <div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full border-2 bg-slate-900
+                                ${isCurrent ? 'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.6)] animate-pulse' : 'border-slate-700'} z-10 transition-all duration-500">
+                                ${isCurrent ? '<div class="absolute inset-0 bg-blue-500 rounded-full scale-50"></div>' : ''}
+                            </div>
+
+                            <!-- Meal Card -->
+                            <div class="glass-card p-6 rounded-2xl border ${isCurrent ? 'border-blue-500/40 bg-blue-600/5' : 'border-white/5'} hover:border-white/20 transition-all duration-500 group-hover:-translate-y-1">
+                                <div class="flex justify-between items-start mb-4">
                                     <div>
-                                        <span class="text-[10px] font-medium ${isCurrent ? 'text-emerald-500' : 'text-slate-400'} uppercase tracking-wider">${m.time} — ${m.t}</span>
-                                        <h4 class="text-sm font-medium mt-1 text-slate-100">${m.f}</h4>
-                                        <p class="text-xs text-slate-400 font-normal uppercase mt-1 italic">${m.d}</p>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-[10px] font-mono font-medium ${isCurrent ? 'text-blue-400' : 'text-slate-500'} uppercase tracking-widest">${m.time} — ${m.t}</span>
+                                            <span class="text-[8px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded uppercase border border-white/5">${m.b}</span>
+                                        </div>
+                                        <h4 class="text-base font-medium mt-2 text-slate-100">${m.f}</h4>
                                     </div>
-                                    <i data-lucide="chevron-down" class="text-slate-300 w-4 h-4"></i>
+                                    <div class="flex gap-2">
+                                        <button onclick="switchMealSubstitution('standard')" title="Standard" class="p-1.5 rounded-lg border border-white/5 hover:bg-white/5 ${activeDietSub==='standard'?'text-blue-400 bg-blue-400/10':''}"><i data-lucide="utensils" class="w-3 h-3"></i></button>
+                                        <button onclick="switchMealSubstitution('veg')" title="Vegetarian" class="p-1.5 rounded-lg border border-white/5 hover:bg-white/5 ${activeDietSub==='veg'?'text-emerald-400 bg-emerald-400/10':''}"><i data-lucide="leaf" class="w-3 h-3"></i></button>
+                                    </div>
                                 </div>
-                                <div class="details hidden mt-4 pt-4 border-t border-white/5 space-y-3">
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <span class="text-[10px] font-medium text-slate-500 uppercase">Ingredients</span>
-                                            <p class="text-[11px] text-slate-400 mt-1">${m.ing}</p>
-                                        </div>
-                                        <div>
-                                            <span class="text-[10px] font-medium text-slate-500 uppercase">Preparation</span>
-                                            <p class="text-[11px] text-slate-400 mt-1">${m.prep}</p>
-                                        </div>
+
+                                <!-- Macro Split Visualization -->
+                                <div class="mt-6">
+                                    <div class="flex justify-between text-[8px] uppercase font-medium text-slate-500 mb-2">
+                                        <span>Macro Profile (P/C/F)</span>
+                                        <span class="font-mono text-slate-300">${m.macros.p}g / ${m.macros.c}g / ${m.macros.f}g</span>
                                     </div>
-                                    <div>
-                                        <span class="text-[10px] font-medium text-slate-500 uppercase">Alternatives</span>
-                                        <p class="text-[11px] text-slate-500 mt-1 italic">${m.alt}</p>
+                                    <div class="h-1 w-full bg-slate-800 rounded-full flex overflow-hidden">
+                                        <div class="h-full bg-blue-500" style="width: ${(m.macros.p/totalMacros)*100}%"></div>
+                                        <div class="h-full bg-emerald-500" style="width: ${(m.macros.c/totalMacros)*100}%"></div>
+                                        <div class="h-full bg-orange-500" style="width: ${(m.macros.f/totalMacros)*100}%"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `}).join('')}
                 </div>
-                <div class="mt-8 p-6 bg-slate-900/50 rounded-xl border border-white/5 flex justify-between items-center">
-                    <span class="text-label">Macronutrient Target</span>
-                    <div class="flex gap-6">
-                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Calories</div><div class="text-sm font-mono font-medium text-slate-100 diet-cal-target">${targets.cal}</div></div>
-                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Protein</div><div class="text-sm font-mono font-medium text-slate-100">${targets.pro}</div></div>
-                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Carbs</div><div class="text-sm font-mono font-medium text-slate-100">${targets.carb}</div></div>
-                        <div class="text-center"><div class="text-[10px] text-slate-400 uppercase">Fats</div><div class="text-sm font-mono font-medium text-slate-100">${targets.fat}</div></div>
-                    </div>
-                </div>
             `;
+            lucide.createIcons();
         }
 
         function renderYoga() {
