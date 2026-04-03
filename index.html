@@ -514,8 +514,8 @@
         <section id="bp" class="page-content">
             <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/50 pb-6">
                 <div>
-                    <h1 class="text-xl font-medium tracking-tight text-slate-100 uppercase">BP <span class="text-slate-500">Analyser</span></h1>
-                    <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Vascular Pressure Monitoring</p>
+                    <h1 class="text-xl font-medium tracking-tight text-slate-100 uppercase">Hemodynamic <span class="text-slate-500">Intelligence</span></h1>
+                    <p class="text-slate-500 font-normal text-xs tracking-wider uppercase">Vascular Pressure Monitoring & Perfusion Metrics</p>
                 </div>
                 <div class="flex items-center gap-3 bg-slate-900/50 backdrop-blur-md p-2 rounded-lg border border-slate-800/50">
                     <i data-lucide="user-circle" class="text-slate-400 ml-2"></i>
@@ -526,23 +526,60 @@
                     </select>
                 </div>
             </header>
-            <div class="grid lg:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-xl text-center">
-                    <span class="text-label">Latest Systolic</span>
-                    <div id="bp_sys_val" class="text-3xl font-medium mt-2 text-slate-100">118 <span class="text-xs text-slate-400 font-normal">mmHg</span></div>
+
+            <!-- Vitals Summary Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                <div class="glass-card p-4 rounded-xl text-center border border-white/5">
+                    <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Systolic</span>
+                    <div id="bp_sys_val" class="text-2xl font-mono font-medium mt-1 text-slate-100">118</div>
+                    <span class="text-[8px] text-slate-500">mmHg</span>
                 </div>
-                <div class="glass-card p-6 rounded-xl text-center">
-                    <span class="text-label">Latest Diastolic</span>
-                    <div id="bp_dia_val" class="text-3xl font-medium mt-2 text-slate-100">76 <span class="text-xs text-slate-400 font-normal">mmHg</span></div>
+                <div class="glass-card p-4 rounded-xl text-center border border-white/5">
+                    <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Diastolic</span>
+                    <div id="bp_dia_val" class="text-2xl font-mono font-medium mt-1 text-slate-100">76</div>
+                    <span class="text-[8px] text-slate-500">mmHg</span>
                 </div>
-                <div class="glass-card p-6 rounded-xl text-center relative overflow-hidden group">
-                    <span class="text-label">Pulse Rate</span>
-                    <div class="text-3xl font-medium mt-2 text-slate-100">72 <span class="text-xs text-slate-400 font-normal">BPM</span></div>
-                    <i data-lucide="heart" class="absolute -right-2 -bottom-2 text-red-500 w-12 h-12 opacity-20 animate-heart"></i>
+                <div id="pulse_rate_card" class="glass-card p-4 rounded-xl text-center border border-white/5 relative overflow-hidden group">
+                    <span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider">Pulse Rate</span>
+                    <div id="pulse_val" class="text-2xl font-mono font-medium mt-1 text-slate-100">72</div>
+                    <span class="text-[8px] text-slate-500">BPM</span>
+                    <div id="pulse_animation" class="absolute -right-1 -bottom-1 text-red-500/20"><i data-lucide="heart" class="w-8 h-8"></i></div>
                 </div>
-                <div class="lg:col-span-3 glass-card p-6 rounded-xl border border-white/5">
-                    <h4 class="text-label mb-6 text-slate-100">Historical Pressure Map</h4>
-                    <canvas id="bpChart" height="100"></canvas>
+                <div class="glass-card p-4 rounded-xl text-center border border-white/5">
+                    <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wider">MAP Index</span>
+                    <div id="res_map" class="text-2xl font-mono font-medium mt-1 text-blue-400">90</div>
+                    <span class="text-[8px] text-slate-500">mmHg perfusion</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center border border-white/5">
+                    <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wider">Pulse Pressure</span>
+                    <div id="res_pp" class="text-2xl font-mono font-medium mt-1 text-emerald-400">42</div>
+                    <span id="tag_pp" class="text-[8px] text-emerald-500 uppercase font-medium">Normal</span>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-3 space-y-6">
+                    <div class="glass-card p-6 rounded-xl border border-white/5 relative">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-label text-slate-100">Historical Hemodynamics Map</h4>
+                            <div class="flex gap-4">
+                                <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-red-500/20"></div><span class="text-[8px] text-slate-500 uppercase">Stage 2</span></div>
+                                <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-orange-500/20"></div><span class="text-[8px] text-slate-500 uppercase">Stage 1</span></div>
+                                <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-emerald-500/20"></div><span class="text-[8px] text-slate-500 uppercase">Optimal</span></div>
+                            </div>
+                        </div>
+                        <div class="h-[300px]">
+                            <canvas id="bpChart"></canvas>
+                        </div>
+                        <!-- AI Insight Box -->
+                        <div id="bp_ai_insight" class="mt-6 p-4 rounded-lg bg-blue-600/5 border border-blue-500/20 flex items-start gap-4">
+                            <div class="bg-blue-600 p-2 rounded-lg text-white shadow-lg shadow-blue-600/20"><i data-lucide="zap" class="w-3 h-3"></i></div>
+                            <div>
+                                <h5 class="text-[10px] font-medium text-blue-400 uppercase mb-1">AI Clinical Insight</h5>
+                                <p id="bp_insight_text" class="text-[11px] text-slate-400 leading-relaxed italic">Analyzing pressure gradients and circulatory efficiency...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             <div class="lg:col-span-1 glass-card p-6 rounded-xl border border-white/5 space-y-6">
@@ -567,21 +604,31 @@
             </div>
 
             <div class="lg:col-span-2 glass-card p-6 rounded-xl border border-white/5">
-                <h4 class="text-label text-slate-100 mb-4">Historical Log</h4>
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-label text-slate-100">Validated Historical Log</h4>
+                    <div class="flex gap-2">
+                        <input type="text" id="logSearch" oninput="filterLog()" placeholder="Search Patient..." class="bg-slate-900/50 border border-white/5 rounded px-3 py-1 text-[10px] text-slate-300 outline-none focus:border-blue-500/50">
+                    </div>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
                         <thead>
                             <tr class="border-b border-white/5">
-                                <th class="text-[10px] font-medium text-slate-400 uppercase py-2">Date</th>
-                                <th class="text-[10px] font-medium text-slate-400 uppercase py-2">Patient</th>
-                                <th class="text-[10px] font-medium text-slate-400 uppercase py-2">Reading</th>
-                                <th class="text-[10px] font-medium text-slate-400 uppercase py-2">Status</th>
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3">Date</th>
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3">Patient</th>
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3">Reading</th>
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3">Status</th>
+                                <th class="text-[10px] font-medium text-slate-400 uppercase py-3 text-center">Flag</th>
                             </tr>
                         </thead>
                         <tbody id="bpHistoryLog">
                             <!-- Populated by JS -->
                         </tbody>
                     </table>
+                </div>
+                <div class="mt-4 flex justify-between items-center text-[10px] text-slate-500 uppercase">
+                    <span>Showing last 10 validated entries</span>
+                    <button class="text-blue-400 hover:underline">Download Report (.PDF)</button>
                 </div>
             </div>
             </div>
@@ -663,11 +710,11 @@
         let isReferenceMode = false;
         let activeProtocolTab = 'acute';
         const bpHistory = [
-            { date: '2023-10-24', pat: 'Sarah Connor', val: '118/76', status: 'Normal', color: 'emerald-500' },
-            { date: '2023-10-23', pat: 'John Doe', val: '145/92', status: 'Stage 1', color: 'orange-500' },
-            { date: '2023-10-22', pat: 'Elena Gilbert', val: '110/70', status: 'Normal', color: 'emerald-500' },
-            { date: '2023-10-21', pat: 'John Doe', val: '180/110', status: 'Crisis', color: 'red-500' },
-            { date: '2023-10-20', pat: 'Sarah Connor', val: '122/82', status: 'Normal', color: 'emerald-500' }
+            { date: '2023-10-24', pat: 'Sarah Connor', val: '118/76', status: 'NORMAL', color: 'emerald-400' },
+            { date: '2023-10-23', pat: 'John Doe', val: '145/92', status: 'STAGE 2', color: 'orange-500' },
+            { date: '2023-10-22', pat: 'Elena Gilbert', val: '110/70', status: 'NORMAL', color: 'emerald-400' },
+            { date: '2023-10-21', pat: 'John Doe', val: '180/110', status: 'CRISIS', color: 'red-400' },
+            { date: '2023-10-20', pat: 'Sarah Connor', val: '122/82', status: 'NORMAL', color: 'emerald-400' }
         ];
 
         // --- STEPPER & VALIDATION ---
@@ -735,25 +782,42 @@
 
         function renderBPHistory() {
             const log = document.getElementById('bpHistoryLog');
+            const search = document.getElementById('logSearch')?.value.toLowerCase() || '';
             if(!log) return;
-            log.innerHTML = bpHistory.slice(0, 5).map(h => {
+
+            const filtered = bpHistory.filter(h => h.pat.toLowerCase().includes(search));
+
+            log.innerHTML = filtered.slice(0, 10).map(h => {
                 let icon = 'check-circle';
-                if (h.status === 'Crisis') icon = 'alert-octagon';
-                else if (h.status.includes('Stage') || h.status === 'Elevated') icon = 'alert-circle';
+                let flag = '';
+                if (h.status === 'CRISIS') {
+                    icon = 'alert-octagon';
+                    flag = '<i data-lucide="flag" class="text-red-500 mx-auto"></i>';
+                }
+                else if (h.status.includes('STAGE 2')) {
+                    icon = 'alert-circle';
+                    flag = '<i data-lucide="flag" class="text-orange-600 mx-auto"></i>';
+                }
+                else if (h.status.includes('Stage 1') || h.status === 'Elevated') icon = 'alert-circle';
 
                 return `
-                <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                    <td class="text-xs py-3 text-slate-500">${h.date}</td>
-                    <td class="text-xs py-3 text-slate-200">${h.pat}</td>
-                    <td class="text-xs py-3 text-slate-200 font-medium">${h.val}</td>
+                <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
+                    <td class="text-xs py-3 text-slate-500 font-mono">${h.date}</td>
+                    <td class="text-xs py-3 text-slate-200 font-medium">${h.pat}</td>
+                    <td class="text-xs py-3 text-slate-200 font-mono">${h.val}</td>
                     <td class="text-xs py-3">
-                        <span class="status-badge bg-${h.color}/10 text-${h.color}">
+                        <span class="status-badge bg-${h.color}/10 text-${h.color} border border-${h.color}/20">
                             <i data-lucide="${icon}"></i> ${h.status}
                         </span>
                     </td>
+                    <td class="py-3 text-center">${flag}</td>
                 </tr>
             `}).join('');
             lucide.createIcons();
+        }
+
+        function filterLog() {
+            renderBPHistory();
         }
 
         function addNewPatient(e) {
@@ -761,23 +825,22 @@
             const name = document.getElementById('new_pat_name').value;
             const age = document.getElementById('new_pat_age').value;
             const bp = document.getElementById('new_pat_bp').value;
-            const sys = parseInt(bp.split('/')[0]);
+            const parts = bp.split('/');
+            const sys = parseInt(parts[0]);
+            const dia = parseInt(parts[1]);
 
-            let status = 'Normal', color = 'emerald-500';
-            if (sys >= 180) { status = 'Crisis'; color = 'red-500'; }
-            else if (sys >= 140) { status = 'Stage 2'; color = 'orange-600'; }
-            else if (sys >= 130) { status = 'Stage 1'; color = 'orange-500'; }
-            else if (sys >= 120) { status = 'Elevated'; color = 'amber-500'; }
+            const metrics = getHemodynamics(sys, dia);
 
             bpHistory.unshift({
                 date: new Date().toISOString().split('T')[0],
                 pat: name,
                 val: bp,
-                status: status,
-                color: color
+                status: metrics.status.l,
+                color: metrics.status.c.replace('text-', '')
             });
 
             renderBPHistory();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
             document.getElementById('addPatientForm').reset();
         }
 
@@ -800,9 +863,24 @@
             if(id === 'bp') { renderBPChart(); renderBPHistory(); }
         }
 
+        // Hemodynamic Calculation Utility
+        const getHemodynamics = (sys, dia) => {
+            const map = Math.round(dia + (1/3) * (sys - dia));
+            const pp = sys - dia;
+            let status = { l: 'NORMAL', c: 'text-emerald-400', bg: 'bg-emerald-500' };
+
+            if (sys >= 180 || dia >= 120) status = { l: 'CRISIS', c: 'text-red-400', bg: 'bg-red-500' };
+            else if (sys >= 140 || dia >= 90) status = { l: 'STAGE 2', c: 'text-orange-500', bg: 'bg-orange-600' };
+            else if (sys >= 130 || dia >= 80) status = { l: 'STAGE 1', c: 'text-orange-400', bg: 'bg-orange-500' };
+            else if (sys >= 120) status = { l: 'ELEVATED', c: 'text-amber-400', bg: 'bg-amber-500' };
+
+            return { map, pp, status };
+        };
+
         // GLOBAL SYNC LOGIC
         function syncPatientData(patientId) {
             const p = patientData[patientId];
+            if (!p) return;
 
             // Sync UI Selectors
             document.getElementById('globalPatientSelector').value = patientId;
@@ -815,9 +893,27 @@
             document.getElementById('HighChol').checked = p.chol;
             document.getElementById('Smoker').checked = p.smoker;
 
-            // Update BP Analyser Display
-            document.getElementById('bp_sys_val').innerHTML = `${p.sys} <span class="text-xs text-slate-400">mmHg</span>`;
-            document.getElementById('bp_dia_val').innerHTML = `${p.dia} <span class="text-xs text-slate-400">mmHg</span>`;
+            // Update Hemodynamic Display
+            document.getElementById('bp_sys_val').innerText = p.sys;
+            document.getElementById('bp_dia_val').innerText = p.dia;
+
+            const pulse = patientId === 'p2' ? 88 : 72;
+            document.getElementById('pulse_val').innerText = pulse;
+
+            // Trigger Heartbeat Animation based on BPM (Targeting container to avoid Lucide replacement issues)
+            const pulseAnim = document.getElementById('pulse_animation');
+            const duration = 60 / pulse;
+            if (pulseAnim) pulseAnim.style.animation = `heartBeat ${duration}s infinite`;
+
+            // Update Hemodynamic Metrics
+            const metrics = getHemodynamics(p.sys, p.dia);
+            document.getElementById('res_map').innerText = metrics.map;
+            document.getElementById('res_pp').innerText = metrics.pp;
+
+            const tagPP = document.getElementById('tag_pp');
+            if (metrics.pp > 60) { tagPP.innerText = "High stiffness"; tagPP.className = "text-[8px] text-red-500 uppercase font-medium"; }
+            else if (metrics.pp < 40) { tagPP.innerText = "Low gradient"; tagPP.className = "text-[8px] text-amber-500 uppercase font-medium"; }
+            else { tagPP.innerText = "Normal"; tagPP.className = "text-[8px] text-emerald-500 uppercase font-medium"; }
 
             currentRisk = p.risk;
 
@@ -988,53 +1084,142 @@
             }
         }
 
-        // BP Chart Logic
+        // BP Chart Logic with Threshold Zones
         function renderBPChart() {
             const ctx = document.getElementById('bpChart').getContext('2d');
             if(bpChart) bpChart.destroy();
 
             const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-            const sysData = currentRisk === 'high' ? [142, 138, 145, 140, 135, 139, 141] : [118, 120, 115, 119, 121, 117, 118];
+            const sysData = currentRisk === 'high' ? [152, 148, 155, 150, 145, 149, 151] : [118, 120, 115, 119, 121, 117, 118];
             const diaData = currentRisk === 'high' ? [92, 88, 95, 90, 88, 91, 89] : [76, 78, 75, 79, 80, 77, 76];
 
-            const advice = (val) => {
-                if (val >= 140) return "Alert: Stage 2 level. Rest and re-measure.";
-                if (val >= 130) return "Elevated: Consider limiting sodium intake.";
-                return "Stable: Maintain current lifestyle protocols.";
+            const getStatus = (sys, dia) => {
+                if (sys >= 180 || dia >= 120) return { l: 'CRISIS', c: 'text-red-400' };
+                if (sys >= 140 || dia >= 90) return { l: 'STAGE 2', c: 'text-orange-500' };
+                if (sys >= 130 || dia >= 80) return { l: 'STAGE 1', c: 'text-orange-400' };
+                if (sys >= 120) return { l: 'ELEVATED', c: 'text-amber-400' };
+                return { l: 'NORMAL', c: 'text-emerald-400' };
+            };
+
+            const calculateMAP = (sys, dia) => Math.round(dia + (1/3) * (sys - dia));
+
+            // Custom Background Zones Plugin
+            const zonesPlugin = {
+                id: 'zones',
+                beforeDraw: (chart) => {
+                    const { ctx, chartArea: { top, bottom, left, right }, scales: { y } } = chart;
+                    const zones = [
+                        { y: 180, color: 'rgba(239, 68, 68, 0.05)' }, // Crisis
+                        { y: 140, color: 'rgba(234, 88, 12, 0.05)' }, // Stage 2
+                        { y: 130, color: 'rgba(251, 191, 36, 0.05)' }, // Stage 1
+                        { y: 120, color: 'rgba(16, 185, 129, 0.05)' }  // Elevated/Normal
+                    ];
+
+                    zones.forEach((z, i) => {
+                        const yStart = y.getPixelForValue(z.y);
+                        const yEnd = i === 0 ? top : y.getPixelForValue(zones[i-1].y);
+                        ctx.fillStyle = z.color;
+                        ctx.fillRect(left, yEnd, right - left, yStart - yEnd);
+                    });
+                }
             };
 
             bpChart = new Chart(ctx, {
                 type: 'line',
+                plugins: [zonesPlugin],
                 data: {
                     labels: labels,
                     datasets: [
-                        { label: 'Systolic', data: sysData, borderColor: '#3b82f6', tension: 0.4, borderWidth: 3, pointRadius: 4, pointHoverRadius: 6 },
+                        { label: 'Systolic', data: sysData, borderColor: '#3b82f6', tension: 0.4, borderWidth: 3, pointRadius: 4, pointHoverRadius: 6, backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true },
                         { label: 'Diastolic', data: diaData, borderColor: '#10b981', tension: 0.4, borderWidth: 3, pointRadius: 4, pointHoverRadius: 6 }
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            callbacks: {
-                                label: (context) => `${context.dataset.label}: ${context.parsed.y} mmHg`,
-                                afterLabel: (context) => `Advice: ${advice(context.parsed.y)}`
-                            },
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
                             padding: 12,
-                            titleFont: { weight: 'medium' },
-                            bodyFont: { size: 11 }
+                            titleFont: { size: 10, weight: 'medium', family: 'Inter' },
+                            bodyFont: { size: 11, family: 'Inter' },
+                            callbacks: {
+                                label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y} mmHg`,
+                                afterBody: (items) => {
+                                    const sys = items.find(i => i.datasetIndex === 0).parsed.y;
+                                    const dia = items.find(i => i.datasetIndex === 1).parsed.y;
+                                    const map = calculateMAP(sys, dia);
+                                    const status = getStatus(sys, dia);
+                                    return [
+                                        `MAP: ${map} mmHg`,
+                                        `Pulse Pressure: ${sys - dia} mmHg`,
+                                        `Status: ${status.l}`
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const label = labels[index];
+                            const sys = sysData[index];
+                            const dia = diaData[index];
+                            const events = [
+                                "Baseline measurement",
+                                "High sodium intake (Dinner)",
+                                "Post-intensive cardio session",
+                                "Slight dehydration noted",
+                                "Optimal rest cycle",
+                                "Morning stress event",
+                                "Baseline consistency"
+                            ];
+                            alert(`Hemodynamic Event [${label}]\nReading: ${sys}/${dia} mmHg\nContext: ${events[index]}`);
                         }
                     },
                     scales: {
                         y: {
-                            grid: { color: 'rgba(0,0,0,0.02)' },
-                            ticks: { font: { size: 10, weight: 'medium' } },
-                            min: 60, max: 180
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8', font: { size: 9, family: 'Inter' } },
+                            min: 60, max: 190
                         },
-                        x: { grid: { display: false }, ticks: { font: { size: 10, weight: 'medium' } } }
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9, family: 'Inter' } } }
                     }
                 }
             });
+
+            // Update Hemodynamic Insights
+            const avgSys = sysData.reduce((a,b) => a+b, 0) / sysData.length;
+            const insightText = document.getElementById('bp_insight_text');
+            if (avgSys > 140) {
+                insightText.innerHTML = "Trend Alert: Stage 2 level detected. <span class='text-red-400'>Hypertensive trends identified.</span> Recommend strict dash diet and immediate clinical follow-up.";
+            } else if (avgSys > 130) {
+                insightText.innerHTML = "Trend Alert: Your 7-day average indicates Stage 1 Hypertension. Focus on DASH diet protocols and sodium reduction to <1,500 mg/day.";
+            } else {
+                insightText.innerHTML = "Hemodynamic stability maintained. Weekly average within physiological target range. Continue current wellness protocols.";
+            }
+
+            // Sync metrics for latest point
+            const lastSys = sysData[sysData.length - 1];
+            const lastDia = diaData[diaData.length - 1];
+
+            // Check if patient selector matches last point, if not use patient data
+            const currentPatId = document.getElementById('globalPatientSelector').value;
+            const p = patientData[currentPatId];
+            const finalSys = p ? p.sys : lastSys;
+            const finalDia = p ? p.dia : lastDia;
+
+            document.getElementById('res_map').innerText = calculateMAP(finalSys, finalDia);
+            const pp = finalSys - finalDia;
+            document.getElementById('res_pp').innerText = pp;
+            const tagPP = document.getElementById('tag_pp');
+            if (pp > 60) { tagPP.innerText = "High stiffness"; tagPP.className = "text-[8px] text-red-500 uppercase font-medium"; }
+            else if (pp < 40) { tagPP.innerText = "Low gradient"; tagPP.className = "text-[8px] text-amber-500 uppercase font-medium"; }
+            else { tagPP.innerText = "Normal"; tagPP.className = "text-[8px] text-emerald-500 uppercase font-medium"; }
         }
 
         // --- AI PREDICTOR CORE ---
